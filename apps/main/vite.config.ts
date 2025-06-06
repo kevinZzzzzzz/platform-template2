@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig, loadEnv, ConfigEnv, UserConfig } from "vite";
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import { manualChunksPlugin } from 'vite-plugin-webpackchunkname'
@@ -6,9 +6,9 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import AutoImport from 'unplugin-auto-import/vite'
 
 // https://vitejs.dev/config/
-export default ({mode, command}) => {
-  const env= loadEnv(mode, process.cwd());   // 获取.env文件里定义的环境变量
-  const analysPlugins: any[] = mode === 'analys' ? [
+export default defineConfig((mode: ConfigEnv): UserConfig => {
+  const env= loadEnv(mode.mode, process.cwd());   // 获取.env文件里定义的环境变量
+  const analysPlugins: any[] = mode.mode === 'analys' ? [
     visualizer({
       emitFile: false,
       filename: "stats.html",
@@ -16,16 +16,16 @@ export default ({mode, command}) => {
       open: true
     })
   ] : []
-  return defineConfig({
+  return {
     plugins: [
       react(),
-      AutoImport({
-        imports:["react", "react-router-dom"],
-        dts: 'src/type/auto-import.d.ts',    // 路径下自动生成文件夹存放全局指令
-        eslintrc: { // 开启eslint校验
-          enabled: true,
-        },
-      }),
+      // AutoImport({
+      //   imports:["react", "react-router-dom"],
+      //   dts: 'src/type/auto-import.d.ts',    // 路径下自动生成文件夹存放全局指令
+      //   eslintrc: { // 开启eslint校验
+      //     enabled: true,
+      //   },
+      // }),
       manualChunksPlugin()
     ].concat(analysPlugins),
     build: {
@@ -71,11 +71,11 @@ export default ({mode, command}) => {
     css: {
       preprocessorOptions: {
         // 全局样式引入
-        scss:{
-          additionalData: `@use "@/assets/styles/global.scss" as *;`,
-          api: "modern-compiler" // or "modern"
+        less:{
+					javascriptEnabled: true,
+          additionalData: `@import "@/assets/styles/global.less";`
         }
       },
     }
-  })
-}
+  }
+});
