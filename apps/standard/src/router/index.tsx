@@ -57,23 +57,6 @@ const NotFoundPage: RouteObject = {
 }
 // 标准版模块路由
 const standardRouter: Array<RouteObject> = [
-	{
-    path: "/home",
-    element: lazy(() => import(/* webpackChunkName: "home" */ '@/pages/Home/index')),
-    meta: {
-      requiresAuth: true,
-      title: "标准版-首页",
-      key: "home"
-    },
-    children: []
-  }
-];
-
-const AllRouters: RouteObject[] = [
-	{
-		path: "/",
-		element: <Navigate to="/home" />
-	},
   {
     path: "/home",
     element: lazyLoad(lazy(() => import(/* webpackChunkName: "home" */ '@/pages/Home/index'))),
@@ -84,6 +67,14 @@ const AllRouters: RouteObject[] = [
     },
     children: []
   },
+];
+
+const AllRouters: RouteObject[] = [
+	{
+		path: "/",
+		element: <Navigate to="/home" />
+	},
+  ...standardRouter
 ]
 
 const Router = () => {
