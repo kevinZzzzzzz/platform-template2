@@ -62,7 +62,7 @@ const standardRouter: Array<RouteObject> = [
     element: lazyLoad(lazy(() => import(/* webpackChunkName: "home" */ '@/pages/Home/index'))),
     meta: {
       requiresAuth: true,
-      title: "标准版-首页",
+      title: "标准版-首页1",
       key: "home"
     },
     children: []
