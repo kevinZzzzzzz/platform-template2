@@ -56,7 +56,7 @@ const NotFoundPage: RouteObject = {
   children: []
 }
 // 标准版模块路由
-const standardRouter: Array<RouteObject> = [
+export const standardRouter: Array<RouteObject> = [
   {
     path: "/home",
     element: lazyLoad(lazy(() => import(/* webpackChunkName: "home" */ '@/pages/Home/index'))),

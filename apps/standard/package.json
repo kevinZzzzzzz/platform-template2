@@ -46,7 +46,7 @@
 		"eslint-plugin-react-refresh": "^0.3.4",
 		"typescript": "*",
 		"vite": "^4.3.9",
-		"sass": "^1.63.2",
+		"less": "^4.1.3",
 		"commitizen": "4.3.0",
 		"commitlint": "17.6.5",
 		"commitlint-config-cz": "0.13.3",

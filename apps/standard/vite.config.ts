@@ -72,7 +72,7 @@ export default ({mode, command}) => {
       preprocessorOptions: {
         // 全局样式引入
         scss:{
-          additionalData: `@import "@/assets/styles/global.scss";`,
+          additionalData: `@import "@/assets/styles/global.less";`,
         }
       },
     }
