@@ -54,7 +54,7 @@ export default ({mode, command}) => {
       }
     },
     server: {
-      port: 8881,
+      port: 8883,
       host: true,
       proxy: {
         "/api": {

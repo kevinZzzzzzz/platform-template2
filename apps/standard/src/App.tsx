@@ -1,7 +1,7 @@
 import React from 'react';
-import {HashRouter, Navigate , Route, Routes, useLocation} from 'react-router-dom'
+import {BrowserRouter, Navigate , Route, Routes, useLocation} from 'react-router-dom'
 import ReactDOM from 'react-dom';
-import Router from "./router/index";
+import {Router} from "./router/index";
 import DefaultLayout from './layout/Default';
 import api from "@/api";
 console.log(Router,'Router')
@@ -17,9 +17,9 @@ window.$api = {...api}
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Router />
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 export default App

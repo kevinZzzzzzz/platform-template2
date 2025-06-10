@@ -1,14 +1,15 @@
-import { defineConfig, loadEnv } from 'vite'
+import { ConfigEnv, defineConfig, loadEnv, UserConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import { manualChunksPlugin } from 'vite-plugin-webpackchunkname'
 import { visualizer } from 'rollup-plugin-visualizer';
 import AutoImport from 'unplugin-auto-import/vite'
+import federation from "@originjs/vite-plugin-federation";
 
 // https://vitejs.dev/config/
-export default ({mode, command}) => {
-  const env= loadEnv(mode, process.cwd());   // 获取.env文件里定义的环境变量
-  const analysPlugins: any[] = mode === 'analys' ? [
+export default defineConfig((mode: ConfigEnv): UserConfig => {
+  const env = loadEnv(mode.mode, process.cwd());   // 获取.env文件里定义的环境变量
+  const analysPlugins: any[] = mode.mode === 'analys' ? [
     visualizer({
       emitFile: false,
       filename: "stats.html",
@@ -16,7 +17,7 @@ export default ({mode, command}) => {
       open: true
     })
   ] : []
-  return defineConfig({
+  return {
     plugins: [
       react(),
       AutoImport({
@@ -26,25 +27,39 @@ export default ({mode, command}) => {
           enabled: true,
         },
       }),
+      federation({
+        name: "remote_standard",
+        filename: "remoteStandardEntry.js",
+        exposes: {
+          './standardRouter': './src/router/index.tsx',
+        },
+        shared: ['react', 'react-dom', 'react-router-dom'],
+        remotes: {},
+      }),
       manualChunksPlugin()
     ].concat(analysPlugins),
     build: {
-      emptyOutDir: true,
-      sourcemap: false,
-      // manifest: true, //开启manifest
-      rollupOptions: {
-        output: {
-          chunkFileNames: 'static/js/[name].[hash].js',
-          entryFileNames: 'static/js/[name].[hash].js',
-          assetFileNames: 'static/[ext]/[name].[hash].[ext]',
-          manualChunks(id: string) {
-            if (id.includes('node_modules')) {
-              return 'vendor'; //代码宰割为第三方包
-            }
-          },
-        }
-      }
+      target: 'esnext', // 设置为 esnext 以支持顶级 await
+      // outDir: 'standard'
+      // emptyOutDir: true,
+      // sourcemap: false,
+      // minify: false, // 不压缩代码，方便调试
+      // cssCodeSplit: false,
+      // rollupOptions: {
+      //   output: {
+      //     minifyInternalExports: false,
+      //     chunkFileNames: 'static/js/[name].[hash].js',
+      //     entryFileNames: 'static/js/[name].[hash].js',
+      //     assetFileNames: 'static/[ext]/[name].[hash].[ext]',
+      //     manualChunks(id: string) {
+      //       if (id.includes('node_modules')) {
+      //         return 'vendor'; //代码宰割为第三方包
+      //       }
+      //     },
+      //   }
+      // }
     },
+    // base: "standard",
     define: {
       'process.env': process.env
     },
@@ -53,8 +68,13 @@ export default ({mode, command}) => {
         '@': path.resolve(__dirname, './src')
       }
     },
+    preview: {
+      port: 8882,
+      host: true,
+      cors: true
+    },
     server: {
-      port: 8881,
+      port: 8882,
       host: true,
       proxy: {
         "/api": {
@@ -76,5 +96,5 @@ export default ({mode, command}) => {
         }
       },
     }
-  })
-}
+  }
+})

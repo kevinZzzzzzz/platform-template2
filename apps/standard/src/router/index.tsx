@@ -1,15 +1,7 @@
 import { lazy, Suspense } from "react";
-import { useRoutes } from "react-router-dom";
-import Home from "@/pages/home/index";
+import { useRoutes, Navigate, RouteObject as RouterDomRouteObject } from "react-router-dom";
 import { Spin } from "antd";
 
-interface RouterInterface {
-  key: number,
-  name: string,
-  path: string,
-  element: any,
-  children?: any[]
-}
 interface MetaProps {
 	keepAlive?: boolean;
 	requiresAuth?: boolean;
@@ -17,15 +9,12 @@ interface MetaProps {
 	key?: string;
 }
 
-interface RouteObject {
-	caseSensitive?: boolean;
-	children?: RouteObject[];
-	element?: any;
-	index?: boolean;
-	path?: string;
+// 扩展 react-router-dom 的 RouteObject 类型
+type RouteObject = RouterDomRouteObject & {
 	meta?: MetaProps;
 	isLink?: string;
 }
+
 const lazyLoad = (Comp: React.LazyExoticComponent<any>): React.ReactNode => {
 	return (
 		<Suspense
@@ -45,18 +34,9 @@ const lazyLoad = (Comp: React.LazyExoticComponent<any>): React.ReactNode => {
 		</Suspense>
 	);
 };
-const NotFoundPage: RouteObject = {
-  meta: {
-    requiresAuth: true,
-    title: "404",
-    key: "404"
-  },
-  path: '/404',
-  element: lazy(() => import(/* webpackChunkName: "404" */ '@/pages/404/index')),
-  children: []
-}
+
 // 标准版模块路由
-export const standardRouter: Array<RouteObject> = [
+export const standardRouter: RouteObject[] = [
   {
     path: "/home",
     element: lazyLoad(lazy(() => import(/* webpackChunkName: "home" */ '@/pages/Home/index'))),
@@ -64,8 +44,7 @@ export const standardRouter: Array<RouteObject> = [
       requiresAuth: true,
       title: "标准版-首页1",
       key: "home"
-    },
-    children: []
+    }
   },
 ];
 
@@ -77,8 +56,11 @@ const AllRouters: RouteObject[] = [
   ...standardRouter
 ]
 
-const Router = () => {
+export const Router = () => {
 	const routes = useRoutes(AllRouters);
 	return routes;
 };
-export default Router;
+
+export default function RouterConfig() {
+  return standardRouter;
+}

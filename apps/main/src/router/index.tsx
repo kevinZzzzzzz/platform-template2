@@ -4,6 +4,10 @@ import { Navigate } from "react-router-dom";
 import React from "react";
 import { useRoutes } from "react-router-dom";
 
+
+
+// const standardRouter = await import('remote_standard/standardRouter')
+// console.log('import.meta.glob("./modules/*.tsx", { eager: true })',await import('remote_standard/standardRouter'))
 // * 导入所有router
 const metaRouters = import.meta.glob("./modules/*.tsx", { eager: true });
 // * 处理路由

@@ -4,9 +4,10 @@ import path from 'path'
 import { manualChunksPlugin } from 'vite-plugin-webpackchunkname'
 import { visualizer } from 'rollup-plugin-visualizer';
 import AutoImport from 'unplugin-auto-import/vite'
+import federation from "@originjs/vite-plugin-federation";
 
 // https://vitejs.dev/config/
-export default defineConfig((mode: ConfigEnv): UserConfig => {
+export default defineConfig((mode: ConfigEnv): any => {
   const env= loadEnv(mode.mode, process.cwd());   // 获取.env文件里定义的环境变量
   const analysPlugins: any[] = mode.mode === 'analys' ? [
     visualizer({
@@ -19,6 +20,14 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
   return {
     plugins: [
       react(),
+      federation({
+        name: "remote_main",
+        filename: "remoteEntry.js",
+        remotes: {
+          remote_standard: "http://localhost:8882/assets/remoteStandardEntry.js",
+        },
+        shared: ['react', 'react-dom', 'react-router-dom'] // 共享的依赖
+      }),
       // AutoImport({
       //   imports:["react", "react-router-dom"],
       //   dts: 'src/type/auto-import.d.ts',    // 路径下自动生成文件夹存放全局指令
@@ -45,6 +54,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
         }
       }
     },
+    base: "",
     define: {
       'process.env': process.env
     },
