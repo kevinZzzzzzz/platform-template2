@@ -5,7 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc && vite build --mode production",
+    "build:dev": "tsc && vite build --mode development",
+		"build": "tsc && vite build --mode development",
 		"lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
 		"preview": "npm run build && vite preview",
 		"prepare ": "husky install"

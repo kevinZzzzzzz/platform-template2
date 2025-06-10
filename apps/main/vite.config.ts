@@ -24,7 +24,7 @@ export default defineConfig((mode: ConfigEnv): any => {
         name: "remote_main",
         filename: "remoteEntry.js",
         remotes: {
-          remote_standard: "http://localhost:8882/assets/remoteStandardEntry.js",
+          remote_standard: "http://localhost:8882/standard/assets/remoteStandardEntry.js",
         },
         shared: ['react', 'react-dom', 'react-router-dom'] // 共享的依赖
       }),

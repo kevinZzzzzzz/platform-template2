@@ -4,22 +4,20 @@ import lazyLoad from "@/router/utils/lazyLoad";
 import { RouteObject } from "@/router/interface";
 import React, { lazy } from "react";
 
+const standardRouters = await import('remote_standard/standardRouter')
+console.log('standardRouter',standardRouters.standardRouter)
 // 标准版模块
 const standardRouter: Array<RouteObject> = [
 	{
 		path: "/standard",
 		element: <DefaultLayout />,
-		// children: [
-		// 	{
-		// 		path: "/home",
-		// 		element: lazyLoad(lazy(() => import(/* webpackChunkName: "home" */ '@/pages/Home/index'))),
-		// 		meta: {
-		// 			requiresAuth: true,
-		// 			title: "首页",
-		// 			key: "home"
-		// 		}
-		// 	}
-		// ]
+		children: standardRouters.standardRouter.map((item: RouteObject) => {
+			return {
+				...item,
+        path: '/standard' + item.path,
+				// element: lazyLoad(lazy(() => import(`remote_standard${item.path}`)))
+			};
+		})
 	}
 ];
 

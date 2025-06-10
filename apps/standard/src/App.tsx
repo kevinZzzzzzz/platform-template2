@@ -17,7 +17,7 @@ window.$api = {...api}
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/standard">
       <Router />
     </BrowserRouter>
   )

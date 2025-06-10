@@ -14,7 +14,6 @@ import React from "react";
 const LayoutTabs = () => {
 	const dispatch = useDispatch();
 	const { tabsList } = useSelector((state: RootState) => state.tabs);
-console.log(tabsList, 'tabsList')
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
 	const [activeValue, setActiveValue] = useState<string>(pathname);
@@ -33,8 +32,7 @@ console.log(tabsList, 'tabsList')
 		const route = searchRoute(pathname, routerArray);
 		let newTabsList = JSON.parse(JSON.stringify(tabsList));
 		if (tabsList.every((item: any) => item.path !== route.path)) {
-      // route.meta!.label
-			newTabsList.push({ key: route.path, label: '', path: route.path });
+			newTabsList.push({ key: route.path, label: route.meta!.title || '', path: route.path });
 		}
 		dispatch(setTabsList(newTabsList));
 		setActiveValue(pathname);

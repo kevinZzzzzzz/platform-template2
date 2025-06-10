@@ -5,6 +5,10 @@
       "icon": "HomeOutlined",
       "title": "首页",
       "path": "/home"
+    }, {
+      "icon": "HomeOutlined",
+      "title": "标准版-首页",
+      "path": "/standard/home"
     }
   ],
   "msg": "成功"

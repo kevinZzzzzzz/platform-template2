@@ -9,6 +9,7 @@ import federation from "@originjs/vite-plugin-federation";
 // https://vitejs.dev/config/
 export default defineConfig((mode: ConfigEnv): UserConfig => {
   const env = loadEnv(mode.mode, process.cwd());   // 获取.env文件里定义的环境变量
+  const root = process.cwd();
   const analysPlugins: any[] = mode.mode === 'analys' ? [
     visualizer({
       emitFile: false,
@@ -18,6 +19,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
     })
   ] : []
   return {
+    root,
     plugins: [
       react(),
       AutoImport({
@@ -31,16 +33,15 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
         name: "remote_standard",
         filename: "remoteStandardEntry.js",
         exposes: {
-          './standardRouter': './src/router/index.tsx',
+          './standardRouter': './src/router/index.tsx'
         },
         shared: ['react', 'react-dom', 'react-router-dom'],
-        remotes: {},
       }),
-      manualChunksPlugin()
+      // manualChunksPlugin()
     ].concat(analysPlugins),
     build: {
       target: 'esnext', // 设置为 esnext 以支持顶级 await
-      // outDir: 'standard'
+      outDir: 'standard'
       // emptyOutDir: true,
       // sourcemap: false,
       // minify: false, // 不压缩代码，方便调试
@@ -59,7 +60,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       //   }
       // }
     },
-    // base: "standard",
+    base: "/standard/",
     define: {
       'process.env': process.env
     },
