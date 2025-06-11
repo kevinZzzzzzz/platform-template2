@@ -5,11 +5,12 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-    "build:dev": "tsc && vite build --mode development",
+    "build:dev": "tsc && vite build --watch --mode development",
 		"build": "tsc && vite build --mode development",
 		"lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
 		"preview": "npm run build && vite preview",
-		"prepare ": "husky install"
+		"prepare ": "husky install",
+		"MF": "concurrently \"vite preview\" \"npm run build:dev\""
 	},
 	"dependencies": {
 		"@ant-design/icons": "5.x",
@@ -58,7 +59,8 @@
 		"husky": "8.0.3",
 		"lint-staged": "13.2.2",
 		"rollup-plugin-visualizer": "^5.9.0",
-		"unplugin-auto-import": "^0.16.7"
+		"unplugin-auto-import": "^0.16.7",
+		"concurrently": "^9.1.2"
 	},
 	"config": {
 		"commitizen": {

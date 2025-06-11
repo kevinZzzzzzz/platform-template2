@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import styles from './index.module.scss'
+import styles from './index.module.less'
 class DefaultLayout extends PureComponent<any> {
   constructor(props: any) {
     super(props)

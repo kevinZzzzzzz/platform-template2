@@ -8,7 +8,7 @@ class HomePage extends PureComponent<any> {
   render() {
     return (
       <>
-        <h1>chongqing Home Page</h1>
+        <h1> chongqing Home Page</h1>
       </>
     )
   }
