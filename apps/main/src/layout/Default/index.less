@@ -3,6 +3,8 @@
 	min-width: 850px;
 	height: 100vh;
 	.ant-layout-sider {
+		width: @layout-sider-width !important;
+    min-width: @layout-sider-width !important;
 		& ::-webkit-scrollbar {
 			background-color: #001529;
 		}
@@ -10,6 +12,10 @@
 			background-color: #41444b;
 		}
 	}
+  .ant-layout-sider-collapsed {
+    width: @layout-sider-collapse-width !important;
+    min-width: @layout-sider-collapse-width !important;
+  }
 	.ant-layout {
 		/* 防止 tabs 超出不收缩 */
 		overflow-x: hidden;

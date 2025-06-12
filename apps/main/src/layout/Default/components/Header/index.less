@@ -2,17 +2,18 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: 55px;
+	height: @layout-header-height;
 	padding: 0 40px 0 20px;
-	background-color: #ffffff;
+  background-color: @theme-color;
 	border-bottom: 1px solid #f6f6f6;
 	.header-lf {
 		display: flex;
 		align-items: center;
 		.collapsed {
 			margin-right: 20px;
-			font-size: 18px;
+			font-size: 22px;
 			cursor: pointer;
+			color: #fff;
 			transition: color 0.3s;
 		}
 	}
@@ -23,7 +24,7 @@
 			margin-right: 22px;
 			font-size: 19px;
 			line-height: 19px;
-			color: rgb(77 77 77);
+			color: #fff;
 			cursor: pointer;
 		}
 		.username {

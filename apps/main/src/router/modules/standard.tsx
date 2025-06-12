@@ -5,7 +5,7 @@ import { RouteObject } from "@/router/interface";
 import React, { lazy } from "react";
 
 const standardRouters = await import('remote_standard/standardRouter')
-console.log('standardRouter',standardRouters.standardRouter)
+
 // 标准版模块
 const standardRouter: Array<RouteObject> = [
 	{

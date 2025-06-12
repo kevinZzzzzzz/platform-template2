@@ -11,13 +11,14 @@ declare global {
 
 window.$api = {...api}
 
+// 提前加载自定义模块
+const modulesRouter = await import(/* @vite-ignore */ `./router/modules/${import.meta.env.VITE_CUSTOM}.tsx`)
 
 function App() {
 
   return (
     <BrowserRouter basename="/">
-      <Router />
-      {/* <standardHomePage /> */}
+      <Router modules={modulesRouter.default}/>
     </BrowserRouter>
   )
 }

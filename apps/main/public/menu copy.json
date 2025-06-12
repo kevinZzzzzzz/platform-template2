@@ -7,8 +7,8 @@
       "path": "/home"
     }, {
       "icon": "HomeOutlined",
-      "title": "标准版-首页",
-      "path": "/standard/home"
+      "title": "重庆-首页",
+      "path": "/chongqing/home"
     }
   ],
   "msg": "成功"

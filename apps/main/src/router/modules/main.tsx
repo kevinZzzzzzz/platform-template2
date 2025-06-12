@@ -7,7 +7,7 @@ import React, { lazy } from "react";
 
 
 // 首页模块
-const homeRouter: Array<RouteObject> = [
+const mainRouter: Array<RouteObject> = [
 	{
 		element: <DefaultLayout />,
 		children: [
@@ -24,4 +24,4 @@ const homeRouter: Array<RouteObject> = [
 	}
 ];
 
-export default homeRouter;
+export default mainRouter;

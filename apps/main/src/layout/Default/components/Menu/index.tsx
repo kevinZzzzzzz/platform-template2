@@ -103,7 +103,6 @@ const LayoutMenu = () => {
 			<Spin spinning={loading} tip="Loading...">
 				<Logo isCollapse={isCollapse}></Logo>
 				<Menu
-					theme="dark"
 					mode="inline"
 					triggerSubMenuAction="click"
 					openKeys={openKeys}

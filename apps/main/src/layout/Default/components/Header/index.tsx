@@ -21,8 +21,8 @@ const LayoutHeader = () => {
 			<div className="header-ri">
 				{/* <AssemblySize />
 				<Language /> */}
-				<Theme />
-				<Fullscreen />
+				{/* <Theme />
+				<Fullscreen /> */}
 				<span className="username">Hooks</span>
 				<AvatarIcon />
 			</div>
