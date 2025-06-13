@@ -1,1 +1,0 @@
-import{importShared as t}from"./__federation_fn_import-B8NBqRj0.js";import{j as r}from"./__federation_expose_StandardRouter-CBkSiTXL.js";const{PureComponent:o}=await t("react");class m extends o{constructor(e){super(e)}render(){return r.jsx(r.Fragment,{children:r.jsx("h1",{children:" standard Home Page"})})}}export{m as default};

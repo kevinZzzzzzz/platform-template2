@@ -1,17 +1,14 @@
-import React, { PureComponent } from 'react';
+import React, { useState, useEffect } from 'react';
 
-class HomePage extends PureComponent<any> {
-  constructor(props: any) {
-    super(props)
-  }
-
-  render() {
-    return (
-      <>
-        <h1> standard Home Page</h1>
-      </>
-    )
-  }
+function HomePage(props: any) {
+    
+  useEffect(() => {
+    console.log(window.localStorage.a);
+  }, [])
+  return (
+    <>
+      <h1>standard2 Home Page {window.localStorage.a}</h1>
+    </>
+  )
 }
-
 export default HomePage

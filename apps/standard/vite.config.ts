@@ -32,6 +32,9 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       federation({
         name: "remote_standard",
         filename: "remoteStandardEntry.js",
+        remotes: {
+          'remote_main': env.VITE_REMOTE_MAIN_URL
+        },
         exposes: {
           './standardRouter': './src/router/index.tsx'
         },

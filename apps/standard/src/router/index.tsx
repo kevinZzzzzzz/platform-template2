@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { useRoutes, Navigate, RouteObject as RouterDomRouteObject } from "react-router-dom";
 import { Spin } from "antd";
+// import MainLayout from 'remote_main/MainLayout'
 
 interface MetaProps {
 	keepAlive?: boolean;
