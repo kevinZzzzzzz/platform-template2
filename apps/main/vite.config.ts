@@ -20,6 +20,7 @@ export default defineConfig((mode: ConfigEnv): any => {
     })
   ] : []
   const handleRemotes = () => {
+    console.log('env.VITE_CUSTOM', import.meta)
     const remoteMap = {
       'standard': env.VITE_STANDARD_REMOTE_URL,
      'chongqing': env.VITE_CHONGQING_REMOTE_URL,
@@ -35,6 +36,9 @@ export default defineConfig((mode: ConfigEnv): any => {
         name: "remote_main",
         filename: "remoteEntry.js",
         remotes: handleRemotes(),
+        exposes: {
+          './mainLayout': './src/layout/index.tsx'
+        },
         shared: ['react', 'react-dom', 'react-router-dom'] // 共享的依赖
       }),
       // AutoImport({
@@ -44,24 +48,25 @@ export default defineConfig((mode: ConfigEnv): any => {
       //     enabled: true,
       //   },
       // }),
-      manualChunksPlugin()
+      // manualChunksPlugin()
     ].concat(analysPlugins),
     build: {
-      emptyOutDir: true,
-      sourcemap: false,
-      // manifest: true, //开启manifest
-      rollupOptions: {
-        output: {
-          chunkFileNames: 'static/js/[name].[hash].js',
-          entryFileNames: 'static/js/[name].[hash].js',
-          assetFileNames: 'static/[ext]/[name].[hash].[ext]',
-          manualChunks(id: string) {
-            if (id.includes('node_modules')) {
-              return 'vendor'; //代码宰割为第三方包
-            }
-          },
-        }
-      }
+      target: 'esnext',
+      // emptyOutDir: true,
+      // sourcemap: false,
+      // // manifest: true, //开启manifest
+      // rollupOptions: {
+      //   output: {
+      //     chunkFileNames: 'static/js/[name].[hash].js',
+      //     entryFileNames: 'static/js/[name].[hash].js',
+      //     assetFileNames: 'static/[ext]/[name].[hash].[ext]',
+      //     manualChunks(id: string) {
+      //       if (id.includes('node_modules')) {
+      //         return 'vendor'; //代码宰割为第三方包
+      //       }
+      //     },
+      //   }
+      // }
     },
     base: "",
     define: {

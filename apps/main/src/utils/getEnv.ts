@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+// @ts-ignore
 import dotenv from "dotenv";
 
 export function isDevFn(mode: string): boolean {
@@ -18,6 +19,7 @@ export function isReportMode(): boolean {
 }
 
 // Read all environment variable configuration files to process.env
+// @ts-ignore
 export function wrapperEnv(envConf: Recordable): ViteEnv {
 	const ret: any = {};
 

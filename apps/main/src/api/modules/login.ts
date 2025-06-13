@@ -3,6 +3,7 @@ import { PORT1 } from "@/api/config/servicePort";
 import qs from "qs";
 
 import http from "@/api";
+import Menu from "@/layout/Default/components/Menu";
 
 /**
  * @name 登录模块
@@ -20,5 +21,5 @@ export const getAuthorButtons = () => {
 // * 获取菜单列表
 export const getMenuList = () => {
 	// return http.get<Menu.MenuOptions[]>(PORT1 + `/menu/list`);
-	return http.get<Menu.MenuOptions[]>('/menu.json');
+	return http.get<any>('/menu.json');
 };

@@ -9,11 +9,11 @@ const AssemblySize = () => {
 	const { assemblySize } = useSelector((state: RootState) => state.global);
 
 	// 切换组件大小
-	const onClick = (e: MenuInfo) => {
+	const onClick = (e) => {
 		dispatch(setAssemblySize(e.key as SizeType));
 	};
 
-	const menu = (
+	const menu: any = (
 		<Menu
 			items={[
 				{

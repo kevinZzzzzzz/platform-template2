@@ -19,12 +19,16 @@ export interface GlobalState {
 /* MenuState */
 export interface MenuState {
 	isCollapse: boolean;
+  
+// @ts-ignore
 	menuList: Menu.MenuOptions[];
 }
 
 /* TabsState */
 export interface TabsState {
 	tabsActive: string;
+  
+// @ts-ignore
 	tabsList: Menu.MenuOptions[];
 }
 

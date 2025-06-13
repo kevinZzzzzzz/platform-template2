@@ -6,7 +6,7 @@ const Language = () => {
 	const dispatch = useDispatch();
 	const { language } = useSelector((state: RootState) => state.global);
 
-	const menu = (
+	const menu: any = (
 		<Menu
 			items={[
 				{

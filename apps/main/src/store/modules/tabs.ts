@@ -12,6 +12,7 @@ const tabsSlice = createSlice({
 	name: "tabs",
 	initialState: tabsState,
 	reducers: {
+    // @ts-ignore
 		setTabsList(state: TabsState, { payload }: PayloadAction<Menu.MenuOptions[]>) {
 			state.tabsList = payload;
 		},

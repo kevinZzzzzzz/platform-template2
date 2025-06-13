@@ -1,3 +1,5 @@
+
+// @ts-ignore
 import { RouteObject } from "@/routers/interface";
 
 /**
@@ -46,6 +48,7 @@ export const localClear = () => {
  * @return string
  */
 export const getBrowserLang = () => {
+  // @ts-ignore
 	let browserLang = navigator.language ? navigator.language : navigator.browserLanguage;
 	let defaultBrowserLang = "";
 	if (browserLang.toLowerCase() === "cn" || browserLang.toLowerCase() === "zh" || browserLang.toLowerCase() === "zh-cn") {
@@ -96,9 +99,11 @@ export const searchRoute = (path: string, routes: RouteObject[] = []): RouteObje
  * @param {Array} menuList 菜单列表
  * @returns array
  */
+// @ts-ignore
 export const getBreadcrumbList = (path: string, menuList: Menu.MenuOptions[]) => {
 	let tempPath: any[] = [];
 	try {
+    // @ts-ignore
 		const getNodePath = (node: Menu.MenuOptions) => {
 			tempPath.push(node);
 			// 找到符合条件的节点，通过throw终止掉递归
@@ -129,8 +134,10 @@ export const getBreadcrumbList = (path: string, menuList: Menu.MenuOptions[]) =>
  * @param {String} menuList 当前菜单列表
  * @returns object
  */
+// @ts-ignore
 export const findAllBreadcrumb = (menuList: Menu.MenuOptions[]): { [key: string]: any } => {
 	let handleBreadcrumbList: any = {};
+  // @ts-ignore
 	const loop = (menuItem: Menu.MenuOptions) => {
 		// 下面判断代码解释 *** !item?.children?.length   ==>   (item.children && item.children.length > 0)
 		if (menuItem?.children?.length) menuItem.children.forEach(item => loop(item));
@@ -146,7 +153,9 @@ export const findAllBreadcrumb = (menuList: Menu.MenuOptions[]): { [key: string]
  * @param {Array} newArr 菜单的一维数组
  * @return array
  */
+// @ts-ignore
 export function handleRouter(routerList: Menu.MenuOptions[], newArr: string[] = []) {
+  // @ts-ignore
 	routerList.forEach((item: Menu.MenuOptions) => {
 		typeof item === "object" && item.path && newArr.push(item.path);
 		item.children && item.children.length && handleRouter(item.children, newArr);

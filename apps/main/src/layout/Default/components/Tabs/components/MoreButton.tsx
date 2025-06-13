@@ -3,6 +3,7 @@ import { DownOutlined } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setTabsList } from "@/store/modules/tabs";
 import { RootState, useDispatch, useSelector } from "@/store";
+// @ts-ignore
 import { useTranslation } from "react-i18next";
 import { HOME_URL } from "@/config/config";
 
@@ -16,14 +17,14 @@ const MoreButton = (props: any) => {
 
 	// close multipleTab
 	const closeMultipleTab = (tabPath?: string) => {
-		const newTabsList = tabsList.filter((item: Menu.MenuOptions) => {
+		const newTabsList = tabsList.filter((item: any) => {
 			return item.path === tabPath || item.path === HOME_URL;
 		});
 		dispatch(setTabsList(newTabsList));
 		tabPath ?? navigate(HOME_URL);
 	};
 
-	const menu = (
+	const menu: any = (
 		<Menu
 			items={[
 				{

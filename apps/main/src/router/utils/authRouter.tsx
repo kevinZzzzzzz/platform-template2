@@ -1,8 +1,10 @@
 import { useLocation, Navigate } from "react-router-dom";
 import { searchRoute } from "@/utils/util";
+
+// @ts-ignore
 import { rootRouter } from "@/routers/index";
 import { HOME_URL } from "@/config/config";
-import { RootState, useSelector } from "@/redux";
+import { RootState, useSelector } from "@/store";
 
 /**
  * @description 路由守卫组件

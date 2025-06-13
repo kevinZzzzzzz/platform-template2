@@ -1,12 +1,16 @@
 // * Echarts 按需引入
+// @ts-ignore
 import * as echarts from "echarts/core";
+// @ts-ignore
 import {
 	BarChart,
 	// 系列类型的定义后缀都为 SeriesOption
 	BarSeriesOption,
 	LineChart,
 	LineSeriesOption
+  // @ts-ignore
 } from "echarts/charts";
+// @ts-ignore
 import { LegendComponent } from "echarts/components";
 import {
 	TitleComponent,
@@ -21,8 +25,11 @@ import {
 	DatasetComponentOption,
 	// 内置数据转换器组件 (filter, sort)
 	TransformComponent
+  // @ts-ignore
 } from "echarts/components";
+// @ts-ignore
 import { LabelLayout, UniversalTransition } from "echarts/features";
+// @ts-ignore
 import { CanvasRenderer } from "echarts/renderers";
 
 // 通过 ComposeOption 来组合出一个只有必须组件和图表的 Option 类型

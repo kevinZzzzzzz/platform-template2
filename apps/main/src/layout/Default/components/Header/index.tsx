@@ -8,6 +8,7 @@ import Theme from "./components/Theme";
 import Fullscreen from "./components/Fullscreen";
 import "./index.less";
 import React from "react";
+import MessageComp from "./components/Message";
 
 const LayoutHeader = () => {
 	const { Header } = Layout;
@@ -21,9 +22,9 @@ const LayoutHeader = () => {
 			<div className="header-ri">
 				{/* <AssemblySize />
 				<Language /> */}
-				{/* <Theme />
-				<Fullscreen /> */}
-				<span className="username">Hooks</span>
+				{/* <Theme /> 
+				<Fullscreen />*/}
+        <MessageComp />
 				<AvatarIcon />
 			</div>
 		</Header>

@@ -20,6 +20,7 @@
 	.header-ri {
 		display: flex;
 		align-items: center;
+    grid-gap: 20px;
 		.icon-style {
 			margin-right: 22px;
 			font-size: 19px;
@@ -28,12 +29,7 @@
 			cursor: pointer;
 		}
 		.username {
-			margin: 0 20px 0 0;
 			font-size: 15px;
-			color: #000000;
-		}
-		.ant-avatar {
-			cursor: pointer;
 		}
 	}
 }
@@ -59,4 +55,27 @@
 .ant-divider-with-text::before,
 .ant-divider-with-text::after {
 	border-top: 1px solid #dcdfe6 !important;
+}
+
+.avatar {
+  padding: 0 10px;
+  display: flex;
+  grid-gap: 5px;
+  align-items: center;
+  color: @layout-header-color;
+  cursor: pointer;
+}
+.avatar:hover {
+  background-color: #ecedf150;
+  border-radius: 10px;
+}
+.message {
+  padding: 0 10px;
+  font-size: 22px;
+  color: #fff;
+  cursor: pointer;
+}
+.message:hover {
+  background-color: #ecedf150;
+  border-radius: 10px;
 }

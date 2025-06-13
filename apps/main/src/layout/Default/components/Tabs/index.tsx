@@ -42,7 +42,7 @@ const LayoutTabs = () => {
 	const delTabs = (tabPath: string) => {
 		if (tabPath === HOME_URL) return;
 		if (pathname === tabPath) {
-			tabsList.forEach((item: Menu.MenuOptions, index: number) => {
+			tabsList.forEach((item: any, index: number) => {
 				if (item.path !== pathname) return;
 				const nextTab = tabsList[index + 1] || tabsList[index - 1];
 				if (!nextTab) return;
@@ -50,7 +50,7 @@ const LayoutTabs = () => {
 			});
 		}
 		message.success("你删除了Tabs标签 😆😆😆");
-		dispatch(setTabsList(tabsList.filter((item: Menu.MenuOptions) => item.path !== tabPath)));
+		dispatch(setTabsList(tabsList.filter((item: any) => item.path !== tabPath)));
 	};
 
 	return (

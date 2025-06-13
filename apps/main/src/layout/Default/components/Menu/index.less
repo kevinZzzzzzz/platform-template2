@@ -7,13 +7,16 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-    height: @layout-header-height;
+    height: calc(@layout-header-height - 1px);
 		// border-bottom: 1px solid #010b14;
     background-color: @theme-color;
 		.logo-img {
-			width: 30px;
+			width: 35px;
 			margin: 0;
 		}
+    .logoSpin {
+     animation: logoSpin 5s linear infinite;
+    }
 		.logo-text {
 			margin: 0 0 0 10px;
 			font-size: 24px;
@@ -46,4 +49,13 @@
 			opacity: 1 !important;
 		}
 	}
+}
+
+@keyframes logoSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -11,6 +11,7 @@ import "./index.less";
 // react 17 创建，控制台会报错，暂时不影响使用（菜单折叠时不会出现闪烁）
 ReactDOM.render(
 	// <React.StrictMode>
+  // @ts-ignore
 	<Provider store={store}>
 		<PersistGate persistor={persistor}>
 			<App />

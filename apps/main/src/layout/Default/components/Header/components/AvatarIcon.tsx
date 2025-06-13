@@ -16,8 +16,6 @@ const AvatarIcon = () => {
 	interface ModalProps {
 		showModal: (params: { name: number }) => void;
 	}
-	const passRef = useRef<ModalProps>(null);
-	const infoRef = useRef<ModalProps>(null);
 
 	// 退出登录
 	const logout = () => {
@@ -60,10 +58,11 @@ const AvatarIcon = () => {
 	return (
 		<>
 			<Dropdown menu={{items}} placement="bottom" arrow trigger={["hover"]}>
-				<Avatar size="large" src={avatar} />
+				<div className="avatar">
+          <Avatar size="large" src={avatar} />
+          <span className="username">Hooks</span>
+        </div>
 			</Dropdown>
-			{/* <InfoModal innerRef={infoRef}></InfoModal>
-			<PasswordModal innerRef={passRef}></PasswordModal> */}
 		</>
 	);
 };
