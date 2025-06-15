@@ -1,0 +1,1 @@
+import{importShared as a}from"./__federation_fn_import-B8NBqRj0.js";import{j as o}from"./__federation_expose_StandardRouter-mfcfy8L6.js";const{useEffect:e}=await a("react");function s(r){return e(()=>{console.log(window.localStorage.a)},[]),o.jsx(o.Fragment,{children:o.jsxs("h1",{children:["standard2 Home Page ",window.localStorage.a]})})}export{s as default};

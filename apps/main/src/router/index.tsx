@@ -39,7 +39,7 @@ const Router = (props) => {
   }
 ]
 	const routes = useRoutes(AllRouters);
-	return routes;
+  return routes;
 };
 
 export default Router;
