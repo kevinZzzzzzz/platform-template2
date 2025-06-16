@@ -1,0 +1,10 @@
+{
+  "code": 200,
+  "data": [{
+      "icon": "HomeOutlined",
+      "title": "标准版-首页",
+      "path": "/standard/home"
+    }
+  ],
+  "msg": "成功"
+}

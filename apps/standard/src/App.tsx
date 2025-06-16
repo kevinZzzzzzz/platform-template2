@@ -1,9 +1,8 @@
 import React from 'react';
-import {BrowserRouter, Navigate , Route, Routes, useLocation} from 'react-router-dom'
+import {BrowserRouter,HashRouter, Navigate , Route, Routes, useLocation} from 'react-router-dom'
 import ReactDOM from 'react-dom';
 import {Router} from "./router/index";
 import api from "@/api";
-console.log(Router,'Router')
 declare global {
   interface Window {
     $api: any,
@@ -16,9 +15,10 @@ window.$api = {...api}
 
 function App() {
   return (
-    <BrowserRouter basename="/standard">
+    //  basename={import.meta.env.MODE === 'development' ? '' : '/standard'}
+    <HashRouter>
       <Router />
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 export default App

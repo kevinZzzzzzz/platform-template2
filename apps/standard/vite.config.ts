@@ -32,6 +32,9 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       federation({
         name: "remote_standard",
         filename: "remoteStandardEntry.js",
+        remotes: {
+          'remote_main': env.VITE_REMOTE_MAIN_URL
+        },
         exposes: {
           './standardRouter': './src/router/index.tsx'
         },
@@ -60,7 +63,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       //   }
       // }
     },
-    base: "/standard/",
+    base: mode.mode === 'development' ? '' : "",
     define: {
       'process.env': process.env
     },
@@ -92,7 +95,8 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         // 全局样式引入
-        scss:{
+        less:{
+					javascriptEnabled: true,
           additionalData: `@import "@/assets/styles/global.less";`,
         }
       },

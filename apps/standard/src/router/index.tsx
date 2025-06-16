@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { useRoutes, Navigate, RouteObject as RouterDomRouteObject } from "react-router-dom";
 import { Spin } from "antd";
-// import MainLayout from 'remote_main/MainLayout'
+import DefaultLayout from "@/layout/Default";
 
 interface MetaProps {
 	keepAlive?: boolean;
@@ -48,13 +48,48 @@ export const standardRouter: RouteObject[] = [
     }
   },
 ];
+// * 处理路由
+export const routerArray: RouteObject[] = [...standardRouter];
 
 const AllRouters: RouteObject[] = [
 	{
 		path: "/",
-		element: <Navigate to="/home" />
+		element: <Navigate to="/standard/home" />
 	},
-  ...standardRouter
+	// {
+	// 	path: "/standard",
+	// 	element: <DefaultLayout children={''} />,
+	// 	meta: {
+	// 		requiresAuth: true,
+	// 		title: "",
+	// 	},
+	// 	children: standardRouter.map(d => {
+	// 		return {
+	// 			...d,
+	// 			path: '/standard' + d.path,
+	// 		}
+	// 	})
+	// },
+	// ...standardRouter.map(d => {
+	// 	return {
+	// 		...d,
+	// 		path: '/standard' + d.path,
+	// 	}
+	// }),
+	// {
+	// 	path: "/404",
+	// 	element: lazyLoad(lazy(() => import(/* webpackChunkName: "404" */ '@/pages/404'))),
+	// },
+  // {
+  //   path: "*",
+  //   element: <Navigate to="/404" />
+  // }
+  ...standardRouter.map(d => {
+				return {
+					...d,
+					path: '/standard' + d.path,
+				}
+			})
 ]
 
 export const Router = () => {

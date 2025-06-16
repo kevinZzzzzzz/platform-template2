@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect, useState } from 'react';
-import {BrowserRouter} from 'react-router-dom'
+import {BrowserRouter, HashRouter} from 'react-router-dom'
 import Router from "@/router/index";
 import api from "@/api";
 // import modulesStandard from "@/router/modules/standard";
@@ -18,9 +18,9 @@ window.$api = {...api}
 function App() {
 
   return (
-    <BrowserRouter basename="/">
+    <HashRouter>
       <Router/>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
