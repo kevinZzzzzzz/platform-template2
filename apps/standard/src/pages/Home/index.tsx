@@ -7,7 +7,7 @@ function HomePage(props: any) {
   }, [])
   return (
     <>
-      <h1>standard2 Home Page {window.localStorage.a}</h1>
+      <h1>standard2 Home Page {window.localStorage.a} 44444</h1>
     </>
   )
 }

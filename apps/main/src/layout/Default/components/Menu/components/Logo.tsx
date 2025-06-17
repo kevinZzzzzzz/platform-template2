@@ -1,6 +1,6 @@
 import logo from "@/assets/images/logo.png";
 import companyLogo from "@/assets/images/companyLogo.png";
-import React from "react";
+// import React from "react";
 
 const Logo = ({ isCollapse }: { isCollapse: boolean }) => {
 	return (

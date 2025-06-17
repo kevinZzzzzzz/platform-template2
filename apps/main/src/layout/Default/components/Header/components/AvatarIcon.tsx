@@ -1,4 +1,3 @@
-import React, { useRef } from "react";
 import { Avatar, Modal, Menu, Dropdown, message, MenuProps } from "antd";
 import { ExclamationCircleOutlined, LogoutOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";

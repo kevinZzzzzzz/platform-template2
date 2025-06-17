@@ -12,6 +12,7 @@ import LayoutFooter from "./components/Footer";
 import "./index.less";
 import React from "react";
 
+
 const DefaultLayout = ({children, ...props}) => {
 	const dispatch = useDispatch();
 	const { isCollapse } = useSelector((state: RootState) => state.menu);

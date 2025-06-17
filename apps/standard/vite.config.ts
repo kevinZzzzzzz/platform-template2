@@ -22,13 +22,13 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
     root,
     plugins: [
       react(),
-      AutoImport({
-        imports:["react", "react-router-dom"],
-        dts: 'src/type/auto-import.d.ts',    // 路径下自动生成文件夹存放全局指令
-        eslintrc: { // 开启eslint校验
-          enabled: true,
-        },
-      }),
+      // AutoImport({
+      //   imports:["react", "react-router-dom"],
+      //   dts: 'src/type/auto-import.d.ts',    // 路径下自动生成文件夹存放全局指令
+      //   eslintrc: { // 开启eslint校验
+      //     enabled: true,
+      //   },
+      // }),
       federation({
         name: "remote_standard",
         filename: "remoteStandardEntry.js",

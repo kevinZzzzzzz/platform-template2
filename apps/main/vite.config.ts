@@ -36,7 +36,7 @@ export default defineConfig((mode: ConfigEnv): any => {
         filename: "remoteEntry.js",
         remotes: handleRemotes(),
         exposes: {
-          './mainLayout': './src/layout/Default/index.tsx'
+          './MainLayout': './src/layout/Default/index.tsx'
         },
         shared: ['react', 'react-dom', 'react-router-dom'] // 共享的依赖
       }),

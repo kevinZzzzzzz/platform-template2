@@ -7,7 +7,7 @@
 		"dev": "vite",
 		"build": "tsc && vite build --mode production",
 		"lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
-		"preview": "vite preview"
+		"preview": "tsc && vite build --mode development && vite preview"
 	},
 	"dependencies": {
 		"@ant-design/icons": "5.x",

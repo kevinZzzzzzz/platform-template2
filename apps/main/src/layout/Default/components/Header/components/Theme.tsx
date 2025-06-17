@@ -3,7 +3,6 @@ import { useState } from "react";
 import { RootState, useDispatch, useSelector } from "@/store";
 import { FireOutlined } from "@ant-design/icons";
 import { setWeakOrGray } from "@/store/modules/global";
-import React from "react";
 
 const Theme = () => {
 	const dispatch = useDispatch();

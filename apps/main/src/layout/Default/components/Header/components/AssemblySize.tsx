@@ -2,7 +2,6 @@ import { Dropdown, Menu } from "antd";
 import { setAssemblySize } from "@/store/modules/global";
 import { RootState, useDispatch, useSelector } from "@/store";
 import type { SizeType } from "antd/lib/config-provider/SizeContext";
-import React from "react";
 
 const AssemblySize = () => {
 	const dispatch = useDispatch();

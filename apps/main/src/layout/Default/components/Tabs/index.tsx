@@ -9,7 +9,6 @@ import { routerArray } from "@/router";
 import { searchRoute } from "@/utils/util";
 // import MoreButton from "./components/MoreButton";
 import "./index.less";
-import React from "react";
 
 const LayoutTabs = () => {
 	const dispatch = useDispatch();
@@ -31,7 +30,7 @@ const LayoutTabs = () => {
 	const addTabs = () => {
 		const route = searchRoute(pathname, routerArray);
 		let newTabsList = JSON.parse(JSON.stringify(tabsList));
-		if (tabsList.every((item: any) => item.path !== route.path)) {
+		if (route.path && tabsList.every((item: any) => item.path !== route.path)) {
 			newTabsList.push({ key: route.path, label: route.meta!.title || '', path: route.path });
 		}
 		dispatch(setTabsList(newTabsList));

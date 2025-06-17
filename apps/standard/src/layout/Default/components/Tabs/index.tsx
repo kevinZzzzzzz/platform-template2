@@ -30,8 +30,9 @@ const LayoutTabs = () => {
 	// add tabs
 	const addTabs = () => {
 		const route = searchRoute(pathname, routerArray);
+		console.log(route, 'route');
 		let newTabsList = JSON.parse(JSON.stringify(tabsList));
-		if (tabsList.every((item: any) => item.path !== route.path)) {
+		if (route.path && tabsList.every((item: any) => item.path !== route.path)) {
 			newTabsList.push({ key: route.path, label: route.meta!.title || '', path: route.path });
 		}
 		dispatch(setTabsList(newTabsList));

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { Layout } from "antd";
 import { setAuthButtons } from "@/store/modules/auth";
@@ -10,7 +10,6 @@ import LayoutHeader from "./components/Header";
 import LayoutTabs from "./components/Tabs";
 import LayoutFooter from "./components/Footer";
 import "./index.less";
-import React from "react";
 
 const DefaultLayout = ({children, ...props}) => {
 	const dispatch = useDispatch();

@@ -3,6 +3,10 @@ import { useRoutes, Navigate, RouteObject as RouterDomRouteObject } from "react-
 import { Spin } from "antd";
 import DefaultLayout from "@/layout/Default";
 
+// import MainLayout from "remote_main/MainLayout";
+const MainLayout = (await import("remote_main/MainLayout")).default
+console.log('MainLayout',MainLayout)
+
 interface MetaProps {
 	keepAlive?: boolean;
 	requiresAuth?: boolean;
@@ -56,20 +60,20 @@ const AllRouters: RouteObject[] = [
 		path: "/",
 		element: <Navigate to="/standard/home" />
 	},
-	// {
-	// 	path: "/standard",
-	// 	element: <DefaultLayout children={''} />,
-	// 	meta: {
-	// 		requiresAuth: true,
-	// 		title: "",
-	// 	},
-	// 	children: standardRouter.map(d => {
-	// 		return {
-	// 			...d,
-	// 			path: '/standard' + d.path,
-	// 		}
-	// 	})
-	// },
+	{
+		path: "/standard",
+		element: <MainLayout children={''} />,
+		meta: {
+			requiresAuth: true,
+			title: "",
+		},
+		children: standardRouter.map(d => {
+			return {
+				...d,
+				path: '/standard' + d.path,
+			}
+		})
+	},
 	// ...standardRouter.map(d => {
 	// 	return {
 	// 		...d,
@@ -84,12 +88,12 @@ const AllRouters: RouteObject[] = [
   //   path: "*",
   //   element: <Navigate to="/404" />
   // }
-  ...standardRouter.map(d => {
-				return {
-					...d,
-					path: '/standard' + d.path,
-				}
-			})
+  // ...standardRouter.map(d => {
+	// 			return {
+	// 				...d,
+	// 				path: '/standard' + d.path,
+	// 			}
+	// 		})
 ]
 
 export const Router = () => {

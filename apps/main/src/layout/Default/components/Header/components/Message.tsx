@@ -1,6 +1,5 @@
 import { BellOutlined } from "@ant-design/icons";
 import { Badge } from "antd";
-import React, { useState, useEffect } from "react";
 
 function MessageComp(props: any) {
 	return (
