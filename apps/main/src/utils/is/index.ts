@@ -116,3 +116,5 @@ export function isNullAndUnDef(val: unknown): val is null | undefined {
 export function isNullOrUnDef(val: unknown): val is null | undefined {
 	return isUnDef(val) || isNull(val);
 }
+
+export const isFederateModule = import.meta.env.VITE_AS_FEDERATE_MODULE === 'true'

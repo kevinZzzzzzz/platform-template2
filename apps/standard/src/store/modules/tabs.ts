@@ -14,7 +14,6 @@ const tabsSlice = createSlice({
 	reducers: {
     // @ts-ignore
 		setTabsList(state: TabsState, { payload }: PayloadAction<Menu.MenuOptions[]>) {
-			console.log(payload, 'payload000000000')
 			state.tabsList = payload.filter(d => d.path && d.label);
 		},
 		setTabsActive(state: TabsState, { payload }: PayloadAction<string>) {

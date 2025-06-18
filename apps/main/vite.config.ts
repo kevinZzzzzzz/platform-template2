@@ -22,7 +22,7 @@ export default defineConfig((mode: ConfigEnv): any => {
   const handleRemotes = () => {
     const remoteMap = {
       'standard': env.VITE_STANDARD_REMOTE_URL,
-     'chongqing': env.VITE_CHONGQING_REMOTE_URL,
+      'chongqing': env.VITE_CHONGQING_REMOTE_URL,
     }
     const remoteConfig = {}
     remoteConfig[`remote_${env.VITE_CUSTOM}`] = remoteMap[env.VITE_CUSTOM]
@@ -38,7 +38,7 @@ export default defineConfig((mode: ConfigEnv): any => {
         exposes: {
           './MainLayout': './src/layout/Default/index.tsx'
         },
-        shared: ['react', 'react-dom', 'react-router-dom'] // 共享的依赖
+        shared: ['react', 'react-dom', '@reduxjs/toolkit', 'react-redux', 'react-router-dom'] // 共享的依赖
       }),
       // AutoImport({
       //   imports:["react", "react-router-dom"],

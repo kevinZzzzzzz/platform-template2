@@ -38,7 +38,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
         exposes: {
           './standardRouter': './src/router/index.tsx'
         },
-        shared: ['react', 'react-dom', 'react-router-dom'],
+        shared: ['react', 'react-dom', '@reduxjs/toolkit', 'react-redux', 'react-router-dom'],
       }),
       // manualChunksPlugin()
     ].concat(analysPlugins),
@@ -63,7 +63,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       //   }
       // }
     },
-    base: mode.mode === 'development' ? '' : "",
+    base: mode.mode === 'development' ? '' : "/standard/",
     define: {
       'process.env': process.env
     },

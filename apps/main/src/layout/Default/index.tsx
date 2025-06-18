@@ -10,9 +10,12 @@ import LayoutHeader from "./components/Header";
 import LayoutTabs from "./components/Tabs";
 import LayoutFooter from "./components/Footer";
 import "./index.less";
+import { addRouterArray } from "@/router";
 
 const DefaultLayout = ({children, ...props}) => {
 	const dispatch = useDispatch();
+  
+  // props.childRouter && addRouterArray(props.childRouter)
 	const { isCollapse } = useSelector((state: RootState) => state.menu);
 
 	const { Sider, Content } = Layout;
@@ -47,7 +50,7 @@ const DefaultLayout = ({children, ...props}) => {
 			</Sider>
 			<Layout>
 				<LayoutHeader></LayoutHeader>
-				<LayoutTabs></LayoutTabs>
+				<LayoutTabs routerArray={props.routerArray}></LayoutTabs>
 				<Content>
 					{/* TransitionGroup 会导致 useEffect 加载两次 && 使用路由懒加载第一次进入没有动画，所以暂时不用过渡动画了 */}
 					{/* <TransitionGroup className="content"> */}
