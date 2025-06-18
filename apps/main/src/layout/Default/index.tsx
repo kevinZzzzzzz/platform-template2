@@ -10,12 +10,10 @@ import LayoutHeader from "./components/Header";
 import LayoutTabs from "./components/Tabs";
 import LayoutFooter from "./components/Footer";
 import "./index.less";
-import { addRouterArray } from "@/router";
 
 const DefaultLayout = ({children, ...props}) => {
 	const dispatch = useDispatch();
   
-  // props.childRouter && addRouterArray(props.childRouter)
 	const { isCollapse } = useSelector((state: RootState) => state.menu);
 
 	const { Sider, Content } = Layout;

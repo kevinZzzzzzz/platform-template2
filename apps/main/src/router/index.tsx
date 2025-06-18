@@ -3,21 +3,19 @@ import { lazy } from "react";
 import { RouteObject } from "@/routers/interface";
 import { Navigate } from "react-router-dom";
 import { useRoutes } from "react-router-dom";
-import mainRouter from "./modules/main";
 import lazyLoad from "@/router/utils/lazyLoad";
 import { isFederateModule } from "@/utils/is";
 import DefaultLayout from "@/layout/Default";
 // 默认加载的路由
+import mainRouter from "./modules/main";
 // const defaultLoadingRouter = [`./target/${import.meta.env.VITE_CUSTOM}.tsx`]
 // * 导入所有router 
 let metaRouters = import.meta.glob("./target/*.tsx", { eager: true });
-console.log(metaRouters);
 // * 处理路由
 export const routerArray: RouteObject[] = isFederateModule ? [] : [...mainRouter];
 Object.keys(metaRouters).forEach(item => {
   routerArray.push(...metaRouters[item].default);
 });
-console.log(routerArray);
 
 /**
  * @description: 提供给联邦的项目动态添加路由

@@ -1,6 +1,12 @@
 import { lazy, Suspense } from "react";
 import { useRoutes, Navigate, RouteObject as RouterDomRouteObject } from "react-router-dom";
 import { Spin } from "antd";
+// import DefaultLayout from "@/layout/Default";
+
+// import MainLayout from "remote_main/MainLayout";
+// @ts-ignore
+const MainLayout = (await import("remote_main/MainLayout")).default
+// console.log('MainLayout',MainLayout)
 
 interface MetaProps {
 	keepAlive?: boolean;
@@ -38,22 +44,38 @@ const lazyLoad = (Comp: React.LazyExoticComponent<any>): React.ReactNode => {
 // 重庆版模块路由
 export const chongqingRouter: RouteObject[] = [
   {
-    path: "/home",
+    path: '/chongqing' + "/home",
     element: lazyLoad(lazy(() => import(/* webpackChunkName: "home" */ '@/pages/Home/index'))),
     meta: {
       requiresAuth: true,
-      title: "重庆版-首页1",
+      title: "重庆版-首页",
       key: "home"
     }
   },
 ];
 
+// * 处理路由
+export const routerArray: RouteObject[] = [...chongqingRouter];
+
 const AllRouters: RouteObject[] = [
 	{
 		path: "/",
-		element: <Navigate to="/home" />
+		element: <Navigate to="/chongqing/home" />
 	},
-  ...chongqingRouter
+	{
+		path: "/chongqing",
+		element: <MainLayout routerArray={routerArray} children={''} />,
+		meta: {
+			requiresAuth: true,
+			title: "",
+		},
+		children: chongqingRouter.map(d => {
+			return {
+				...d,
+				path: d.path,
+			}
+		})
+	}
 ]
 
 export const Router = () => {

@@ -5,7 +5,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const globalState = {
 	token: "",
 	userInfo: "",
-  sysCompanyName: '标准版',
+  sysCompanyName: '重庆版',
 	assemblySize: "middle",
 	language: "",
 	themeConfig: {

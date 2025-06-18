@@ -75,27 +75,7 @@ const AllRouters: RouteObject[] = [
 				path: d.path,
 			}
 		})
-	},
-	// ...standardRouter.map(d => {
-	// 	return {
-	// 		...d,
-	// 		path: '/standard' + d.path,
-	// 	}
-	// }),
-	// {
-	// 	path: "/404",
-	// 	element: lazyLoad(lazy(() => import(/* webpackChunkName: "404" */ '@/pages/404'))),
-	// },
-  // {
-  //   path: "*",
-  //   element: <Navigate to="/404" />
-  // }
-  // ...standardRouter.map(d => {
-	// 			return {
-	// 				...d,
-	// 				path: '/standard' + d.path,
-	// 			}
-	// 		})
+	}
 ]
 
 export const Router = () => {

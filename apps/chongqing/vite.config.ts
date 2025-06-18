@@ -32,10 +32,13 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       federation({
         name: "remote_chongqing",
         filename: "remoteChongqingEntry.js",
+        remotes: {
+          'remote_main': env.VITE_REMOTE_MAIN_URL
+        },
         exposes: {
           './chongqingRouter': './src/router/index.tsx'
         },
-        shared: ['react', 'react-dom', 'react-router-dom'],
+        shared: ['react', 'react-dom', '@reduxjs/toolkit', 'react-redux', 'react-router-dom'],
       }),
       // manualChunksPlugin()
     ].concat(analysPlugins),
@@ -60,7 +63,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       //   }
       // }
     },
-    base: "/chongqing/",
+    // base: "/chongqing/",
     define: {
       'process.env': process.env
     },
@@ -92,7 +95,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         // 全局样式引入
-        scss:{
+        less:{
           additionalData: `@import "@/assets/styles/global.less";`,
         }
       },

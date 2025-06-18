@@ -2,9 +2,10 @@ import { GlobalState } from "@/store/interface";
 import type { SizeType } from "antd/lib/config-provider/SizeContext";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const globalState: GlobalState = {
+const globalState = {
 	token: "",
 	userInfo: "",
+  sysCompanyName: '',
 	assemblySize: "middle",
 	language: "",
 	themeConfig: {
@@ -18,19 +19,19 @@ const globalSlice = createSlice({
 	name: "global",
 	initialState: globalState,
 	reducers: {
-		setToken(state: GlobalState, { payload }: PayloadAction<string>) {
+		setToken(state, { payload }: PayloadAction<string>) {
 			state.token = payload;
 		},
-		setAssemblySize(state: GlobalState, { payload }: PayloadAction<SizeType>) {
+		setAssemblySize(state, { payload }: PayloadAction<SizeType>) {
 			state.assemblySize = payload;
 		},
-		setLanguage(state: GlobalState, { payload }: PayloadAction<string>) {
+		setLanguage(state, { payload }: PayloadAction<string>) {
 			state.language = payload;
 		},
-		setDark(state: GlobalState, { payload }: PayloadAction<boolean>) {
+		setDark(state, { payload }: PayloadAction<boolean>) {
 			state.themeConfig.isDark = payload;
 		},
-		setWeakOrGray(state: GlobalState, { payload }: PayloadAction<string>) {
+		setWeakOrGray(state, { payload }: PayloadAction<string>) {
 			state.themeConfig.weakOrGray = payload;
 		}
 	}

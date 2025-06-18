@@ -1,0 +1,10 @@
+{
+  "code": 200,
+  "data": [{
+      "icon": "HomeOutlined",
+      "title": "重庆版-首页",
+      "path": "/chongqing/home"
+    }
+  ],
+  "msg": "成功"
+}
