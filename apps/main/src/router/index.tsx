@@ -10,21 +10,19 @@ import DefaultLayout from "@/layout/Default";
 import mainRouter from "./modules/main";
 // const defaultLoadingRouter = [`./modules/${import.meta.env.VITE_CUSTOM}.tsx`]
 // * 导入所有router 
-let metaRouters = import.meta.glob("./modules/*.tsx", { eager: true });
-console.log(metaRouters)
-// * 处理路由
-export const routerArray: RouteObject[] = isFederateModule ? [] : [];
-Object.keys(metaRouters).forEach(item => {
-  routerArray.push(...metaRouters[item].default);
-});
-console.log(routerArray)
-// // 动态加载远程路由数据并整合路由
-// let metaRouters = await import(`./modules/${import.meta.env.VITE_CUSTOM}.tsx`);
+// let metaRouters = import.meta.glob("./modules/*.tsx", { eager: true });
 // // * 处理路由
-// export const routerArray: RouteObject[] = isFederateModule ? [] : [...mainRouter];
+// export const routerArray: RouteObject[] = isFederateModule ? [] : [];
 // Object.keys(metaRouters).forEach(item => {
-//   routerArray.push(...metaRouters[item]);
+//   routerArray.push(...metaRouters[item].default);
 // });
+// // 动态加载远程路由数据并整合路由
+let metaRouters = await import(`./modules/${import.meta.env.VITE_CUSTOM}.tsx`);
+// * 处理路由
+export const routerArray: RouteObject[] = isFederateModule ? [] : [...mainRouter];
+Object.keys(metaRouters).forEach(item => {
+  routerArray.push(...metaRouters[item]);
+});
 
 /**
  * @description: 提供给联邦的项目动态添加路由

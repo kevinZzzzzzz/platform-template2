@@ -8,6 +8,7 @@ import tabs from "./modules/tabs";
 import auth from "./modules/auth";
 import breadcrumb from "./modules/breadcrumb";
 
+console.log(global, 'global-------')
 // create reducer
 const reducer = combineReducers({
 	global,
