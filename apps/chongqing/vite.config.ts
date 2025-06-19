@@ -63,7 +63,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       //   }
       // }
     },
-    // base: "/chongqing/",
+    // base: mode.mode === 'development' ? '' : "/chongqing/",
     define: {
       'process.env': process.env
     },

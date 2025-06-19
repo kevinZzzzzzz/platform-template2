@@ -63,7 +63,7 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       //   }
       // }
     },
-    base: mode.mode === 'development' ? '' : "/standard/",
+    // base: mode.mode === 'development' ? '' : "/standard/",
     define: {
       'process.env': process.env
     },

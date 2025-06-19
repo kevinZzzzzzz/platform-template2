@@ -78,11 +78,8 @@ const AllRouters: RouteObject[] = [
 	}
 ]
 
-export const Router = () => {
+const Router = () => {
 	const routes = useRoutes(AllRouters);
 	return routes;
 };
-
-export default function RouterConfig() {
-  return standardRouter;
-}
+export default Router

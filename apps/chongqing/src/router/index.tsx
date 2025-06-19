@@ -77,12 +77,9 @@ const AllRouters: RouteObject[] = [
 		})
 	}
 ]
-
-export const Router = () => {
+const Router = () => {
 	const routes = useRoutes(AllRouters);
 	return routes;
 };
 
-export default function RouterConfig() {
-  return chongqingRouter;
-}
+export default Router

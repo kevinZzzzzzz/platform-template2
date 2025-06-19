@@ -33,9 +33,12 @@ const globalSlice = createSlice({
 		},
 		setWeakOrGray(state, { payload }: PayloadAction<string>) {
 			state.themeConfig.weakOrGray = payload;
-		}
+		},
+    setSysCompanyName(state, { payload }: PayloadAction<string>) {
+      state.sysCompanyName = payload;
+    }
 	}
 });
 
-export const { setToken, setAssemblySize, setLanguage, setDark, setWeakOrGray } = globalSlice.actions;
+export const { setToken, setAssemblySize, setLanguage, setDark, setWeakOrGray, setSysCompanyName } = globalSlice.actions;
 export default globalSlice.reducer;

@@ -1,1 +1,0 @@
-import{importShared as t}from"./__federation_fn_import-B8NBqRj0.js";import{j as e}from"./__federation_expose_ChongqingRouter-BZ_S9V5v.js";const{PureComponent:o}=await t("react");class m extends o{constructor(r){super(r)}render(){return e.jsx(e.Fragment,{children:e.jsx("h1",{children:" chongqing Home Page"})})}}export{m as default};
