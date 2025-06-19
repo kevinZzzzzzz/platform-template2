@@ -26,6 +26,9 @@ export default defineConfig((mode: ConfigEnv): any => {
     }
     const remoteConfig = {}
     remoteConfig[`remote_${env.VITE_CUSTOM}`] = remoteMap[env.VITE_CUSTOM]
+    // for (const key in remoteMap) {
+    //   remoteConfig[`remote_${key}`] = remoteMap[key]
+    // }
     return remoteConfig
   }
   return {

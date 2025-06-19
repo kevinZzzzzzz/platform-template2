@@ -1,0 +1,19 @@
+{
+  "data": [
+    {
+      "name": "standard",
+      "path": "remote_standard",
+      "exposes": {
+        "./standardRouter": "./src/router/modules/standard.tsx"
+      }
+    },
+    {
+      "name": "federation",
+      "path": "remote_federation",
+      "exposes": {
+        "./federationRouter": "./src/router/modules/federation.tsx"
+      }
+    }
+  ],
+  "code": 0
+}

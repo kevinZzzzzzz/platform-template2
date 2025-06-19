@@ -1,24 +1,35 @@
-
-import DefaultLayout from "@/layout/Default";
+// import DefaultLayout from "@/layout/Default";
 import lazyLoad from "@/router/utils/lazyLoad";
 import { RouteObject } from "@/router/interface";
 import React, { lazy } from "react";
-
-const standardRouters: any = await import('remote_standard/standardRouter')
+import { store } from "@/store";
+import { setSysCompanyName } from "@/store/modules/global";
+// import { routerArray } from "@/router";
+// import { isFederateModule } from "@/utils/is";
 
 // 标准版模块
-const standardRouter: Array<RouteObject> = [
-	{
-		path: "/standard",
-		element: <DefaultLayout children={''} />,
-		children: standardRouters.standardRouter.map((item: RouteObject) => {
-			return {
-				...item,
-        path: '/standard' + item.path,
-				// element: lazyLoad(lazy(() => import(`remote_standard${item.path}`)))
-			};
-		})
-	}
-];
+let standardRouter: Array<RouteObject> = []
+if (import.meta.env.VITE_CUSTOM === 'standard') {
+  try {
+    const standardRouters: any = await import('remote_standard/standardRouter')
+    store.dispatch(setSysCompanyName('标准版'))
+    standardRouter = [
+      {
+        path: "/standard",
+        // element: <DefaultLayout children={''} routerArray={routerArray} />,
+        children: standardRouters.standardRouter.map((item: RouteObject) => {
+          return {
+            ...item,
+            path: item.path,
+            // element: lazyLoad(lazy(() => import(`remote_standard${item.path}`)))
+          };
+        })
+      }
+    ];
+  } catch (error) {
+    console.error('error',error)
+  }
+}
+
 
 export default standardRouter;

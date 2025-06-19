@@ -8,14 +8,23 @@ import { isFederateModule } from "@/utils/is";
 import DefaultLayout from "@/layout/Default";
 // 默认加载的路由
 import mainRouter from "./modules/main";
-// const defaultLoadingRouter = [`./target/${import.meta.env.VITE_CUSTOM}.tsx`]
+// const defaultLoadingRouter = [`./modules/${import.meta.env.VITE_CUSTOM}.tsx`]
 // * 导入所有router 
-let metaRouters = import.meta.glob("./target/*.tsx", { eager: true });
+let metaRouters = import.meta.glob("./modules/*.tsx", { eager: true });
+console.log(metaRouters)
 // * 处理路由
-export const routerArray: RouteObject[] = isFederateModule ? [] : [...mainRouter];
+export const routerArray: RouteObject[] = isFederateModule ? [] : [];
 Object.keys(metaRouters).forEach(item => {
   routerArray.push(...metaRouters[item].default);
 });
+console.log(routerArray)
+// // 动态加载远程路由数据并整合路由
+// let metaRouters = await import(`./modules/${import.meta.env.VITE_CUSTOM}.tsx`);
+// // * 处理路由
+// export const routerArray: RouteObject[] = isFederateModule ? [] : [...mainRouter];
+// Object.keys(metaRouters).forEach(item => {
+//   routerArray.push(...metaRouters[item]);
+// });
 
 /**
  * @description: 提供给联邦的项目动态添加路由
