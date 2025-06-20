@@ -1,4 +1,4 @@
-import { AuthState } from "@/store/interface";
+import { AuthState } from "@/interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const authState: AuthState = {

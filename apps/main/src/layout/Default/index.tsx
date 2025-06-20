@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { Layout } from "antd";
-import { setAuthButtons } from "@/store/modules/auth";
-import { updateCollapse } from "@/store/modules/menu";
+import { setAuthButtons } from "@repo/store/dist/auth";
+import { updateCollapse } from "@repo/store/dist/menu";
 // import { getAuthorButtons } from "@/api/modules/login";
 import { RootState, useDispatch, useSelector } from "@/store";
 import LayoutMenu from "./components/Menu";

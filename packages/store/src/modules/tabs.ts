@@ -1,4 +1,4 @@
-import { TabsState } from "@/store/interface";
+import { TabsState } from "@/interface";
 import { HOME_URL } from "@/config/config";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

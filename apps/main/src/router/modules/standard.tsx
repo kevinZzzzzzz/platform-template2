@@ -3,7 +3,7 @@ import lazyLoad from "@/router/utils/lazyLoad";
 import { RouteObject } from "@/router/interface";
 import React, { lazy } from "react";
 import { store } from "@/store";
-import { setSysCompanyName } from "@/store/modules/global";
+import { setSysCompanyName } from "@repo/store/dist/global";
 // import { routerArray } from "@/router";
 // import { isFederateModule } from "@/utils/is";
 

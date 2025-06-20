@@ -1,0 +1,54 @@
+{
+  "compilerOptions": {
+    "plugins": [],
+    "outDir": "./dist",
+    "rootDir": ".",
+    "lib": [
+      "ES2015",
+      "ESNext",
+      "dom",
+      "es5",
+      "es6"
+    ],
+    "skipLibCheck": true,
+    "module": "ES2015",
+    "target": "es5",
+    "esModuleInterop": true,
+    "strict": true,
+    "typeRoots": [
+      "index.d.ts",
+      "type.d.ts",
+      "./node_modules/@types"
+    ],
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "@dashboard/utils": [
+        "packages/utils/src/index.ts"
+      ],
+      "@/*": ["src/*"] 
+    },
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "removeComments": false,
+    "noEmit": true,
+    "downlevelIteration": true,
+    "declarationDir": "./types",
+    "forceConsistentCasingInFileNames": true,
+  },
+  "include": [
+    "*.ts",
+    "./**/*.ts",
+    "index.ts",
+    "src/postcss.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "es",
+    "lib",
+    "dist",
+    "docs",
+    "iife"
+  ],
+}

@@ -17,7 +17,18 @@ import mainRouter from "./modules/main";
 //   routerArray.push(...metaRouters[item].default);
 // });
 // // 动态加载远程路由数据并整合路由
-let metaRouters = await import(`./modules/${import.meta.env.VITE_CUSTOM}.tsx`);
+let metaRouters = null
+console.log(import.meta.env.MODE, import.meta.env.VITE_CUSTOM, '---------')
+if (import.meta.env.MODE === 'development') {
+	metaRouters = await import(`./modules/${import.meta.env.VITE_CUSTOM}.tsx`)
+} else {
+  const moduleMap = {
+    'standard': () => import('./modules/standard'),
+    'chongqing': () => import('./modules/chongqing')
+    // 其他模块...
+  };
+  metaRouters = await moduleMap[import.meta.env.VITE_CUSTOM]();
+}
 // * 处理路由
 export const routerArray: RouteObject[] = isFederateModule ? [] : [...mainRouter];
 Object.keys(metaRouters).forEach(item => {

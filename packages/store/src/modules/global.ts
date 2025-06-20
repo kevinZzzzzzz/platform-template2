@@ -1,11 +1,11 @@
-import { GlobalState } from "@/store/interface";
+import { GlobalState } from "@/interface";
 import type { SizeType } from "antd/lib/config-provider/SizeContext";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const globalState = {
 	token: "",
 	userInfo: "",
-  sysCompanyName: '重庆版',
+  sysCompanyName: '',
 	assemblySize: "middle",
 	language: "",
 	themeConfig: {

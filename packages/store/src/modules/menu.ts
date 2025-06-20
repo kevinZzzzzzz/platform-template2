@@ -1,4 +1,4 @@
-import { MenuState } from "@/store/interface";
+import { MenuState } from "@/interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const menuState: MenuState = {
