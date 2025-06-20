@@ -1,12 +1,22 @@
 import { lazy, Suspense } from "react";
 import { useRoutes, Navigate, RouteObject as RouterDomRouteObject } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Spin } from "antd";
-// import DefaultLayout from "@/layout/Default";
 
-// import MainLayout from "remote_main/MainLayout";
-// @ts-ignore
-const MainLayout = (await import("remote_main/MainLayout")).default
-// console.log('MainLayout',MainLayout)
+let MainLayout: {
+	(props: {
+		routerArray: RouteObject[],
+		children: React.ReactNode
+	})
+} = () => {
+	return <><Outlet/></>
+}
+try {
+	// @ts-ignore
+	MainLayout = (await import("remote_main/MainLayout")).default
+} catch (error) {
+	console.log('error',error)
+}
 
 interface MetaProps {
 	keepAlive?: boolean;

@@ -2,7 +2,7 @@ import { Drawer, Divider, Switch, message } from "antd";
 import { useState } from "react";
 import { RootState, useDispatch, useSelector } from "@/store";
 import { FireOutlined } from "@ant-design/icons";
-import { setWeakOrGray } from "@/store/modules/global";
+import { setWeakOrGray } from "@repo/store/dist/global";
 
 const Theme = () => {
 	const dispatch = useDispatch();

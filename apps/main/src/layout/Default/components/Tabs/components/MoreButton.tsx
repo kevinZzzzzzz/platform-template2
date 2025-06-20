@@ -1,7 +1,7 @@
 import { Button, Dropdown, Menu } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
-import { setTabsList } from "@/store/modules/tabs";
+import { setTabsList } from "@repo/store/dist/tabs";
 import { RootState, useDispatch, useSelector } from "@/store";
 // @ts-ignore
 import { useTranslation } from "react-i18next";

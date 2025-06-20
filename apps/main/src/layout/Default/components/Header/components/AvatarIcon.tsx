@@ -3,7 +3,7 @@ import { ExclamationCircleOutlined, LogoutOutlined, SettingOutlined, UserOutline
 import { useNavigate } from "react-router-dom";
 import { HOME_URL } from "@/config/config";
 import { useDispatch } from "@/store";
-import { setToken } from "@/store/modules/global";
+import { setToken } from "@repo/store/dist/global";
 import PasswordModal from "./PasswordModal";
 import InfoModal from "./InfoModal";
 import avatar from "@/assets/images/avatar.png";
