@@ -13,37 +13,37 @@ demo地址： https://git.sharing8.cn/zhangyingjie/platform-template.git
 ## 目录介绍
 ```
 platform-template
-├── apps                          			# 应用包
-│   ├── chongqing												# 重庆分支
-│   ├── main														# 标准版系统
-│   │   ├── eslint.config.js						# eslint配置
-│   │   ├── index.html
-│   │   ├── package.json 								# 项目依赖配置文件
-│   │   ├── prettier.config.js					# Prettier配置文件
-│   │   ├── public											# 静态资源目录
-│   │   ├── src
-│   │   │   ├── App.tsx									# 项目根组件
-│   │   │   ├── api											# API接口管理
-│   │   │   ├── assets
-│   │   │   ├── components							# 公共组件
-│   │   │   ├── config									# 项目变量配置
-│   │   │   ├── enums										# 枚举定义
-│   │   │   ├── layout									# 布局组件
-│   │   │   ├── main.tsx								# 项目入口文件
-│   │   │   ├── pages										# 页面视图
-│   │   │   ├── router									# 路由配置
-│   │   │   ├── store										# 状态管理
-│   │   │   ├── typings									# 类型定义
-│   │   │   └── utils										# 工具函数
-│   │   ├── tsconfig.json								# TypeScript 配置文件
-│   │   └── vite.config.ts							# Vite 配置文件
-├── package.json
-├── packages														# 工具包
-│   ├── eslint-config
-│   └── store
-├── pnpm-lock.yaml
-├── pnpm-workspace.yaml
-└── turbo.json													# turbo 配置文件
+├──apps                          			  # 应用包
+│   ├──chongqing												# 重庆分支
+│   ├──main														  # 标准版系统
+│   │   ├──eslint.config.js						  # eslint配置
+│   │   ├──index.html
+│   │   ├──package.json 								# 项目依赖配置文件
+│   │   ├──prettier.config.js					  # Prettier配置文件
+│   │   ├──public											  # 静态资源目录
+│   │   ├──src
+│   │   │   ├──App.tsx									# 项目根组件
+│   │   │   ├──api											# API接口管理
+│   │   │   ├──assets
+│   │   │   ├──components							  # 公共组件
+│   │   │   ├──config									  # 项目变量配置
+│   │   │   ├──enums										# 枚举定义
+│   │   │   ├──layout									  # 布局组件
+│   │   │   ├──main.tsx								  # 项目入口文件
+│   │   │   ├──pages										# 页面视图
+│   │   │   ├──router									  # 路由配置
+│   │   │   ├──store										# 状态管理
+│   │   │   ├──typings									# 类型定义
+│   │   │   └──utils										# 工具函数
+│   │   ├──tsconfig.json								# TypeScript 配置文件
+│   │   └──vite.config.ts							  # Vite 配置文件
+├──package.json
+├──packages														  # 工具包
+│   ├──eslint-config
+│   └──store
+├──pnpm-lock.yaml
+├──pnpm-workspace.yaml
+└──turbo.json													  # turbo 配置文件
 
 ```
 ## 联邦配置
