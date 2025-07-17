@@ -5,7 +5,7 @@ import { ResultData } from "@/api/interface";
 import { ResultEnum } from "@/enums/httpEnum";
 import { checkStatus } from "./helper/checkStatus";
 import { AxiosCanceler } from "./helper/axiosCancel";
-import { setToken } from "@repo/store/dist/global";
+import { setToken } from "@repo/store/lib/global";
 import { message } from "antd";
 import { store } from "@/store";
 
