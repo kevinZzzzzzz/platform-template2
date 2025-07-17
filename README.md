@@ -184,3 +184,28 @@ pnpm preview
 ```
 初期可以本地起服务，后期可以走打包走线上服务
 
+### 项目部署
+- 标准版
+需要将环境变量中的VITE_CUSTOM 置空
+```
+// apps/main/.env.production
+VITE_AS_FEDERATE_MODULE='' // 是否作为模块依赖注
+VITE_CUSTOM='' // 引入分支模块
+VITE_CHONGQING_REMOTE_URL='/chongqing/assets/remoteChongqingEntry.js' // 远程模块地址
+```
+```
+// apps/main
+pnpm build
+```
+- 重庆分支
+需要将环境变量中的VITE_CUSTOM 指向chongqing
+```
+// apps/main/.env.production
+VITE_AS_FEDERATE_MODULE='' // 是否作为模块依赖注
+VITE_CUSTOM='chongqing' // 引入分支模块
+VITE_CHONGQING_REMOTE_URL='/chongqing/assets/remoteChongqingEntry.js' // 远程模块地址
+```
+```
+// apps/main 和 apps/chongqing
+pnpm build
+```
