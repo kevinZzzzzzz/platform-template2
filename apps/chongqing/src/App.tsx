@@ -15,7 +15,6 @@ window.$api = {...api}
 
 function App() {
   return (
-    //  basename={import.meta.env.MODE === 'development' ? '' : '/standard'}
     <HashRouter>
       <Router />
     </HashRouter>

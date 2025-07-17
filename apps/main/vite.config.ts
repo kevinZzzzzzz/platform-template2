@@ -21,14 +21,12 @@ export default defineConfig((mode: ConfigEnv): any => {
   ] : []
   const handleRemotes = () => {
     const remoteMap = {
-      'standard': env.VITE_STANDARD_REMOTE_URL,
       'chongqing': env.VITE_CHONGQING_REMOTE_URL,
     }
     const remoteConfig = {}
-    remoteConfig[`remote_${env.VITE_CUSTOM}`] = remoteMap[env.VITE_CUSTOM]
-    // for (const key in remoteMap) {
-    //   remoteConfig[`remote_${key}`] = remoteMap[key]
-    // }
+    if (env.VITE_CUSTOM) {
+      remoteConfig[`remote_${env.VITE_CUSTOM}`] = remoteMap[env.VITE_CUSTOM]
+    }
     return remoteConfig
   }
   return {
@@ -43,14 +41,6 @@ export default defineConfig((mode: ConfigEnv): any => {
         },
         shared: ['react', 'react-dom', '@reduxjs/toolkit', 'react-redux', 'react-router-dom'] // 共享的依赖
       }),
-      // AutoImport({
-      //   imports:["react", "react-router-dom"],
-      //   dts: 'src/type/auto-import.d.ts',    // 路径下自动生成文件夹存放全局指令
-      //   eslintrc: { // 开启eslint校验
-      //     enabled: true,
-      //   },
-      // }),
-      // manualChunksPlugin()
     ].concat(analysPlugins),
     build: {
       target: 'esnext',

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "plugins": [],
-    "outDir": "./dist",
+    "outDir": "lib",
     "rootDir": ".",
     "lib": [
       "ES2015",
@@ -47,7 +47,7 @@
     "node_modules",
     "es",
     "lib",
-    "dist",
+    "lib",
     "docs",
     "iife"
   ],

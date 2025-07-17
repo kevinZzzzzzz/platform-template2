@@ -2,11 +2,11 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import { TypedUseSelectorHook, useDispatch as useReduxDispatch, useSelector as useReduxSelector } from "react-redux";
 import storage from "redux-persist/lib/storage";
-import global from "@repo/store/dist/global";
-import menu from "@repo/store/dist/menu";
-import tabs from "@repo/store/dist/tabs";
-import auth from "@repo/store/dist/auth";
-import breadcrumb from "@repo/store/dist/breadcrumb";
+import global from "@repo/store/lib/global";
+import menu from "@repo/store/lib/menu";
+import tabs from "@repo/store/lib/tabs";
+import auth from "@repo/store/lib/auth";
+import breadcrumb from "@repo/store/lib/breadcrumb";
 
 // create reducer
 const reducer = combineReducers({

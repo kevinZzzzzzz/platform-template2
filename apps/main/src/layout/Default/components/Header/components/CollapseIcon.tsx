@@ -1,6 +1,6 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { RootState, useDispatch, useSelector } from "@/store";
-import { updateCollapse } from "@repo/store/dist/menu";
+import { updateCollapse } from "@repo/store/lib/menu";
 
 const CollapseIcon = () => {
 	const dispatch = useDispatch();

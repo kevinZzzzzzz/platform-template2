@@ -11,11 +11,14 @@ let MainLayout: {
 } = () => {
 	return <><Outlet/></>
 }
-try {
-	// @ts-ignore
-	MainLayout = (await import("remote_main/MainLayout")).default
-} catch (error) {
-	console.log('error',error)
+
+if (import.meta.env.VITE_AS_FEDERATE_MODULE === 'false') { // 非联邦模块
+	try {
+		// @ts-ignore
+		MainLayout = (await import("remote_main/MainLayout")).default
+	} catch (error) {
+		console.log('error',error)
+	}
 }
 
 interface MetaProps {
