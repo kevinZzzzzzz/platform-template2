@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "main": "dist",
-  "module": "dist",
+  "main": "lib",
+  "module": "lib",
   "files": [
-    "dist"
+    "lib"
   ],
   "scripts": {
     "dev": "rollup -c -w",

@@ -57,7 +57,7 @@ export default {
     //   fix: true, // 自动修复
     // }),
     clear({
-      targets: ["dist", "es", "lib", "iife", "docs", "html"],
+      targets: ["lib", "es", "lib", "iife", "docs", "html"],
       watch: true,
     }),
     typescript(),

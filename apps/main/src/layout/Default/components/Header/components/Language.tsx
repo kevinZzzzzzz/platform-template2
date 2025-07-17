@@ -1,6 +1,6 @@
 import { Dropdown, Menu } from "antd";
 import { RootState, useDispatch, useSelector } from "@/store";
-import { setLanguage } from "@repo/store/dist/global";
+import { setLanguage } from "@repo/store/lib/global";
 
 const Language = () => {
 	const dispatch = useDispatch();
