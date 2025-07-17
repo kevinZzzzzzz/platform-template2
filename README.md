@@ -172,12 +172,12 @@ pnpm build
 // apps/main
 pnpm dev
 ```
-● 重庆分支
+● 运行重庆分支
 ```
 // apps/chongqing
 pnpm dev
 ```
-如果需要引用布局组件，可以另起一个终端服务
+  如果需要引用布局组件，可以另起一个终端服务
 ```
 // apps/main
 pnpm preview
@@ -197,7 +197,7 @@ VITE_CHONGQING_REMOTE_URL='/chongqing/assets/remoteChongqingEntry.js' // 远程�
 // apps/main
 pnpm build
 ```
-- 重庆分支
+- 打包重庆分支
 需要将环境变量中的VITE_CUSTOM 指向chongqing
 ```
 // apps/main/.env.production
