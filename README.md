@@ -1,12 +1,12 @@
 ## 技术选型
-● 框架 react18（V18.2.0） 
-● 状态管理 @reduxjs/toolkit 
-● 组件库 ant.design 
-● 路由 react-router-dom 
-● 打包构建工具 vite/rullup 
-● node版本>= 20.12.0 
-● 多项目管理方案 turborepo  
-● 模块联邦 @originjs/vite-plugin-federation （v1.3.6） 
+· 框架 react18（V18.2.0） 
+· 状态管理 @reduxjs/toolkit 
+· 组件库 ant.design 
+· 路由 react-router-dom 
+· 打包构建工具 vite/rullup 
+· node版本>= 20.12.0 
+· 多项目管理方案 turborepo  
+· 模块联邦 @originjs/vite-plugin-federation （v1.3.6） 
 ## 项目地址
 demo地址： https://git.sharing8.cn/zhangyingjie/platform-template.git
 相关文档： https://sharing8.yuque.com/lt3glz/seyttu/ff3hfql6tetyo9ol
