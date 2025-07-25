@@ -5,8 +5,11 @@ import { Navigate } from "react-router-dom";
 import { useRoutes } from "react-router-dom";
 import lazyLoad from "@/router/utils/lazyLoad";
 import DefaultLayout from "@/layout/Default";
+import FullPage from "@/layout/FullPage";
+
 // 默认加载的路由
 import mainRouter from "./modules/main";
+import LoginPage from "@/pages/Login";
 
 // // 动态加载远程路由数据并整合路由
 let metaRouters = null
@@ -50,6 +53,12 @@ const Router = () => {
 		path: "/",
 		element: <Navigate to="/home" />
 	},
+  {
+    path: "/login",
+    element: <FullPage>
+      <LoginPage />
+    </FullPage>,
+  },
   {
 		element: <DefaultLayout children={''} routerArray={routerArray} />,
     children: [
