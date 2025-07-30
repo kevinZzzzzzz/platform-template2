@@ -25,6 +25,8 @@ if (import.meta.env.VITE_CUSTOM) {
     metaRouters = await moduleMap[import.meta.env.VITE_CUSTOM]();
   }
 }
+// store.dispatch(setSysCompanyName('重庆版'))
+
 // 处理路由
 export const routerArray: RouteObject[] = [...mainRouter];
 metaRouters && Object.keys(metaRouters).forEach(item => {

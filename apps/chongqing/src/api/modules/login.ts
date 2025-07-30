@@ -23,3 +23,8 @@ export const getMenuList = () => {
 	// return http.get<Menu.MenuOptions[]>(PORT1 + `/menu/list`);
 	return http.get<any>('/menu.json');
 };
+
+// * 获取应用信息
+export const getAppInfo = () => {
+	return http.get<any>('/tmp/app-data.json');
+};

@@ -3,7 +3,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const authState: AuthState = {
 	authButtons: {},
-	authRouter: []
+	authRouter: [],
+	loginInfo: {}
 };
 
 const authSlice = createSlice({
@@ -15,6 +16,9 @@ const authSlice = createSlice({
 		},
 		setAuthRouter(state: AuthState, { payload }: PayloadAction<string[]>) {
 			state.authRouter = payload;
+		},
+		setLoginInfo(state: AuthState, { payload }: PayloadAction<{ [propName: string]: any }>) {
+			state.loginInfo = payload;
 		}
 	}
 });

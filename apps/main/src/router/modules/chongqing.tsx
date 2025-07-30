@@ -8,7 +8,7 @@ import { setSysCompanyName } from "@repo/store/lib/global";
 
 // 标准版模块
 let chongqingRouter: Array<RouteObject> = []
-console.log(import.meta.env.VITE_CUSTOM,'import.meta.env.VITE_CUSTOM')
+
 if (import.meta.env.VITE_CUSTOM === 'chongqing') {
   try {
     // @ts-ignore
