@@ -27,7 +27,7 @@ if (import.meta.env.VITE_CUSTOM) {
     metaRouters = await moduleMap[import.meta.env.VITE_CUSTOM]();
   }
 } else {
-  store.dispatch(setSysCompanyName(''))
+  store.dispatch(setSysCompanyName('标准版'))
 }
 
 // 处理路由
