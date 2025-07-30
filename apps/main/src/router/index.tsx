@@ -6,10 +6,12 @@ import { useRoutes } from "react-router-dom";
 import lazyLoad from "@/router/utils/lazyLoad";
 import DefaultLayout from "@/layout/Default";
 import FullPage from "@/layout/FullPage";
+import { setSysCompanyName } from "@repo/store/lib/global";
 
 // 默认加载的路由
 import mainRouter from "./modules/main";
 import LoginPage from "@/pages/Login";
+import { store } from "@/store";
 
 // // 动态加载远程路由数据并整合路由
 let metaRouters = null
@@ -24,7 +26,10 @@ if (import.meta.env.VITE_CUSTOM) {
     };
     metaRouters = await moduleMap[import.meta.env.VITE_CUSTOM]();
   }
+} else {
+  store.dispatch(setSysCompanyName('标准版'))
 }
+
 // 处理路由
 export const routerArray: RouteObject[] = [...mainRouter];
 metaRouters && Object.keys(metaRouters).forEach(item => {

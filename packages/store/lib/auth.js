@@ -3,7 +3,8 @@ import { c as createSlice } from './redux-toolkit.esm-abb17662.js';
 var _a;
 var authState = {
     authButtons: {},
-    authRouter: []
+    authRouter: [],
+    loginInfo: {}
 };
 var authSlice = createSlice({
     name: "auth",
@@ -16,6 +17,10 @@ var authSlice = createSlice({
         setAuthRouter: function (state, _a) {
             var payload = _a.payload;
             state.authRouter = payload;
+        },
+        setLoginInfo: function (state, _a) {
+            var payload = _a.payload;
+            state.loginInfo = payload;
         }
     }
 });

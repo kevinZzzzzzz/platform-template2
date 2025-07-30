@@ -36,9 +36,10 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
           'remote_main': env.VITE_REMOTE_MAIN_URL
         },
         exposes: {
-          './chongqingRouter': './src/router/index.tsx'
+          './chongqingRouter': './src/router/index.tsx',
+          './AccountPassword': './src/components/AccountPassword/index.tsx'
         },
-        shared: ['react', 'react-dom', '@reduxjs/toolkit', 'react-redux', 'react-router-dom'],
+        shared: ['react', 'react-dom', '@reduxjs/toolkit', 'axios', 'antd', 'react-redux', 'react-router-dom'],
       }),
       // manualChunksPlugin()
     ].concat(analysPlugins),

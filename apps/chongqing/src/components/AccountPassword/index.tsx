@@ -3,21 +3,14 @@ import styles from "./index.module.less";
 import { getAppInfo } from "@/api/modules/login";
 import { Tabs, Form, Input, Checkbox, Button, Flex, Divider } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import http from "@/api";
 
 function AccountPassword(props: any) {
-	// const [appInfo, setAppInfo] = useState<any>({});
-	useEffect(() => {
-		// getAppInfo().then(res => {
-		// 	setAppInfo(res);
-		// });
-	}, []);
 	const onFinish = (values: any) => {
 		console.log("Received values of form: ", values);
 	};
 	return (
 		<div className={styles.accountPassword}>
-			<h1 className={styles.accountPassword_title}>{props.appInfo?.app?.name}</h1>
+			<h1 className={styles.accountPassword_title}>{props.appInfo?.app?.name}-重庆</h1>
 			<Tabs
 				defaultActiveKey="1"
 				centered
@@ -29,7 +22,7 @@ function AccountPassword(props: any) {
 					}
 				]}
 			/>
-			<Form name="login" initialValues={{ remember: true }} style={{ maxWidth: 360 }} onFinish={onFinish}>
+			<Form name="login" initialValues={{ remember: true }} onFinish={onFinish}>
 				<Form.Item name="username" rules={[{ required: true, message: "请输入用户名!" }]}>
 					<Input size="large" prefix={<UserOutlined />} placeholder="用户名" />
 				</Form.Item>

@@ -1,0 +1,15 @@
+{
+  "code": 200,
+  "version": "3.0.0",
+  "app": {
+    "name": "重庆城市用血实时联网平台",
+    "description": "让每个城市不再缺血",
+    "version": "2.4.3.0",
+    "company": {
+      "name": "穿越医疗",
+      "link": "http://www.stpass.com",
+      "telephone": "",
+      "showLogo": true
+    }
+  }
+} 
