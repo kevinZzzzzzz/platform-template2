@@ -10,7 +10,7 @@ function AccountPassword(props: any) {
 	};
 	return (
 		<div className={styles.accountPassword}>
-			<h1 className={styles.accountPassword_title}>{props.appInfo?.app?.name}</h1>
+			<h1 className={styles.accountPassword_title}>{props.appInfo?.app?.name}-重庆</h1>
 			<Tabs
 				defaultActiveKey="1"
 				centered
