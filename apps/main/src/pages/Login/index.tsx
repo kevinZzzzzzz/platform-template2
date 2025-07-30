@@ -12,18 +12,13 @@ const loadRemoteComp = async () => {
   };
   return moduleMap[import.meta.env.VITE_CUSTOM] ? await moduleMap[import.meta.env.VITE_CUSTOM]() : AccountPassword
 }
-// import.meta.env.VITE_CUSTOM === 'chongqing' ? 
-//   React.lazy(() => 
-//     import('remote_chongqing/AccountPassword').catch(() => ({ default: AccountPassword }))
-//   ) : 
-//   AccountPassword;
-function LoginPage(props: any) {
+function LoginPage(_props: any) {
   const [appInfo, setAppInfo] = useState<any>({});
   useEffect(() => {
     loadRemoteComp().then(res => {
       AccountPasswordComp = res.default || res
-      getAppInfo().then(ress => {
-        setAppInfo(ress);
+      getAppInfo().then(data => {
+        setAppInfo(data);
       });
     })
   }, [])
