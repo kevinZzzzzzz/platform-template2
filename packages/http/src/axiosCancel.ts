@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig, Canceler } from "axios";
-import { isFunction } from "@/utils/is/index";
 import qs from "qs";
 
 // * 声明一个 Map 用于存储每个请求的标识 和 取消函数
@@ -8,7 +7,11 @@ let pendingMap = new Map<string, Canceler>();
 // * 序列化参数
 export const getPendingUrl = (config: AxiosRequestConfig) =>
 	[config.method, config.url, qs.stringify(config.data), qs.stringify(config.params)].join("&");
-
+	
+// * 判断是否为函数
+export const isFunction = (val: any) => {
+	return Object.prototype.toString.call(val) === "[object Function]";
+};
 export class AxiosCanceler {
 	/**
 	 * @description: 添加请求

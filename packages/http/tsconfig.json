@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "plugins": [],
-    "outDir": "lib",
+    "outDir": "./lib",
     "rootDir": ".",
     "lib": [
       "ES2015",
@@ -23,25 +23,28 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "@dashboard/utils": [
-        "packages/utils/src/index.ts"
-      ],
-      "@/*": ["src/*"] 
+      "@/*": [
+        "src/*"
+      ]
     },
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
     "removeComments": false,
-    "noEmit": true,
+    "noEmit": false,
     "downlevelIteration": true,
     "declarationDir": "./types",
     "forceConsistentCasingInFileNames": true,
+    "jsx": "react-jsx",
+    "importHelpers": true,
+    "emitDeclarationOnly": false
   },
   "include": [
     "*.ts",
     "./**/*.ts",
+    "./**/*.tsx",
     "index.ts",
-    "src/postcss.ts",
+    "./**/*.tsx",
   ],
   "exclude": [
     "node_modules",

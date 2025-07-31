@@ -35,6 +35,7 @@
 		"@repo/eslint-config": "workspace:*",
 		"@repo/typescript-config": "workspace:*",
 		"@repo/store": "workspace:*",
+    "@repo/http": "workspace:*",
     "@originjs/vite-plugin-federation": "1.3.6",
 		"@commitlint/cli": "12.1.4",
 		"@commitlint/config-conventional": "12.1.4",

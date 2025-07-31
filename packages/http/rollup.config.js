@@ -20,19 +20,11 @@ const extensions = [".js", ".jsx", ".ts", ".tsx"]
 export default {
   context: 'window', // 强制 this 指向 window[1](@ref)
   // moduleContext: 'window', // 强制 module 指向 window[1](@ref)
-  input: {
-    // 多入口配置
-    // 'interface': getPath("./src/interface/index.ts"),
-    // 'auth': getPath("./src/modules/auth.ts"),
-    // 'menu': getPath("./src/modules/menu.ts"),
-    // 'tabs': getPath("./src/modules/tabs.ts"),
-    // 'global': getPath("./src/modules/global.ts"),
-    // 'breadcrumb': getPath("./src/modules/breadcrumb.ts"),
-  },
+  input: getPath("./src/index.ts"),
   output: {
     dir: getPath(pkg.main),
-    format: "esm", // 输出为 ESM 格式
-    name: "$xxx",
+     format: "esm", // 输出为 ESM 格式
+    name: "http",
   },
   plugins: [
     nodePolyfills(),
@@ -57,7 +49,7 @@ export default {
     //   fix: true, // 自动修复
     // }),
     clear({
-      targets: ["lib", "es", "lib", "iife", "docs", "html"],
+      targets: ["lib"],
       watch: true,
     }),
     typescript(),
@@ -81,4 +73,12 @@ export default {
   //   preset: "safest",
   //   tryCatchDeoptimization: true,
   // },
+  onwarn(warning, warn) {
+    // 忽略 'use client' 警告
+    if (warning.code === 'MODULE_LEVEL_DIRECTIVE' && warning.message.includes('use client')) {
+      return;
+    }
+    // 继续显示其他警告
+    warn(warning);
+  },
 }
