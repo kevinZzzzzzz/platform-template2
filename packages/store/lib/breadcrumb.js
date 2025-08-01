@@ -1,4 +1,4 @@
-import { c as createSlice } from './redux-toolkit.esm-abb17662.js';
+import { c as createSlice } from './redux-toolkit.esm-ca140e18.js';
 
 var breadcrumbState = {
     breadcrumbList: {}

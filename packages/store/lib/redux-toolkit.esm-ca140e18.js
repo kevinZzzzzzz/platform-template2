@@ -89,30 +89,6 @@ var __async = function (__this, __arguments, generator) {
         step((generator = generator.apply(__this, __arguments)).next());
     });
 };
-// src/createAction.ts
-function createAction(type, prepareAction) {
-    function actionCreator() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        if (prepareAction) {
-            var prepared = prepareAction.apply(void 0, args);
-            if (!prepared) {
-                throw new Error("prepareAction did not return an object");
-            }
-            return __spreadValues(__spreadValues({
-                type: type,
-                payload: prepared.payload
-            }, "meta" in prepared && { meta: prepared.meta }), "error" in prepared && { error: prepared.error });
-        }
-        return { type: type, payload: args[0] };
-    }
-    actionCreator.toString = function () { return "" + type; };
-    actionCreator.type = type;
-    actionCreator.match = function (action) { return action.type === type; };
-    return actionCreator;
-}
 /** @class */ ((function (_super) {
     __extends(MiddlewareArray, _super);
     function MiddlewareArray() {
@@ -195,6 +171,30 @@ function freezeDraftable(val) {
 process.env.NODE_ENV === "production";
 // src/configureStore.ts
 process.env.NODE_ENV === "production";
+// src/createAction.ts
+function createAction(type, prepareAction) {
+    function actionCreator() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (prepareAction) {
+            var prepared = prepareAction.apply(void 0, args);
+            if (!prepared) {
+                throw new Error("prepareAction did not return an object");
+            }
+            return __spreadValues(__spreadValues({
+                type: type,
+                payload: prepared.payload
+            }, "meta" in prepared && { meta: prepared.meta }), "error" in prepared && { error: prepared.error });
+        }
+        return { type: type, payload: args[0] };
+    }
+    actionCreator.toString = function () { return "" + type; };
+    actionCreator.type = type;
+    actionCreator.match = function (action) { return action.type === type; };
+    return actionCreator;
+}
 // src/mapBuilders.ts
 function executeReducerBuilderCallback(builderCallback) {
     var actionsMap = {};
@@ -211,11 +211,8 @@ function executeReducerBuilderCallback(builderCallback) {
                 }
             }
             var type = typeof typeOrActionCreator === "string" ? typeOrActionCreator : typeOrActionCreator.type;
-            if (!type) {
-                throw new Error("`builder.addCase` cannot be called with an empty action type");
-            }
             if (type in actionsMap) {
-                throw new Error("`builder.addCase` cannot be called with two reducers for the same action type");
+                throw new Error("addCase cannot be called with two reducers for the same action type");
             }
             actionsMap[type] = reducer;
             return builder;

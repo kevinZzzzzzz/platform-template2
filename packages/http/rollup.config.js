@@ -8,6 +8,7 @@ import alias from "@rollup/plugin-alias" // alias 和 reslove 功能
 import clear from "rollup-plugin-clear"
 import pkg from "./package.json"
 import json from "@rollup/plugin-json"
+import postcss from "rollup-plugin-postcss"
 // import babel from "@rollup/plugin-babel"
 // import replace from "@rollup/plugin-replace"
 import nodePolyfills from "rollup-plugin-node-polyfills"
@@ -23,8 +24,8 @@ export default {
   input: getPath("./src/index.ts"),
   output: {
     dir: getPath(pkg.main),
-     format: "esm", // 输出为 ESM 格式
-    name: "http",
+    format: "esm", // 输出为 ESM 格式
+    name: "$xxx",
   },
   plugins: [
     nodePolyfills(),
@@ -49,8 +50,11 @@ export default {
     //   fix: true, // 自动修复
     // }),
     clear({
-      targets: ["lib"],
+      targets: ["lib", "es", "lib", "iife", "docs", "html"],
       watch: true,
+    }),
+    postcss({
+      extensions: ['.css'],
     }),
     typescript(),
     alias({
@@ -73,12 +77,4 @@ export default {
   //   preset: "safest",
   //   tryCatchDeoptimization: true,
   // },
-  onwarn(warning, warn) {
-    // 忽略 'use client' 警告
-    if (warning.code === 'MODULE_LEVEL_DIRECTIVE' && warning.message.includes('use client')) {
-      return;
-    }
-    // 继续显示其他警告
-    warn(warning);
-  },
 }

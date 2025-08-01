@@ -1,8 +1,7 @@
-import { c as createSlice } from './redux-toolkit.esm-abb17662.js';
+import { c as createSlice } from './redux-toolkit.esm-ca140e18.js';
 
 var _a;
 var globalState = {
-    token: "",
     userInfo: "",
     sysCompanyName: '',
     assemblySize: "middle",
@@ -17,10 +16,6 @@ var globalSlice = createSlice({
     name: "global",
     initialState: globalState,
     reducers: {
-        setToken: function (state, _a) {
-            var payload = _a.payload;
-            state.token = payload;
-        },
         setAssemblySize: function (state, _a) {
             var payload = _a.payload;
             state.assemblySize = payload;
@@ -43,7 +38,7 @@ var globalSlice = createSlice({
         }
     }
 });
-var setToken = (_a = globalSlice.actions, _a.setToken), setAssemblySize = _a.setAssemblySize, setLanguage = _a.setLanguage, setDark = _a.setDark, setWeakOrGray = _a.setWeakOrGray, setSysCompanyName = _a.setSysCompanyName;
+var setAssemblySize = (_a = globalSlice.actions, _a.setAssemblySize), setLanguage = _a.setLanguage, setDark = _a.setDark, setWeakOrGray = _a.setWeakOrGray, setSysCompanyName = _a.setSysCompanyName;
 var global = globalSlice.reducer;
 
-export { global as default, setAssemblySize, setDark, setLanguage, setSysCompanyName, setToken, setWeakOrGray };
+export { global as default, setAssemblySize, setDark, setLanguage, setSysCompanyName, setWeakOrGray };

@@ -82,7 +82,7 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
   return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 };
 
-function bind(fn, thisArg) {
+function bind$4(fn, thisArg) {
   return function wrap() {
     return fn.apply(thisArg, arguments);
   };
@@ -112,7 +112,7 @@ const typeOfTest = type => thing => typeof thing === type;
  *
  * @returns {boolean} True if value is an Array, otherwise false
  */
-const {isArray} = Array;
+const {isArray: isArray$4} = Array;
 
 /**
  * Determine if a value is undefined
@@ -130,9 +130,9 @@ const isUndefined = typeOfTest('undefined');
  *
  * @returns {boolean} True if value is a Buffer, otherwise false
  */
-function isBuffer(val) {
+function isBuffer$1(val) {
   return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor)
-    && isFunction(val.constructor.isBuffer) && val.constructor.isBuffer(val);
+    && isFunction$1(val.constructor.isBuffer) && val.constructor.isBuffer(val);
 }
 
 /**
@@ -169,7 +169,7 @@ function isArrayBufferView(val) {
  *
  * @returns {boolean} True if value is a String, otherwise false
  */
-const isString = typeOfTest('string');
+const isString$1 = typeOfTest('string');
 
 /**
  * Determine if a value is a Function
@@ -177,7 +177,7 @@ const isString = typeOfTest('string');
  * @param {*} val The value to test
  * @returns {boolean} True if value is a Function, otherwise false
  */
-const isFunction = typeOfTest('function');
+const isFunction$1 = typeOfTest('function');
 
 /**
  * Determine if a value is a Number
@@ -186,7 +186,7 @@ const isFunction = typeOfTest('function');
  *
  * @returns {boolean} True if value is a Number, otherwise false
  */
-const isNumber = typeOfTest('number');
+const isNumber$1 = typeOfTest('number');
 
 /**
  * Determine if a value is an Object
@@ -203,7 +203,7 @@ const isObject$1 = (thing) => thing !== null && typeof thing === 'object';
  * @param {*} thing The value to test
  * @returns {boolean} True if value is a Boolean, otherwise false
  */
-const isBoolean = thing => thing === true || thing === false;
+const isBoolean$1 = thing => thing === true || thing === false;
 
 /**
  * Determine if a value is a plain Object
@@ -228,7 +228,7 @@ const isPlainObject = (val) => {
  *
  * @returns {boolean} True if value is a Date, otherwise false
  */
-const isDate = kindOfTest('Date');
+const isDate$1 = kindOfTest('Date');
 
 /**
  * Determine if a value is a File
@@ -264,7 +264,7 @@ const isFileList = kindOfTest('FileList');
  *
  * @returns {boolean} True if value is a Stream, otherwise false
  */
-const isStream = (val) => isObject$1(val) && isFunction(val.pipe);
+const isStream = (val) => isObject$1(val) && isFunction$1(val.pipe);
 
 /**
  * Determine if a value is a FormData
@@ -278,7 +278,7 @@ const isFormData = (thing) => {
   return thing && (
     (typeof FormData === 'function' && thing instanceof FormData) ||
     toString.call(thing) === pattern ||
-    (isFunction(thing.toString) && thing.toString() === pattern)
+    (isFunction$1(thing.toString) && thing.toString() === pattern)
   );
 };
 
@@ -331,7 +331,7 @@ function forEach(obj, fn, {allOwnKeys = false} = {}) {
     obj = [obj];
   }
 
-  if (isArray(obj)) {
+  if (isArray$4(obj)) {
     // Iterate over array values
     for (i = 0, l = obj.length; i < l; i++) {
       fn.call(null, obj[i], i, obj);
@@ -389,16 +389,16 @@ const isContextDefined = (context) => !isUndefined(context) && context !== _glob
  *
  * @returns {Object} Result of all merge properties
  */
-function merge$2(/* obj1, obj2, obj3, ... */) {
+function merge$3(/* obj1, obj2, obj3, ... */) {
   const {caseless} = isContextDefined(this) && this || {};
   const result = {};
   const assignValue = (val, key) => {
     const targetKey = caseless && findKey(result, key) || key;
     if (isPlainObject(result[targetKey]) && isPlainObject(val)) {
-      result[targetKey] = merge$2(result[targetKey], val);
+      result[targetKey] = merge$3(result[targetKey], val);
     } else if (isPlainObject(val)) {
-      result[targetKey] = merge$2({}, val);
-    } else if (isArray(val)) {
+      result[targetKey] = merge$3({}, val);
+    } else if (isArray$4(val)) {
       result[targetKey] = val.slice();
     } else {
       result[targetKey] = val;
@@ -423,8 +423,8 @@ function merge$2(/* obj1, obj2, obj3, ... */) {
  */
 const extend = (a, b, thisArg, {allOwnKeys}= {}) => {
   forEach(b, (val, key) => {
-    if (thisArg && isFunction(val)) {
-      a[key] = bind(val, thisArg);
+    if (thisArg && isFunction$1(val)) {
+      a[key] = bind$4(val, thisArg);
     } else {
       a[key] = val;
     }
@@ -528,9 +528,9 @@ const endsWith = (str, searchString, position) => {
  */
 const toArray = (thing) => {
   if (!thing) return null;
-  if (isArray(thing)) return thing;
+  if (isArray$4(thing)) return thing;
   let i = thing.length;
-  if (!isNumber(i)) return null;
+  if (!isNumber$1(i)) return null;
   const arr = new Array(i);
   while (i-- > 0) {
     arr[i] = thing[i];
@@ -615,7 +615,7 @@ const hasOwnProperty = (({hasOwnProperty}) => (obj, prop) => hasOwnProperty.call
  *
  * @returns {boolean} True if value is a RegExp object, otherwise false
  */
-const isRegExp = kindOfTest('RegExp');
+const isRegExp$2 = kindOfTest('RegExp');
 
 const reduceDescriptors = (obj, reducer) => {
   const descriptors = Object.getOwnPropertyDescriptors(obj);
@@ -638,13 +638,13 @@ const reduceDescriptors = (obj, reducer) => {
 const freezeMethods = (obj) => {
   reduceDescriptors(obj, (descriptor, name) => {
     // skip restricted props in strict mode
-    if (isFunction(obj) && ['arguments', 'caller', 'callee'].indexOf(name) !== -1) {
+    if (isFunction$1(obj) && ['arguments', 'caller', 'callee'].indexOf(name) !== -1) {
       return false;
     }
 
     const value = obj[name];
 
-    if (!isFunction(value)) return;
+    if (!isFunction$1(value)) return;
 
     descriptor.enumerable = false;
 
@@ -670,7 +670,7 @@ const toObjectSet = (arrayOrString, delimiter) => {
     });
   };
 
-  isArray(arrayOrString) ? define(arrayOrString) : define(String(arrayOrString).split(delimiter));
+  isArray$4(arrayOrString) ? define(arrayOrString) : define(String(arrayOrString).split(delimiter));
 
   return obj;
 };
@@ -710,7 +710,7 @@ const generateString = (size = 16, alphabet = ALPHABET.ALPHA_DIGIT) => {
  * @returns {boolean}
  */
 function isSpecCompliantForm(thing) {
-  return !!(thing && isFunction(thing.append) && thing[Symbol.toStringTag] === 'FormData' && thing[Symbol.iterator]);
+  return !!(thing && isFunction$1(thing.append) && thing[Symbol.toStringTag] === 'FormData' && thing[Symbol.iterator]);
 }
 
 const toJSONObject = (obj) => {
@@ -725,7 +725,7 @@ const toJSONObject = (obj) => {
 
       if(!('toJSON' in source)) {
         stack[i] = source;
-        const target = isArray(source) ? [] : {};
+        const target = isArray$4(source) ? [] : {};
 
         forEach(source, (value, key) => {
           const reducedValue = visit(value, i + 1);
@@ -744,29 +744,29 @@ const toJSONObject = (obj) => {
   return visit(obj, 0);
 };
 
-var utils = {
-  isArray,
+var utils$3 = {
+  isArray: isArray$4,
   isArrayBuffer,
-  isBuffer,
+  isBuffer: isBuffer$1,
   isFormData,
   isArrayBufferView,
-  isString,
-  isNumber,
-  isBoolean,
+  isString: isString$1,
+  isNumber: isNumber$1,
+  isBoolean: isBoolean$1,
   isObject: isObject$1,
   isPlainObject,
   isUndefined,
-  isDate,
+  isDate: isDate$1,
   isFile,
   isBlob,
-  isRegExp,
-  isFunction,
+  isRegExp: isRegExp$2,
+  isFunction: isFunction$1,
   isStream,
   isURLSearchParams,
   isTypedArray,
   isFileList,
   forEach,
-  merge: merge$2,
+  merge: merge$3,
   extend,
   trim: trim$1,
   stripBOM,
@@ -824,7 +824,7 @@ function AxiosError(message, code, config, request, response) {
   response && (this.response = response);
 }
 
-utils.inherits(AxiosError, Error, {
+utils$3.inherits(AxiosError, Error, {
   toJSON: function toJSON() {
     return {
       // Standard
@@ -839,7 +839,7 @@ utils.inherits(AxiosError, Error, {
       columnNumber: this.columnNumber,
       stack: this.stack,
       // Axios
-      config: utils.toJSONObject(this.config),
+      config: utils$3.toJSONObject(this.config),
       code: this.code,
       status: this.response && this.response.status ? this.response.status : null
     };
@@ -874,7 +874,7 @@ Object.defineProperty(prototype$1, 'isAxiosError', {value: true});
 AxiosError.from = (error, code, config, request, response, customProps) => {
   const axiosError = Object.create(prototype$1);
 
-  utils.toFlatObject(error, axiosError, function filter(obj) {
+  utils$3.toFlatObject(error, axiosError, function filter(obj) {
     return obj !== Error.prototype;
   }, prop => {
     return prop !== 'isAxiosError';
@@ -902,7 +902,7 @@ var httpAdapter = null;
  * @returns {boolean}
  */
 function isVisitable(thing) {
-  return utils.isPlainObject(thing) || utils.isArray(thing);
+  return utils$3.isPlainObject(thing) || utils$3.isArray(thing);
 }
 
 /**
@@ -913,7 +913,7 @@ function isVisitable(thing) {
  * @returns {string} the key without the brackets.
  */
 function removeBrackets(key) {
-  return utils.endsWith(key, '[]') ? key.slice(0, -2) : key;
+  return utils$3.endsWith(key, '[]') ? key.slice(0, -2) : key;
 }
 
 /**
@@ -942,10 +942,10 @@ function renderKey(path, key, dots) {
  * @returns {boolean}
  */
 function isFlatArray(arr) {
-  return utils.isArray(arr) && !arr.some(isVisitable);
+  return utils$3.isArray(arr) && !arr.some(isVisitable);
 }
 
-const predicates = utils.toFlatObject(utils, {}, null, function filter(prop) {
+const predicates = utils$3.toFlatObject(utils$3, {}, null, function filter(prop) {
   return /^is[A-Z]/.test(prop);
 });
 
@@ -973,7 +973,7 @@ const predicates = utils.toFlatObject(utils, {}, null, function filter(prop) {
  * @returns
  */
 function toFormData(obj, formData, options) {
-  if (!utils.isObject(obj)) {
+  if (!utils$3.isObject(obj)) {
     throw new TypeError('target must be an object');
   }
 
@@ -981,13 +981,13 @@ function toFormData(obj, formData, options) {
   formData = formData || new (FormData)();
 
   // eslint-disable-next-line no-param-reassign
-  options = utils.toFlatObject(options, {
+  options = utils$3.toFlatObject(options, {
     metaTokens: true,
     dots: false,
     indexes: false
   }, false, function defined(option, source) {
     // eslint-disable-next-line no-eq-null,eqeqeq
-    return !utils.isUndefined(source[option]);
+    return !utils$3.isUndefined(source[option]);
   });
 
   const metaTokens = options.metaTokens;
@@ -996,24 +996,24 @@ function toFormData(obj, formData, options) {
   const dots = options.dots;
   const indexes = options.indexes;
   const _Blob = options.Blob || typeof Blob !== 'undefined' && Blob;
-  const useBlob = _Blob && utils.isSpecCompliantForm(formData);
+  const useBlob = _Blob && utils$3.isSpecCompliantForm(formData);
 
-  if (!utils.isFunction(visitor)) {
+  if (!utils$3.isFunction(visitor)) {
     throw new TypeError('visitor must be a function');
   }
 
   function convertValue(value) {
     if (value === null) return '';
 
-    if (utils.isDate(value)) {
+    if (utils$3.isDate(value)) {
       return value.toISOString();
     }
 
-    if (!useBlob && utils.isBlob(value)) {
+    if (!useBlob && utils$3.isBlob(value)) {
       throw new AxiosError('Blob is not supported. Use a Buffer instead.');
     }
 
-    if (utils.isArrayBuffer(value) || utils.isTypedArray(value)) {
+    if (utils$3.isArrayBuffer(value) || utils$3.isTypedArray(value)) {
       return useBlob && typeof Blob === 'function' ? new Blob([value]) : Buffer.from(value);
     }
 
@@ -1034,20 +1034,20 @@ function toFormData(obj, formData, options) {
     let arr = value;
 
     if (value && !path && typeof value === 'object') {
-      if (utils.endsWith(key, '{}')) {
+      if (utils$3.endsWith(key, '{}')) {
         // eslint-disable-next-line no-param-reassign
         key = metaTokens ? key : key.slice(0, -2);
         // eslint-disable-next-line no-param-reassign
         value = JSON.stringify(value);
       } else if (
-        (utils.isArray(value) && isFlatArray(value)) ||
-        ((utils.isFileList(value) || utils.endsWith(key, '[]')) && (arr = utils.toArray(value))
+        (utils$3.isArray(value) && isFlatArray(value)) ||
+        ((utils$3.isFileList(value) || utils$3.endsWith(key, '[]')) && (arr = utils$3.toArray(value))
         )) {
         // eslint-disable-next-line no-param-reassign
         key = removeBrackets(key);
 
         arr.forEach(function each(el, index) {
-          !(utils.isUndefined(el) || el === null) && formData.append(
+          !(utils$3.isUndefined(el) || el === null) && formData.append(
             // eslint-disable-next-line no-nested-ternary
             indexes === true ? renderKey([key], index, dots) : (indexes === null ? key : key + '[]'),
             convertValue(el)
@@ -1075,7 +1075,7 @@ function toFormData(obj, formData, options) {
   });
 
   function build(value, path) {
-    if (utils.isUndefined(value)) return;
+    if (utils$3.isUndefined(value)) return;
 
     if (stack.indexOf(value) !== -1) {
       throw Error('Circular reference detected in ' + path.join('.'));
@@ -1083,9 +1083,9 @@ function toFormData(obj, formData, options) {
 
     stack.push(value);
 
-    utils.forEach(value, function each(el, key) {
-      const result = !(utils.isUndefined(el) || el === null) && visitor.call(
-        formData, el, utils.isString(key) ? key.trim() : key, path, exposedHelpers
+    utils$3.forEach(value, function each(el, key) {
+      const result = !(utils$3.isUndefined(el) || el === null) && visitor.call(
+        formData, el, utils$3.isString(key) ? key.trim() : key, path, exposedHelpers
       );
 
       if (result === true) {
@@ -1096,7 +1096,7 @@ function toFormData(obj, formData, options) {
     stack.pop();
   }
 
-  if (!utils.isObject(obj)) {
+  if (!utils$3.isObject(obj)) {
     throw new TypeError('data must be an object');
   }
 
@@ -1113,7 +1113,7 @@ function toFormData(obj, formData, options) {
  *
  * @returns {string} The encoded string.
  */
-function encode$1(str) {
+function encode$2(str) {
   const charMap = {
     '!': '%21',
     "'": '%27',
@@ -1150,8 +1150,8 @@ prototype.append = function append(name, value) {
 
 prototype.toString = function toString(encoder) {
   const _encode = encoder ? function(value) {
-    return encoder.call(this, value, encode$1);
-  } : encode$1;
+    return encoder.call(this, value, encode$2);
+  } : encode$2;
 
   return this._pairs.map(function each(pair) {
     return _encode(pair[0]) + '=' + _encode(pair[1]);
@@ -1166,7 +1166,7 @@ prototype.toString = function toString(encoder) {
  *
  * @returns {string} The encoded value.
  */
-function encode(val) {
+function encode$1(val) {
   return encodeURIComponent(val).
     replace(/%3A/gi, ':').
     replace(/%24/g, '$').
@@ -1191,7 +1191,7 @@ function buildURL(url, params, options) {
     return url;
   }
   
-  const _encode = options && options.encode || encode;
+  const _encode = options && options.encode || encode$1;
 
   const serializeFn = options && options.serialize;
 
@@ -1200,7 +1200,7 @@ function buildURL(url, params, options) {
   if (serializeFn) {
     serializedParams = serializeFn(params, options);
   } else {
-    serializedParams = utils.isURLSearchParams(params) ?
+    serializedParams = utils$3.isURLSearchParams(params) ?
       params.toString() :
       new AxiosURLSearchParams(params, options).toString(_encode);
   }
@@ -1275,7 +1275,7 @@ class InterceptorManager {
    * @returns {void}
    */
   forEach(fn) {
-    utils.forEach(this.handlers, function forEachHandler(h) {
+    utils$3.forEach(this.handlers, function forEachHandler(h) {
       if (h !== null) {
         fn(h);
       }
@@ -1359,7 +1359,7 @@ var platform = {
 function toURLEncodedForm(data, options) {
   return toFormData(data, new platform.classes.URLSearchParams(), Object.assign({
     visitor: function(value, key, path, helpers) {
-      if (platform.isNode && utils.isBuffer(value)) {
+      if (platform.isNode && utils$3.isBuffer(value)) {
         this.append(key, value.toString('base64'));
         return false;
       }
@@ -1381,7 +1381,7 @@ function parsePropPath(name) {
   // foo.x.y.z
   // foo-x-y-z
   // foo x y z
-  return utils.matchAll(/\w+|\[(\w*)]/g, name).map(match => {
+  return utils$3.matchAll(/\w+|\[(\w*)]/g, name).map(match => {
     return match[0] === '[]' ? '' : match[1] || match[0];
   });
 }
@@ -1393,7 +1393,7 @@ function parsePropPath(name) {
  *
  * @returns An object with the same keys and values as the array.
  */
-function arrayToObject(arr) {
+function arrayToObject$1(arr) {
   const obj = {};
   const keys = Object.keys(arr);
   let i;
@@ -1418,10 +1418,10 @@ function formDataToJSON(formData) {
     let name = path[index++];
     const isNumericKey = Number.isFinite(+name);
     const isLast = index >= path.length;
-    name = !name && utils.isArray(target) ? target.length : name;
+    name = !name && utils$3.isArray(target) ? target.length : name;
 
     if (isLast) {
-      if (utils.hasOwnProp(target, name)) {
+      if (utils$3.hasOwnProp(target, name)) {
         target[name] = [target[name], value];
       } else {
         target[name] = value;
@@ -1430,23 +1430,23 @@ function formDataToJSON(formData) {
       return !isNumericKey;
     }
 
-    if (!target[name] || !utils.isObject(target[name])) {
+    if (!target[name] || !utils$3.isObject(target[name])) {
       target[name] = [];
     }
 
     const result = buildPath(path, value, target[name], index);
 
-    if (result && utils.isArray(target[name])) {
-      target[name] = arrayToObject(target[name]);
+    if (result && utils$3.isArray(target[name])) {
+      target[name] = arrayToObject$1(target[name]);
     }
 
     return !isNumericKey;
   }
 
-  if (utils.isFormData(formData) && utils.isFunction(formData.entries)) {
+  if (utils$3.isFormData(formData) && utils$3.isFunction(formData.entries)) {
     const obj = {};
 
-    utils.forEachEntry(formData, (name, value) => {
+    utils$3.forEachEntry(formData, (name, value) => {
       buildPath(parsePropPath(name), value, obj, 0);
     });
 
@@ -1471,10 +1471,10 @@ const DEFAULT_CONTENT_TYPE = {
  * @returns {string} A stringified version of the rawValue.
  */
 function stringifySafely(rawValue, parser, encoder) {
-  if (utils.isString(rawValue)) {
+  if (utils$3.isString(rawValue)) {
     try {
       (parser || JSON.parse)(rawValue);
-      return utils.trim(rawValue);
+      return utils$3.trim(rawValue);
     } catch (e) {
       if (e.name !== 'SyntaxError') {
         throw e;
@@ -1485,7 +1485,7 @@ function stringifySafely(rawValue, parser, encoder) {
   return (encoder || JSON.stringify)(rawValue);
 }
 
-const defaults = {
+const defaults$2 = {
 
   transitional: transitionalDefaults,
 
@@ -1494,13 +1494,13 @@ const defaults = {
   transformRequest: [function transformRequest(data, headers) {
     const contentType = headers.getContentType() || '';
     const hasJSONContentType = contentType.indexOf('application/json') > -1;
-    const isObjectPayload = utils.isObject(data);
+    const isObjectPayload = utils$3.isObject(data);
 
-    if (isObjectPayload && utils.isHTMLForm(data)) {
+    if (isObjectPayload && utils$3.isHTMLForm(data)) {
       data = new FormData(data);
     }
 
-    const isFormData = utils.isFormData(data);
+    const isFormData = utils$3.isFormData(data);
 
     if (isFormData) {
       if (!hasJSONContentType) {
@@ -1509,18 +1509,18 @@ const defaults = {
       return hasJSONContentType ? JSON.stringify(formDataToJSON(data)) : data;
     }
 
-    if (utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
+    if (utils$3.isArrayBuffer(data) ||
+      utils$3.isBuffer(data) ||
+      utils$3.isStream(data) ||
+      utils$3.isFile(data) ||
+      utils$3.isBlob(data)
     ) {
       return data;
     }
-    if (utils.isArrayBufferView(data)) {
+    if (utils$3.isArrayBufferView(data)) {
       return data.buffer;
     }
-    if (utils.isURLSearchParams(data)) {
+    if (utils$3.isURLSearchParams(data)) {
       headers.setContentType('application/x-www-form-urlencoded;charset=utf-8', false);
       return data.toString();
     }
@@ -1532,7 +1532,7 @@ const defaults = {
         return toURLEncodedForm(data, this.formSerializer).toString();
       }
 
-      if ((isFileList = utils.isFileList(data)) || contentType.indexOf('multipart/form-data') > -1) {
+      if ((isFileList = utils$3.isFileList(data)) || contentType.indexOf('multipart/form-data') > -1) {
         const _FormData = this.env && this.env.FormData;
 
         return toFormData(
@@ -1552,11 +1552,11 @@ const defaults = {
   }],
 
   transformResponse: [function transformResponse(data) {
-    const transitional = this.transitional || defaults.transitional;
+    const transitional = this.transitional || defaults$2.transitional;
     const forcedJSONParsing = transitional && transitional.forcedJSONParsing;
     const JSONRequested = this.responseType === 'json';
 
-    if (data && utils.isString(data) && ((forcedJSONParsing && !this.responseType) || JSONRequested)) {
+    if (data && utils$3.isString(data) && ((forcedJSONParsing && !this.responseType) || JSONRequested)) {
       const silentJSONParsing = transitional && transitional.silentJSONParsing;
       const strictJSONParsing = !silentJSONParsing && JSONRequested;
 
@@ -1603,19 +1603,19 @@ const defaults = {
   }
 };
 
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
+utils$3.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults$2.headers[method] = {};
 });
 
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+utils$3.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults$2.headers[method] = utils$3.merge(DEFAULT_CONTENT_TYPE);
 });
 
-var defaults$1 = defaults;
+var defaults$3 = defaults$2;
 
 // RawAxiosHeaders whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
-const ignoreDuplicateOf = utils.toObjectSet([
+const ignoreDuplicateOf = utils$3.toObjectSet([
   'age', 'authorization', 'content-length', 'content-type', 'etag',
   'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
   'last-modified', 'location', 'max-forwards', 'proxy-authorization',
@@ -1676,7 +1676,7 @@ function normalizeValue(value) {
     return value;
   }
 
-  return utils.isArray(value) ? value.map(normalizeValue) : String(value);
+  return utils$3.isArray(value) ? value.map(normalizeValue) : String(value);
 }
 
 function parseTokens(str) {
@@ -1696,17 +1696,17 @@ function isValidHeaderName(str) {
 }
 
 function matchHeaderValue(context, value, header, filter) {
-  if (utils.isFunction(filter)) {
+  if (utils$3.isFunction(filter)) {
     return filter.call(this, value, header);
   }
 
-  if (!utils.isString(value)) return;
+  if (!utils$3.isString(value)) return;
 
-  if (utils.isString(filter)) {
+  if (utils$3.isString(filter)) {
     return value.indexOf(filter) !== -1;
   }
 
-  if (utils.isRegExp(filter)) {
+  if (utils$3.isRegExp(filter)) {
     return filter.test(value);
   }
 }
@@ -1719,7 +1719,7 @@ function formatHeader(header) {
 }
 
 function buildAccessors(obj, header) {
-  const accessorName = utils.toCamelCase(' ' + header);
+  const accessorName = utils$3.toCamelCase(' ' + header);
 
   ['get', 'set', 'has'].forEach(methodName => {
     Object.defineProperty(obj, methodName + accessorName, {
@@ -1746,7 +1746,7 @@ class AxiosHeaders {
         throw new Error('header name must be a non-empty string');
       }
 
-      const key = utils.findKey(self, lHeader);
+      const key = utils$3.findKey(self, lHeader);
 
       if(!key || self[key] === undefined || _rewrite === true || (_rewrite === undefined && self[key] !== false)) {
         self[key || _header] = normalizeValue(_value);
@@ -1754,11 +1754,11 @@ class AxiosHeaders {
     }
 
     const setHeaders = (headers, _rewrite) =>
-      utils.forEach(headers, (_value, _header) => setHeader(_value, _header, _rewrite));
+      utils$3.forEach(headers, (_value, _header) => setHeader(_value, _header, _rewrite));
 
-    if (utils.isPlainObject(header) || header instanceof this.constructor) {
+    if (utils$3.isPlainObject(header) || header instanceof this.constructor) {
       setHeaders(header, valueOrRewrite);
-    } else if(utils.isString(header) && (header = header.trim()) && !isValidHeaderName(header)) {
+    } else if(utils$3.isString(header) && (header = header.trim()) && !isValidHeaderName(header)) {
       setHeaders(parseHeaders(header), valueOrRewrite);
     } else {
       header != null && setHeader(valueOrRewrite, header, rewrite);
@@ -1771,7 +1771,7 @@ class AxiosHeaders {
     header = normalizeHeader(header);
 
     if (header) {
-      const key = utils.findKey(this, header);
+      const key = utils$3.findKey(this, header);
 
       if (key) {
         const value = this[key];
@@ -1784,11 +1784,11 @@ class AxiosHeaders {
           return parseTokens(value);
         }
 
-        if (utils.isFunction(parser)) {
+        if (utils$3.isFunction(parser)) {
           return parser.call(this, value, key);
         }
 
-        if (utils.isRegExp(parser)) {
+        if (utils$3.isRegExp(parser)) {
           return parser.exec(value);
         }
 
@@ -1801,7 +1801,7 @@ class AxiosHeaders {
     header = normalizeHeader(header);
 
     if (header) {
-      const key = utils.findKey(this, header);
+      const key = utils$3.findKey(this, header);
 
       return !!(key && this[key] !== undefined && (!matcher || matchHeaderValue(this, this[key], key, matcher)));
     }
@@ -1817,7 +1817,7 @@ class AxiosHeaders {
       _header = normalizeHeader(_header);
 
       if (_header) {
-        const key = utils.findKey(self, _header);
+        const key = utils$3.findKey(self, _header);
 
         if (key && (!matcher || matchHeaderValue(self, self[key], key, matcher))) {
           delete self[key];
@@ -1827,7 +1827,7 @@ class AxiosHeaders {
       }
     }
 
-    if (utils.isArray(header)) {
+    if (utils$3.isArray(header)) {
       header.forEach(deleteHeader);
     } else {
       deleteHeader(header);
@@ -1856,8 +1856,8 @@ class AxiosHeaders {
     const self = this;
     const headers = {};
 
-    utils.forEach(this, (value, header) => {
-      const key = utils.findKey(headers, header);
+    utils$3.forEach(this, (value, header) => {
+      const key = utils$3.findKey(headers, header);
 
       if (key) {
         self[key] = normalizeValue(value);
@@ -1886,8 +1886,8 @@ class AxiosHeaders {
   toJSON(asStrings) {
     const obj = Object.create(null);
 
-    utils.forEach(this, (value, header) => {
-      value != null && value !== false && (obj[header] = asStrings && utils.isArray(value) ? value.join(', ') : value);
+    utils$3.forEach(this, (value, header) => {
+      value != null && value !== false && (obj[header] = asStrings && utils$3.isArray(value) ? value.join(', ') : value);
     });
 
     return obj;
@@ -1934,7 +1934,7 @@ class AxiosHeaders {
       }
     }
 
-    utils.isArray(header) ? header.forEach(defineAccessor) : defineAccessor(header);
+    utils$3.isArray(header) ? header.forEach(defineAccessor) : defineAccessor(header);
 
     return this;
   }
@@ -1942,8 +1942,8 @@ class AxiosHeaders {
 
 AxiosHeaders.accessor(['Content-Type', 'Content-Length', 'Accept', 'Accept-Encoding', 'User-Agent', 'Authorization']);
 
-utils.freezeMethods(AxiosHeaders.prototype);
-utils.freezeMethods(AxiosHeaders);
+utils$3.freezeMethods(AxiosHeaders.prototype);
+utils$3.freezeMethods(AxiosHeaders);
 
 var AxiosHeaders$1 = AxiosHeaders;
 
@@ -1956,12 +1956,12 @@ var AxiosHeaders$1 = AxiosHeaders;
  * @returns {*} The resulting transformed data
  */
 function transformData(fns, response) {
-  const config = this || defaults$1;
+  const config = this || defaults$3;
   const context = response || config;
   const headers = AxiosHeaders$1.from(context.headers);
   let data = context.data;
 
-  utils.forEach(fns, function transform(fn) {
+  utils$3.forEach(fns, function transform(fn) {
     data = fn.call(config, data, headers.normalize(), response ? response.status : undefined);
   });
 
@@ -1989,7 +1989,7 @@ function CanceledError(message, config, request) {
   this.name = 'CanceledError';
 }
 
-utils.inherits(CanceledError, AxiosError, {
+utils$3.inherits(CanceledError, AxiosError, {
   __CANCEL__: true
 });
 
@@ -2026,15 +2026,15 @@ var cookies = platform.isStandardBrowserEnv ?
         const cookie = [];
         cookie.push(name + '=' + encodeURIComponent(value));
 
-        if (utils.isNumber(expires)) {
+        if (utils$3.isNumber(expires)) {
           cookie.push('expires=' + new Date(expires).toGMTString());
         }
 
-        if (utils.isString(path)) {
+        if (utils$3.isString(path)) {
           cookie.push('path=' + path);
         }
 
-        if (utils.isString(domain)) {
+        if (utils$3.isString(domain)) {
           cookie.push('domain=' + domain);
         }
 
@@ -2160,7 +2160,7 @@ var isURLSameOrigin = platform.isStandardBrowserEnv ?
     * @returns {boolean} True if URL shares the same origin, otherwise false
     */
     return function isURLSameOrigin(requestURL) {
-      const parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+      const parsed = (utils$3.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
       return (parsed.protocol === originURL.protocol &&
           parsed.host === originURL.host);
     };
@@ -2277,7 +2277,7 @@ var xhrAdapter = isXHRAdapterSupported && function (config) {
       }
     }
 
-    if (utils.isFormData(requestData) && (platform.isStandardBrowserEnv || platform.isStandardBrowserWebWorkerEnv)) {
+    if (utils$3.isFormData(requestData) && (platform.isStandardBrowserEnv || platform.isStandardBrowserWebWorkerEnv)) {
       requestHeaders.setContentType(false); // Let the browser set it
     }
 
@@ -2408,13 +2408,13 @@ var xhrAdapter = isXHRAdapterSupported && function (config) {
 
     // Add headers to the request
     if ('setRequestHeader' in request) {
-      utils.forEach(requestHeaders.toJSON(), function setRequestHeader(val, key) {
+      utils$3.forEach(requestHeaders.toJSON(), function setRequestHeader(val, key) {
         request.setRequestHeader(key, val);
       });
     }
 
     // Add withCredentials to request if needed
-    if (!utils.isUndefined(config.withCredentials)) {
+    if (!utils$3.isUndefined(config.withCredentials)) {
       request.withCredentials = !!config.withCredentials;
     }
 
@@ -2469,7 +2469,7 @@ const knownAdapters = {
   xhr: xhrAdapter
 };
 
-utils.forEach(knownAdapters, (fn, value) => {
+utils$3.forEach(knownAdapters, (fn, value) => {
   if(fn) {
     try {
       Object.defineProperty(fn, 'name', {value});
@@ -2482,7 +2482,7 @@ utils.forEach(knownAdapters, (fn, value) => {
 
 var adapters = {
   getAdapter: (adapters) => {
-    adapters = utils.isArray(adapters) ? adapters : [adapters];
+    adapters = utils$3.isArray(adapters) ? adapters : [adapters];
 
     const {length} = adapters;
     let nameOrAdapter;
@@ -2490,7 +2490,7 @@ var adapters = {
 
     for (let i = 0; i < length; i++) {
       nameOrAdapter = adapters[i];
-      if((adapter = utils.isString(nameOrAdapter) ? knownAdapters[nameOrAdapter.toLowerCase()] : nameOrAdapter)) {
+      if((adapter = utils$3.isString(nameOrAdapter) ? knownAdapters[nameOrAdapter.toLowerCase()] : nameOrAdapter)) {
         break;
       }
     }
@@ -2504,13 +2504,13 @@ var adapters = {
       }
 
       throw new Error(
-        utils.hasOwnProp(knownAdapters, nameOrAdapter) ?
+        utils$3.hasOwnProp(knownAdapters, nameOrAdapter) ?
           `Adapter '${nameOrAdapter}' is not available in the build` :
           `Unknown adapter '${nameOrAdapter}'`
       );
     }
 
-    if (!utils.isFunction(adapter)) {
+    if (!utils$3.isFunction(adapter)) {
       throw new TypeError('adapter is not a function');
     }
 
@@ -2558,7 +2558,7 @@ function dispatchRequest(config) {
     config.headers.setContentType('application/x-www-form-urlencoded', false);
   }
 
-  const adapter = adapters.getAdapter(config.adapter || defaults$1.adapter);
+  const adapter = adapters.getAdapter(config.adapter || defaults$3.adapter);
 
   return adapter(config).then(function onAdapterResolution(response) {
     throwIfCancellationRequested(config);
@@ -2609,11 +2609,11 @@ function mergeConfig$1(config1, config2) {
   const config = {};
 
   function getMergedValue(target, source, caseless) {
-    if (utils.isPlainObject(target) && utils.isPlainObject(source)) {
-      return utils.merge.call({caseless}, target, source);
-    } else if (utils.isPlainObject(source)) {
-      return utils.merge({}, source);
-    } else if (utils.isArray(source)) {
+    if (utils$3.isPlainObject(target) && utils$3.isPlainObject(source)) {
+      return utils$3.merge.call({caseless}, target, source);
+    } else if (utils$3.isPlainObject(source)) {
+      return utils$3.merge({}, source);
+    } else if (utils$3.isArray(source)) {
       return source.slice();
     }
     return source;
@@ -2621,25 +2621,25 @@ function mergeConfig$1(config1, config2) {
 
   // eslint-disable-next-line consistent-return
   function mergeDeepProperties(a, b, caseless) {
-    if (!utils.isUndefined(b)) {
+    if (!utils$3.isUndefined(b)) {
       return getMergedValue(a, b, caseless);
-    } else if (!utils.isUndefined(a)) {
+    } else if (!utils$3.isUndefined(a)) {
       return getMergedValue(undefined, a, caseless);
     }
   }
 
   // eslint-disable-next-line consistent-return
   function valueFromConfig2(a, b) {
-    if (!utils.isUndefined(b)) {
+    if (!utils$3.isUndefined(b)) {
       return getMergedValue(undefined, b);
     }
   }
 
   // eslint-disable-next-line consistent-return
   function defaultToConfig2(a, b) {
-    if (!utils.isUndefined(b)) {
+    if (!utils$3.isUndefined(b)) {
       return getMergedValue(undefined, b);
-    } else if (!utils.isUndefined(a)) {
+    } else if (!utils$3.isUndefined(a)) {
       return getMergedValue(undefined, a);
     }
   }
@@ -2684,10 +2684,10 @@ function mergeConfig$1(config1, config2) {
     headers: (a, b) => mergeDeepProperties(headersToObject(a), headersToObject(b), true)
   };
 
-  utils.forEach(Object.keys(config1).concat(Object.keys(config2)), function computeConfigValue(prop) {
+  utils$3.forEach(Object.keys(config1).concat(Object.keys(config2)), function computeConfigValue(prop) {
     const merge = mergeMap[prop] || mergeDeepProperties;
     const configValue = merge(config1[prop], config2[prop], prop);
-    (utils.isUndefined(configValue) && merge !== mergeDirectKeys) || (config[prop] = configValue);
+    (utils$3.isUndefined(configValue) && merge !== mergeDirectKeys) || (config[prop] = configValue);
   });
 
   return config;
@@ -2843,12 +2843,12 @@ class Axios {
     let contextHeaders;
 
     // Flatten headers
-    contextHeaders = headers && utils.merge(
+    contextHeaders = headers && utils$3.merge(
       headers.common,
       headers[config.method]
     );
 
-    contextHeaders && utils.forEach(
+    contextHeaders && utils$3.forEach(
       ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
       (method) => {
         delete headers[method];
@@ -2935,7 +2935,7 @@ class Axios {
 }
 
 // Provide aliases for supported request methods
-utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+utils$3.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
   /*eslint func-names:0*/
   Axios.prototype[method] = function(url, config) {
     return this.request(mergeConfig$1(config || {}, {
@@ -2946,7 +2946,7 @@ utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData
   };
 });
 
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+utils$3.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
   /*eslint func-names:0*/
 
   function generateHTTPMethod(isForm) {
@@ -3122,7 +3122,7 @@ function spread(callback) {
  * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
  */
 function isAxiosError(payload) {
-  return utils.isObject(payload) && (payload.isAxiosError === true);
+  return utils$3.isObject(payload) && (payload.isAxiosError === true);
 }
 
 const HttpStatusCode = {
@@ -3206,13 +3206,13 @@ var HttpStatusCode$1 = HttpStatusCode;
  */
 function createInstance(defaultConfig) {
   const context = new Axios$1(defaultConfig);
-  const instance = bind(Axios$1.prototype.request, context);
+  const instance = bind$4(Axios$1.prototype.request, context);
 
   // Copy axios.prototype to instance
-  utils.extend(instance, Axios$1.prototype, context, {allOwnKeys: true});
+  utils$3.extend(instance, Axios$1.prototype, context, {allOwnKeys: true});
 
   // Copy context to instance
-  utils.extend(instance, context, null, {allOwnKeys: true});
+  utils$3.extend(instance, context, null, {allOwnKeys: true});
 
   // Factory for creating new instances
   instance.create = function create(instanceConfig) {
@@ -3223,7 +3223,7 @@ function createInstance(defaultConfig) {
 }
 
 // Create the default instance to be exported
-const axios = createInstance(defaults$1);
+const axios = createInstance(defaults$3);
 
 // Expose Axios class to allow class inheritance
 axios.Axios = Axios$1;
@@ -3256,7 +3256,7 @@ axios.mergeConfig = mergeConfig$1;
 
 axios.AxiosHeaders = AxiosHeaders$1;
 
-axios.formToJSON = thing => formDataToJSON(utils.isHTMLForm(thing) ? new FormData(thing) : thing);
+axios.formToJSON = thing => formDataToJSON(utils$3.isHTMLForm(thing) ? new FormData(thing) : thing);
 
 axios.HttpStatusCode = HttpStatusCode$1;
 
@@ -3264,6 +3264,23 @@ axios.default = axios;
 
 // this module should only have a default export
 var axios$1 = axios;
+
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function getAugmentedNamespace(n) {
+	if (n.__esModule) return n;
+	var a = Object.defineProperty({}, '__esModule', {value: true});
+	Object.keys(n).forEach(function (k) {
+		var d = Object.getOwnPropertyDescriptor(n, k);
+		Object.defineProperty(a, k, d.get ? d : {
+			enumerable: true,
+			get: function () {
+				return n[k];
+			}
+		});
+	});
+	return a;
+}
 
 var react = {exports: {}};
 
@@ -3283,7 +3300,7 @@ var B$1={isMounted:function(){return !1},enqueueForceUpdate:function(){},enqueue
 E$1.prototype.setState=function(a,b){if("object"!==typeof a&&"function"!==typeof a&&null!=a)throw Error("setState(...): takes an object of state variables to update or a function which returns an object of state variables.");this.updater.enqueueSetState(this,a,b,"setState");};E$1.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate");};function F(){}F.prototype=E$1.prototype;function G$1(a,b,e){this.props=a;this.context=b;this.refs=D$1;this.updater=e||B$1;}var H$1=G$1.prototype=new F;
 H$1.constructor=G$1;C$1(H$1,E$1.prototype);H$1.isPureReactComponent=!0;var I$1=Array.isArray,J=Object.prototype.hasOwnProperty,K$1={current:null},L$1={key:!0,ref:!0,__self:!0,__source:!0};
 function M$1(a,b,e){var d,c={},k=null,h=null;if(null!=b)for(d in void 0!==b.ref&&(h=b.ref),void 0!==b.key&&(k=""+b.key),b)J.call(b,d)&&!L$1.hasOwnProperty(d)&&(c[d]=b[d]);var g=arguments.length-2;if(1===g)c.children=e;else if(1<g){for(var f=Array(g),m=0;m<g;m++)f[m]=arguments[m+2];c.children=f;}if(a&&a.defaultProps)for(d in g=a.defaultProps,g)void 0===c[d]&&(c[d]=g[d]);return {$$typeof:l$2,type:a,key:k,ref:h,props:c,_owner:K$1.current}}
-function N$1(a,b){return {$$typeof:l$2,type:a.type,key:b,ref:a.ref,props:a.props,_owner:a._owner}}function O$1(a){return "object"===typeof a&&null!==a&&a.$$typeof===l$2}function escape(a){var b={"=":"=0",":":"=2"};return "$"+a.replace(/[=:]/g,function(a){return b[a]})}var P$1=/\/+/g;function Q$1(a,b){return "object"===typeof a&&null!==a&&null!=a.key?escape(""+a.key):b.toString(36)}
+function N$1(a,b){return {$$typeof:l$2,type:a.type,key:b,ref:a.ref,props:a.props,_owner:a._owner}}function O$1(a){return "object"===typeof a&&null!==a&&a.$$typeof===l$2}function escape$1(a){var b={"=":"=0",":":"=2"};return "$"+a.replace(/[=:]/g,function(a){return b[a]})}var P$1=/\/+/g;function Q$1(a,b){return "object"===typeof a&&null!==a&&null!=a.key?escape$1(""+a.key):b.toString(36)}
 function R$1(a,b,e,d,c){var k=typeof a;if("undefined"===k||"boolean"===k)a=null;var h=!1;if(null===a)h=!0;else switch(k){case "string":case "number":h=!0;break;case "object":switch(a.$$typeof){case l$2:case n$2:h=!0;}}if(h)return h=a,c=c(h),a=""===d?"."+Q$1(h,0):d,I$1(c)?(e="",null!=a&&(e=a.replace(P$1,"$&/")+"/"),R$1(c,b,e,"",function(a){return a})):null!=c&&(O$1(c)&&(c=N$1(c,e+(!c.key||h&&h.key===c.key?"":(""+c.key).replace(P$1,"$&/")+"/")+a)),b.push(c)),1;h=0;d=""===d?".":d+":";if(I$1(a))for(var g=0;g<a.length;g++){k=
 a[g];var f=d+Q$1(k,g);h+=R$1(k,b,e,f,c);}else if(f=A$1(a),"function"===typeof f)for(a=f.call(a),g=0;!(k=a.next()).done;)k=k.value,f=d+Q$1(k,g++),h+=R$1(k,b,e,f,c);else if("object"===k)throw b=String(a),Error("Objects are not valid as a React child (found: "+("[object Object]"===b?"object with keys {"+Object.keys(a).join(", ")+"}":b)+"). If you meant to render a collection of children, use an array instead.");return h}
 function S$1(a,b,e){if(null==a)return a;var d=[],c=0;R$1(a,d,"","",function(a){return b.call(e,a,c++)});return d}function T$1(a){if(-1===a._status){var b=a._result;b=b();b.then(function(b){if(0===a._status||-1===a._status)a._status=1,a._result=b;},function(b){if(0===a._status||-1===a._status)a._status=2,a._result=b;});-1===a._status&&(a._status=0,a._result=b);}if(1===a._status)return a._result.default;throw a._result;}
@@ -6215,7 +6232,7 @@ function note(valid, message) {
 function resetWarned$1() {
   warned = {};
 }
-function call(method, valid, message) {
+function call$1(method, valid, message) {
   if (!valid && !warned[message]) {
     method(false, message);
     warned[message] = true;
@@ -6224,12 +6241,12 @@ function call(method, valid, message) {
 
 /** @see Same as {@link warning}, but only warn once for the same message */
 function warningOnce(valid, message) {
-  call(warning$3, valid, message);
+  call$1(warning$3, valid, message);
 }
 
 /** @see Same as {@link warning}, but only warn once for the same message */
 function noteOnce(valid, message) {
-  call(note, valid, message);
+  call$1(note, valid, message);
 }
 warningOnce.preMessage = preMessage;
 warningOnce.resetWarned = resetWarned$1;
@@ -37197,11 +37214,11 @@ var reactIs_production_min = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var b=Symbol.for("react.element"),c=Symbol.for("react.portal"),d=Symbol.for("react.fragment"),e=Symbol.for("react.strict_mode"),f$1=Symbol.for("react.profiler"),g=Symbol.for("react.provider"),h=Symbol.for("react.context"),k$1=Symbol.for("react.server_context"),l$1=Symbol.for("react.forward_ref"),m$1=Symbol.for("react.suspense"),n$1=Symbol.for("react.suspense_list"),p$1=Symbol.for("react.memo"),q$1=Symbol.for("react.lazy"),t=Symbol.for("react.offscreen"),u;u=Symbol.for("react.module.reference");
-function v(a){if("object"===typeof a&&null!==a){var r=a.$$typeof;switch(r){case b:switch(a=a.type,a){case d:case f$1:case e:case m$1:case n$1:return a;default:switch(a=a&&a.$$typeof,a){case k$1:case h:case l$1:case q$1:case p$1:case g:return a;default:return r}}case c:return r}}}reactIs_production_min.ContextConsumer=h;reactIs_production_min.ContextProvider=g;reactIs_production_min.Element=b;reactIs_production_min.ForwardRef=l$1;reactIs_production_min.Fragment=d;reactIs_production_min.Lazy=q$1;reactIs_production_min.Memo=p$1;reactIs_production_min.Portal=c;reactIs_production_min.Profiler=f$1;reactIs_production_min.StrictMode=e;reactIs_production_min.Suspense=m$1;
+var b=Symbol.for("react.element"),c=Symbol.for("react.portal"),d=Symbol.for("react.fragment"),e=Symbol.for("react.strict_mode"),f$1=Symbol.for("react.profiler"),g=Symbol.for("react.provider"),h=Symbol.for("react.context"),k$1=Symbol.for("react.server_context"),l$1=Symbol.for("react.forward_ref"),m$2=Symbol.for("react.suspense"),n$1=Symbol.for("react.suspense_list"),p$1=Symbol.for("react.memo"),q$1=Symbol.for("react.lazy"),t=Symbol.for("react.offscreen"),u;u=Symbol.for("react.module.reference");
+function v(a){if("object"===typeof a&&null!==a){var r=a.$$typeof;switch(r){case b:switch(a=a.type,a){case d:case f$1:case e:case m$2:case n$1:return a;default:switch(a=a&&a.$$typeof,a){case k$1:case h:case l$1:case q$1:case p$1:case g:return a;default:return r}}case c:return r}}}reactIs_production_min.ContextConsumer=h;reactIs_production_min.ContextProvider=g;reactIs_production_min.Element=b;reactIs_production_min.ForwardRef=l$1;reactIs_production_min.Fragment=d;reactIs_production_min.Lazy=q$1;reactIs_production_min.Memo=p$1;reactIs_production_min.Portal=c;reactIs_production_min.Profiler=f$1;reactIs_production_min.StrictMode=e;reactIs_production_min.Suspense=m$2;
 reactIs_production_min.SuspenseList=n$1;reactIs_production_min.isAsyncMode=function(){return !1};reactIs_production_min.isConcurrentMode=function(){return !1};reactIs_production_min.isContextConsumer=function(a){return v(a)===h};reactIs_production_min.isContextProvider=function(a){return v(a)===g};reactIs_production_min.isElement=function(a){return "object"===typeof a&&null!==a&&a.$$typeof===b};reactIs_production_min.isForwardRef=function(a){return v(a)===l$1};reactIs_production_min.isFragment=function(a){return v(a)===d};reactIs_production_min.isLazy=function(a){return v(a)===q$1};reactIs_production_min.isMemo=function(a){return v(a)===p$1};
-reactIs_production_min.isPortal=function(a){return v(a)===c};reactIs_production_min.isProfiler=function(a){return v(a)===f$1};reactIs_production_min.isStrictMode=function(a){return v(a)===e};reactIs_production_min.isSuspense=function(a){return v(a)===m$1};reactIs_production_min.isSuspenseList=function(a){return v(a)===n$1};
-reactIs_production_min.isValidElementType=function(a){return "string"===typeof a||"function"===typeof a||a===d||a===f$1||a===e||a===m$1||a===n$1||a===t||"object"===typeof a&&null!==a&&(a.$$typeof===q$1||a.$$typeof===p$1||a.$$typeof===g||a.$$typeof===h||a.$$typeof===l$1||a.$$typeof===u||void 0!==a.getModuleId)?!0:!1};reactIs_production_min.typeOf=v;
+reactIs_production_min.isPortal=function(a){return v(a)===c};reactIs_production_min.isProfiler=function(a){return v(a)===f$1};reactIs_production_min.isStrictMode=function(a){return v(a)===e};reactIs_production_min.isSuspense=function(a){return v(a)===m$2};reactIs_production_min.isSuspenseList=function(a){return v(a)===n$1};
+reactIs_production_min.isValidElementType=function(a){return "string"===typeof a||"function"===typeof a||a===d||a===f$1||a===e||a===m$2||a===n$1||a===t||"object"===typeof a&&null!==a&&(a.$$typeof===q$1||a.$$typeof===p$1||a.$$typeof===g||a.$$typeof===h||a.$$typeof===l$1||a.$$typeof===u||void 0!==a.getModuleId)?!0:!1};reactIs_production_min.typeOf=v;
 
 var reactIs_development = {};
 
@@ -38795,7 +38812,7 @@ var LAYER = '@layer';
  * @param {number}
  * @return {number}
  */
-var abs = Math.abs;
+var abs$2 = Math.abs;
 
 /**
  * @param {number}
@@ -38817,7 +38834,7 @@ function trim (value) {
  * @param {string} replacement
  * @return {string}
  */
-function replace (value, pattern, replacement) {
+function replace$1 (value, pattern, replacement) {
 	return value.replace(pattern, replacement)
 }
 
@@ -39092,7 +39109,7 @@ function identifier (index) {
  * @return {object[]}
  */
 function compile (value) {
-	return dealloc(parse('', null, null, null, [''], value = alloc(value), 0, [0], value))
+	return dealloc(parse$2('', null, null, null, [''], value = alloc(value), 0, [0], value))
 }
 
 /**
@@ -39107,7 +39124,7 @@ function compile (value) {
  * @param {string[]} declarations
  * @return {object}
  */
-function parse (value, root, parent, rule, rules, rulesets, pseudo, points, declarations) {
+function parse$2 (value, root, parent, rule, rules, rulesets, pseudo, points, declarations) {
 	var index = 0;
 	var offset = 0;
 	var length = pseudo;
@@ -39129,7 +39146,7 @@ function parse (value, root, parent, rule, rules, rulesets, pseudo, points, decl
 			// (
 			case 40:
 				if (previous != 108 && charat(characters, length - 1) == 58) {
-					if (indexof(characters += replace(delimit(character), '&', '&\f'), '&\f', abs(index ? points[index - 1] : 0)) != -1)
+					if (indexof(characters += replace$1(delimit(character), '&', '&\f'), '&\f', abs$2(index ? points[index - 1] : 0)) != -1)
 						ampersand = -1;
 					break
 				}
@@ -39165,9 +39182,9 @@ function parse (value, root, parent, rule, rules, rulesets, pseudo, points, decl
 					// \0 }
 					case 0: case 125: scanning = 0;
 					// ;
-					case 59 + offset: if (ampersand == -1) characters = replace(characters, /\f/g, '');
+					case 59 + offset: if (ampersand == -1) characters = replace$1(characters, /\f/g, '');
 						if (property > 0 && (strlen(characters) - length || (variable === 0 && previous === 47)))
-							append(property > 32 ? declaration(characters + ';', rule, parent, length - 1, declarations) : declaration(replace(characters, ' ', '') + ';', rule, parent, length - 2, declarations), declarations);
+							append(property > 32 ? declaration(characters + ';', rule, parent, length - 1, declarations) : declaration(replace$1(characters, ' ', '') + ';', rule, parent, length - 2, declarations), declarations);
 						break
 					// @ ;
 					case 59: characters += ';';
@@ -39177,7 +39194,7 @@ function parse (value, root, parent, rule, rules, rulesets, pseudo, points, decl
 
 						if (character === 123)
 							if (offset === 0)
-								parse(characters, root, reference, reference, props, rulesets, length, points, children);
+								parse$2(characters, root, reference, reference, props, rulesets, length, points, children);
 							else {
 								switch (atrule) {
 									// c(ontainer)
@@ -39191,8 +39208,8 @@ function parse (value, root, parent, rule, rules, rulesets, pseudo, points, decl
 									// d(ocument) m(edia) s(upports)
 									case 100: case 109: case 115:
 								}
-								if (offset) parse(value, reference, reference, rule && append(ruleset(value, reference, reference, 0, 0, rules, points, type, rules, props = [], length, children), children), rules, children, length, points, rule ? props : children);
-								else parse(characters, reference, reference, reference, [''], children, 0, points, children);
+								if (offset) parse$2(value, reference, reference, rule && append(ruleset(value, reference, reference, 0, 0, rules, points, type, rules, props = [], length, children), children), rules, children, length, points, rule ? props : children);
+								else parse$2(characters, reference, reference, reference, [''], children, 0, points, children);
 							}
 				}
 
@@ -39256,8 +39273,8 @@ function ruleset (value, root, parent, index, offset, rules, points, type, props
 	var size = sizeof(rule);
 
 	for (var i = 0, j = 0, k = 0; i < index; ++i)
-		for (var x = 0, y = substr(value, post + 1, post = abs(j = points[i])), z = value; x < size; ++x)
-			if (z = trim(j > 0 ? rule[x] + ' ' + y : replace(y, /&\f/g, rule[x])))
+		for (var x = 0, y = substr(value, post + 1, post = abs$2(j = points[i])), z = value; x < size; ++x)
+			if (z = trim(j > 0 ? rule[x] + ' ' + y : replace$1(y, /&\f/g, rule[x])))
 				props[k++] = z;
 
 	return node(value, root, parent, offset === 0 ? RULESET : type, props, children, length, siblings)
@@ -39307,7 +39324,7 @@ function serialize (children, callback) {
  * @param {function} callback
  * @return {string}
  */
-function stringify (element, index, children, callback) {
+function stringify$2 (element, index, children, callback) {
 	switch (element.type) {
 		case LAYER: if (element.children.length) break
 		case IMPORT: case NAMESPACE: case DECLARATION: return element.return = element.return || element.value
@@ -39416,7 +39433,7 @@ var MULTI_VALUE = '_multi_value_';
 // ============================================================================
 // Preprocessor style content to browser support one
 function normalizeStyle(styleStr) {
-  var serialized = serialize(compile(styleStr), stringify);
+  var serialized = serialize(compile(styleStr), stringify$2);
   return serialized.replace(/\{%%%\:[^;];}/g, ';');
 }
 function isCompoundCSSProperty(value) {
@@ -39985,7 +40002,7 @@ function _toArray(r) {
   return _arrayWithHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableRest();
 }
 
-function get(entity, path) {
+function get$1(entity, path) {
   var current = entity;
   for (var i = 0; i < path.length; i += 1) {
     if (current === null || current === undefined) {
@@ -40023,7 +40040,7 @@ function internalSet(entity, paths, value, removeIfUndefined) {
 function set(entity, paths, value) {
   var removeIfUndefined = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
   // Do nothing if `removeIfUndefined` and parent object not exist
-  if (paths.length && removeIfUndefined && value === undefined && !get(entity, paths.slice(0, -1))) {
+  if (paths.length && removeIfUndefined && value === undefined && !get$1(entity, paths.slice(0, -1))) {
     return entity;
   }
   return internalSet(entity, paths, value, removeIfUndefined);
@@ -40039,7 +40056,7 @@ var keys = typeof Reflect === 'undefined' ? Object.keys : Reflect.ownKeys;
 /**
  * Merge objects which will create
  */
-function merge$1() {
+function merge$2() {
   for (var _len = arguments.length, sources = new Array(_len), _key = 0; _key < _len; _key++) {
     sources[_key] = arguments[_key];
   }
@@ -40047,13 +40064,13 @@ function merge$1() {
   sources.forEach(function (src) {
     function internalMerge(path, parentLoopSet) {
       var loopSet = new Set(parentLoopSet);
-      var value = get(src, path);
+      var value = get$1(src, path);
       var isArr = Array.isArray(value);
       if (isArr || isObject(value)) {
         // Only add not loop obj
         if (!loopSet.has(value)) {
           loopSet.add(value);
-          var originValue = get(clone, path);
+          var originValue = get$1(clone, path);
           if (isArr) {
             // Array will always be override
             clone = set(clone, path, []);
@@ -40472,7 +40489,7 @@ const seedToken = Object.assign(Object.assign({}, defaultPresetColors), {
 });
 var seedToken$1 = seedToken;
 
-const round = Math.round;
+const round$2 = Math.round;
 
 /**
  * Support format, alpha unit will check the % mark:
@@ -40634,7 +40651,7 @@ class FastColor {
       if (delta === 0) {
         this._h = 0;
       } else {
-        this._h = round(60 * (this.r === this.getMax() ? (this.g - this.b) / delta + (this.g < this.b ? 6 : 0) : this.g === this.getMax() ? (this.b - this.r) / delta + 2 : (this.r - this.g) / delta + 4));
+        this._h = round$2(60 * (this.r === this.getMax() ? (this.g - this.b) / delta + (this.g < this.b ? 6 : 0) : this.g === this.getMax() ? (this.b - this.r) / delta + 2 : (this.r - this.g) / delta + 4));
       }
     }
     return this._h;
@@ -40715,10 +40732,10 @@ class FastColor {
     const p = amount / 100;
     const calc = key => (color[key] - this[key]) * p + this[key];
     const rgba = {
-      r: round(calc('r')),
-      g: round(calc('g')),
-      b: round(calc('b')),
-      a: round(calc('a') * 100) / 100
+      r: round$2(calc('r')),
+      g: round$2(calc('g')),
+      b: round$2(calc('b')),
+      a: round$2(calc('a') * 100) / 100
     };
     return this._c(rgba);
   }
@@ -40752,7 +40769,7 @@ class FastColor {
     const bg = this._c(background);
     const alpha = this.a + bg.a * (1 - this.a);
     const calc = key => {
-      return round((this[key] * this.a + bg[key] * bg.a * (1 - this.a)) / alpha);
+      return round$2((this[key] * this.a + bg[key] * bg.a * (1 - this.a)) / alpha);
     };
     return this._c({
       r: calc('r'),
@@ -40788,7 +40805,7 @@ class FastColor {
     const bHex = (this.b || 0).toString(16);
     hex += bHex.length === 2 ? bHex : '0' + bHex;
     if (typeof this.a === 'number' && this.a >= 0 && this.a < 1) {
-      const aHex = round(this.a * 255).toString(16);
+      const aHex = round$2(this.a * 255).toString(16);
       hex += aHex.length === 2 ? aHex : '0' + aHex;
     }
     return hex;
@@ -40807,8 +40824,8 @@ class FastColor {
   /** CSS support color pattern */
   toHslString() {
     const h = this.getHue();
-    const s = round(this.getSaturation() * 100);
-    const l = round(this.getLightness() * 100);
+    const s = round$2(this.getSaturation() * 100);
+    const l = round$2(this.getLightness() * 100);
     return this.a !== 1 ? `hsla(${h},${s}%,${l}%,${this.a})` : `hsl(${h},${s}%,${l}%)`;
   }
 
@@ -40888,7 +40905,7 @@ class FastColor {
     this._l = l;
     this.a = typeof a === 'number' ? a : 1;
     if (s <= 0) {
-      const rgb = round(l * 255);
+      const rgb = round$2(l * 255);
       this.r = rgb;
       this.g = rgb;
       this.b = rgb;
@@ -40919,9 +40936,9 @@ class FastColor {
       b = secondComponent;
     }
     const lightnessModification = l - chroma / 2;
-    this.r = round((r + lightnessModification) * 255);
-    this.g = round((g + lightnessModification) * 255);
-    this.b = round((b + lightnessModification) * 255);
+    this.r = round$2((r + lightnessModification) * 255);
+    this.g = round$2((g + lightnessModification) * 255);
+    this.b = round$2((b + lightnessModification) * 255);
   }
   fromHsv({
     h,
@@ -40933,7 +40950,7 @@ class FastColor {
     this._s = s;
     this._v = v;
     this.a = typeof a === 'number' ? a : 1;
-    const vv = round(v * 255);
+    const vv = round$2(v * 255);
     this.r = vv;
     this.g = vv;
     this.b = vv;
@@ -40943,9 +40960,9 @@ class FastColor {
     const hh = h / 60;
     const i = Math.floor(hh);
     const ff = hh - i;
-    const p = round(v * (1.0 - s) * 255);
-    const q = round(v * (1.0 - s * ff) * 255);
-    const t = round(v * (1.0 - s * (1.0 - ff)) * 255);
+    const p = round$2(v * (1.0 - s) * 255);
+    const q = round$2(v * (1.0 - s * ff) * 255);
+    const t = round$2(v * (1.0 - s * (1.0 - ff)) * 255);
     switch (i) {
       case 0:
         this.g = t;
@@ -40995,7 +41012,7 @@ class FastColor {
   fromRgbString(trimStr) {
     const cells = splitColorStr(trimStr, (num, txt) =>
     // Convert percentage to number. e.g. 50% -> 128
-    txt.includes('%') ? round(num / 100 * 255) : num);
+    txt.includes('%') ? round$2(num / 100 * 255) : num);
     this.r = cells[0];
     this.g = cells[1];
     this.b = cells[2];
@@ -41929,7 +41946,7 @@ var recording = true;
  * This function will do as `Object.assign` in production. But will use Object.defineProperty:get to
  * pass all value access in development. To support statistic field usage with alias token.
  */
-function merge() {
+function merge$1() {
   for (var _len = arguments.length, objs = new Array(_len), _key = 0; _key < _len; _key++) {
     objs[_key] = arguments[_key];
   }
@@ -41998,7 +42015,7 @@ var statisticToken = function statisticToken(token) {
 function getDefaultComponentToken(component, token, getDefaultToken) {
   if (typeof getDefaultToken === 'function') {
     var _token$component;
-    return getDefaultToken(merge(token, (_token$component = token[component]) !== null && _token$component !== void 0 ? _token$component : {}));
+    return getDefaultToken(merge$1(token, (_token$component = token[component]) !== null && _token$component !== void 0 ? _token$component : {}));
   }
   return getDefaultToken !== null && getDefaultToken !== void 0 ? getDefaultToken : {};
 }
@@ -42313,7 +42330,7 @@ function genStyleUtils(config) {
             defaultComponentToken[key] = "var(".concat(token2CSSVar(key, getCompVarPrefix(component, cssVar.prefix)), ")");
           });
         }
-        var mergedToken = merge(proxyToken, {
+        var mergedToken = merge$1(proxyToken, {
           componentCls: componentCls,
           prefixCls: prefixCls,
           iconCls: ".".concat(iconPrefixCls),
@@ -43525,7 +43542,7 @@ function wrapKeyToObject(key) {
     key: String(keyObj.key)
   });
 }
-function parseKeys() {
+function parseKeys$1() {
   var keys = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   return keys.map(wrapKeyToObject);
 }
@@ -43535,8 +43552,8 @@ function diffKeys() {
   var list = [];
   var currentIndex = 0;
   var currentLen = currentKeys.length;
-  var prevKeyObjects = parseKeys(prevKeys);
-  var currentKeyObjects = parseKeys(currentKeys);
+  var prevKeyObjects = parseKeys$1(prevKeys);
+  var currentKeyObjects = parseKeys$1(currentKeys);
 
   // Check prev keys to insert or keep
   prevKeyObjects.forEach(function (keyObj) {
@@ -43704,7 +43721,7 @@ function genCSSMotionList(transitionSupport) {
       value: function getDerivedStateFromProps(_ref3, _ref4) {
         var keys = _ref3.keys;
         var keyEntities = _ref4.keyEntities;
-        var parsedKeyObjects = parseKeys(keys);
+        var parsedKeyObjects = parseKeys$1(keys);
         var mixedKeyEntities = diffKeys(keyEntities, parsedKeyObjects);
         return {
           keyEntities: mixedKeyEntities.filter(function (entity) {
@@ -44061,7 +44078,7 @@ const ProviderChildren = props => {
   }), children);
   const validateMessages = react.exports.useMemo(() => {
     var _a, _b, _c, _d;
-    return merge$1(((_a = defaultLocale.Form) === null || _a === void 0 ? void 0 : _a.defaultValidateMessages) || {}, ((_c = (_b = memoedConfig.locale) === null || _b === void 0 ? void 0 : _b.Form) === null || _c === void 0 ? void 0 : _c.defaultValidateMessages) || {}, ((_d = memoedConfig.form) === null || _d === void 0 ? void 0 : _d.validateMessages) || {}, (form === null || form === void 0 ? void 0 : form.validateMessages) || {});
+    return merge$2(((_a = defaultLocale.Form) === null || _a === void 0 ? void 0 : _a.defaultValidateMessages) || {}, ((_c = (_b = memoedConfig.locale) === null || _b === void 0 ? void 0 : _b.Form) === null || _c === void 0 ? void 0 : _c.defaultValidateMessages) || {}, ((_d = memoedConfig.form) === null || _d === void 0 ? void 0 : _d.validateMessages) || {}, (form === null || form === void 0 ? void 0 : form.validateMessages) || {});
   }, [memoedConfig, form === null || form === void 0 ? void 0 : form.validateMessages]);
   if (Object.keys(validateMessages).length > 0) {
     childNode = /*#__PURE__*/react.exports.createElement(ValidateMessagesContext.Provider, {
@@ -45866,7 +45883,7 @@ const prepareComponentToken$1 = token => ({
 // ============================== Export ==============================
 var useStyle$1 = genStyleHooks('Message', token => {
   // Gen-style functions here
-  const combinedToken = merge(token, {
+  const combinedToken = merge$1(token, {
     height: 150
   });
   return [genMessageStyle(combinedToken)];
@@ -46437,11 +46454,11 @@ var fullClone = _objectSpread2({}, ReactDOM$1);
 var version = fullClone.version,
   reactRender = fullClone.render,
   unmountComponentAtNode = fullClone.unmountComponentAtNode;
-var createRoot;
+var createRoot$1;
 try {
   var mainVersion = Number((version || '').split('.')[0]);
   if (mainVersion >= 18) {
-    createRoot = fullClone.createRoot;
+    createRoot$1 = fullClone.createRoot;
   }
 } catch (e) {
   // Do nothing;
@@ -46458,7 +46475,7 @@ var MARK = '__rc_react_root__';
 
 function modernRender(node, container) {
   toggleWarning(true);
-  var root = container[MARK] || createRoot(container);
+  var root = container[MARK] || createRoot$1(container);
   toggleWarning(false);
   root.render(node);
   container[MARK] = root;
@@ -46467,7 +46484,7 @@ function legacyRender(node, container) {
   reactRender === null || reactRender === void 0 || reactRender(node, container);
 }
 function render(node, container) {
-  if (createRoot) {
+  if (createRoot$1) {
     modernRender(node, container);
     return;
   }
@@ -46507,7 +46524,7 @@ function _unmount() {
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          if (!(createRoot !== undefined)) {
+          if (!(createRoot$1 !== undefined)) {
             _context2.next = 2;
             break;
           }
@@ -47089,7 +47106,7 @@ const prepareComponentToken = token => {
 };
 // ============================== Export ==============================
 var useStyle = genStyleHooks('Spin', token => {
-  const spinToken = merge(token, {
+  const spinToken = merge$1(token, {
     spinDotDefault: token.colorTextDescription
   });
   return [genSpinStyle(spinToken)];
@@ -47466,6 +47483,2516 @@ if (process.env.NODE_ENV === 'test') ;
 if (process.env.NODE_ENV === 'test') ;
 var message$1 = staticMethods;
 
+/** @type {import('./type')} */
+var type = TypeError;
+
+var _nodeResolve_empty = {};
+
+var _nodeResolve_empty$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  'default': _nodeResolve_empty
+});
+
+var require$$0 = /*@__PURE__*/getAugmentedNamespace(_nodeResolve_empty$1);
+
+var hasMap = typeof Map === 'function' && Map.prototype;
+var mapSizeDescriptor = Object.getOwnPropertyDescriptor && hasMap ? Object.getOwnPropertyDescriptor(Map.prototype, 'size') : null;
+var mapSize = hasMap && mapSizeDescriptor && typeof mapSizeDescriptor.get === 'function' ? mapSizeDescriptor.get : null;
+var mapForEach = hasMap && Map.prototype.forEach;
+var hasSet = typeof Set === 'function' && Set.prototype;
+var setSizeDescriptor = Object.getOwnPropertyDescriptor && hasSet ? Object.getOwnPropertyDescriptor(Set.prototype, 'size') : null;
+var setSize = hasSet && setSizeDescriptor && typeof setSizeDescriptor.get === 'function' ? setSizeDescriptor.get : null;
+var setForEach = hasSet && Set.prototype.forEach;
+var hasWeakMap = typeof WeakMap === 'function' && WeakMap.prototype;
+var weakMapHas = hasWeakMap ? WeakMap.prototype.has : null;
+var hasWeakSet = typeof WeakSet === 'function' && WeakSet.prototype;
+var weakSetHas = hasWeakSet ? WeakSet.prototype.has : null;
+var hasWeakRef = typeof WeakRef === 'function' && WeakRef.prototype;
+var weakRefDeref = hasWeakRef ? WeakRef.prototype.deref : null;
+var booleanValueOf = Boolean.prototype.valueOf;
+var objectToString = Object.prototype.toString;
+var functionToString = Function.prototype.toString;
+var $match = String.prototype.match;
+var $slice = String.prototype.slice;
+var $replace$1 = String.prototype.replace;
+var $toUpperCase = String.prototype.toUpperCase;
+var $toLowerCase = String.prototype.toLowerCase;
+var $test = RegExp.prototype.test;
+var $concat$1 = Array.prototype.concat;
+var $join = Array.prototype.join;
+var $arrSlice = Array.prototype.slice;
+var $floor = Math.floor;
+var bigIntValueOf = typeof BigInt === 'function' ? BigInt.prototype.valueOf : null;
+var gOPS = Object.getOwnPropertySymbols;
+var symToString = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? Symbol.prototype.toString : null;
+var hasShammedSymbols = typeof Symbol === 'function' && typeof Symbol.iterator === 'object';
+// ie, `has-tostringtag/shams
+var toStringTag = typeof Symbol === 'function' && Symbol.toStringTag && (typeof Symbol.toStringTag === hasShammedSymbols ? 'object' : 'symbol')
+    ? Symbol.toStringTag
+    : null;
+var isEnumerable = Object.prototype.propertyIsEnumerable;
+
+var gPO = (typeof Reflect === 'function' ? Reflect.getPrototypeOf : Object.getPrototypeOf) || (
+    [].__proto__ === Array.prototype // eslint-disable-line no-proto
+        ? function (O) {
+            return O.__proto__; // eslint-disable-line no-proto
+        }
+        : null
+);
+
+function addNumericSeparator(num, str) {
+    if (
+        num === Infinity
+        || num === -Infinity
+        || num !== num
+        || (num && num > -1000 && num < 1000)
+        || $test.call(/e/, str)
+    ) {
+        return str;
+    }
+    var sepRegex = /[0-9](?=(?:[0-9]{3})+(?![0-9]))/g;
+    if (typeof num === 'number') {
+        var int = num < 0 ? -$floor(-num) : $floor(num); // trunc(num)
+        if (int !== num) {
+            var intStr = String(int);
+            var dec = $slice.call(str, intStr.length + 1);
+            return $replace$1.call(intStr, sepRegex, '$&_') + '.' + $replace$1.call($replace$1.call(dec, /([0-9]{3})/g, '$&_'), /_$/, '');
+        }
+    }
+    return $replace$1.call(str, sepRegex, '$&_');
+}
+
+var utilInspect = require$$0;
+var inspectCustom = utilInspect.custom;
+var inspectSymbol = isSymbol(inspectCustom) ? inspectCustom : null;
+
+var quotes = {
+    __proto__: null,
+    'double': '"',
+    single: "'"
+};
+var quoteREs = {
+    __proto__: null,
+    'double': /(["\\])/g,
+    single: /(['\\])/g
+};
+
+var objectInspect = function inspect_(obj, options, depth, seen) {
+    var opts = options || {};
+
+    if (has$3(opts, 'quoteStyle') && !has$3(quotes, opts.quoteStyle)) {
+        throw new TypeError('option "quoteStyle" must be "single" or "double"');
+    }
+    if (
+        has$3(opts, 'maxStringLength') && (typeof opts.maxStringLength === 'number'
+            ? opts.maxStringLength < 0 && opts.maxStringLength !== Infinity
+            : opts.maxStringLength !== null
+        )
+    ) {
+        throw new TypeError('option "maxStringLength", if provided, must be a positive integer, Infinity, or `null`');
+    }
+    var customInspect = has$3(opts, 'customInspect') ? opts.customInspect : true;
+    if (typeof customInspect !== 'boolean' && customInspect !== 'symbol') {
+        throw new TypeError('option "customInspect", if provided, must be `true`, `false`, or `\'symbol\'`');
+    }
+
+    if (
+        has$3(opts, 'indent')
+        && opts.indent !== null
+        && opts.indent !== '\t'
+        && !(parseInt(opts.indent, 10) === opts.indent && opts.indent > 0)
+    ) {
+        throw new TypeError('option "indent" must be "\\t", an integer > 0, or `null`');
+    }
+    if (has$3(opts, 'numericSeparator') && typeof opts.numericSeparator !== 'boolean') {
+        throw new TypeError('option "numericSeparator", if provided, must be `true` or `false`');
+    }
+    var numericSeparator = opts.numericSeparator;
+
+    if (typeof obj === 'undefined') {
+        return 'undefined';
+    }
+    if (obj === null) {
+        return 'null';
+    }
+    if (typeof obj === 'boolean') {
+        return obj ? 'true' : 'false';
+    }
+
+    if (typeof obj === 'string') {
+        return inspectString(obj, opts);
+    }
+    if (typeof obj === 'number') {
+        if (obj === 0) {
+            return Infinity / obj > 0 ? '0' : '-0';
+        }
+        var str = String(obj);
+        return numericSeparator ? addNumericSeparator(obj, str) : str;
+    }
+    if (typeof obj === 'bigint') {
+        var bigIntStr = String(obj) + 'n';
+        return numericSeparator ? addNumericSeparator(obj, bigIntStr) : bigIntStr;
+    }
+
+    var maxDepth = typeof opts.depth === 'undefined' ? 5 : opts.depth;
+    if (typeof depth === 'undefined') { depth = 0; }
+    if (depth >= maxDepth && maxDepth > 0 && typeof obj === 'object') {
+        return isArray$3(obj) ? '[Array]' : '[Object]';
+    }
+
+    var indent = getIndent(opts, depth);
+
+    if (typeof seen === 'undefined') {
+        seen = [];
+    } else if (indexOf(seen, obj) >= 0) {
+        return '[Circular]';
+    }
+
+    function inspect(value, from, noIndent) {
+        if (from) {
+            seen = $arrSlice.call(seen);
+            seen.push(from);
+        }
+        if (noIndent) {
+            var newOpts = {
+                depth: opts.depth
+            };
+            if (has$3(opts, 'quoteStyle')) {
+                newOpts.quoteStyle = opts.quoteStyle;
+            }
+            return inspect_(value, newOpts, depth + 1, seen);
+        }
+        return inspect_(value, opts, depth + 1, seen);
+    }
+
+    if (typeof obj === 'function' && !isRegExp$1(obj)) { // in older engines, regexes are callable
+        var name = nameOf(obj);
+        var keys = arrObjKeys(obj, inspect);
+        return '[Function' + (name ? ': ' + name : ' (anonymous)') + ']' + (keys.length > 0 ? ' { ' + $join.call(keys, ', ') + ' }' : '');
+    }
+    if (isSymbol(obj)) {
+        var symString = hasShammedSymbols ? $replace$1.call(String(obj), /^(Symbol\(.*\))_[^)]*$/, '$1') : symToString.call(obj);
+        return typeof obj === 'object' && !hasShammedSymbols ? markBoxed(symString) : symString;
+    }
+    if (isElement(obj)) {
+        var s = '<' + $toLowerCase.call(String(obj.nodeName));
+        var attrs = obj.attributes || [];
+        for (var i = 0; i < attrs.length; i++) {
+            s += ' ' + attrs[i].name + '=' + wrapQuotes(quote(attrs[i].value), 'double', opts);
+        }
+        s += '>';
+        if (obj.childNodes && obj.childNodes.length) { s += '...'; }
+        s += '</' + $toLowerCase.call(String(obj.nodeName)) + '>';
+        return s;
+    }
+    if (isArray$3(obj)) {
+        if (obj.length === 0) { return '[]'; }
+        var xs = arrObjKeys(obj, inspect);
+        if (indent && !singleLineValues(xs)) {
+            return '[' + indentedJoin(xs, indent) + ']';
+        }
+        return '[ ' + $join.call(xs, ', ') + ' ]';
+    }
+    if (isError(obj)) {
+        var parts = arrObjKeys(obj, inspect);
+        if (!('cause' in Error.prototype) && 'cause' in obj && !isEnumerable.call(obj, 'cause')) {
+            return '{ [' + String(obj) + '] ' + $join.call($concat$1.call('[cause]: ' + inspect(obj.cause), parts), ', ') + ' }';
+        }
+        if (parts.length === 0) { return '[' + String(obj) + ']'; }
+        return '{ [' + String(obj) + '] ' + $join.call(parts, ', ') + ' }';
+    }
+    if (typeof obj === 'object' && customInspect) {
+        if (inspectSymbol && typeof obj[inspectSymbol] === 'function' && utilInspect) {
+            return utilInspect(obj, { depth: maxDepth - depth });
+        } else if (customInspect !== 'symbol' && typeof obj.inspect === 'function') {
+            return obj.inspect();
+        }
+    }
+    if (isMap(obj)) {
+        var mapParts = [];
+        if (mapForEach) {
+            mapForEach.call(obj, function (value, key) {
+                mapParts.push(inspect(key, obj, true) + ' => ' + inspect(value, obj));
+            });
+        }
+        return collectionOf('Map', mapSize.call(obj), mapParts, indent);
+    }
+    if (isSet(obj)) {
+        var setParts = [];
+        if (setForEach) {
+            setForEach.call(obj, function (value) {
+                setParts.push(inspect(value, obj));
+            });
+        }
+        return collectionOf('Set', setSize.call(obj), setParts, indent);
+    }
+    if (isWeakMap(obj)) {
+        return weakCollectionOf('WeakMap');
+    }
+    if (isWeakSet(obj)) {
+        return weakCollectionOf('WeakSet');
+    }
+    if (isWeakRef(obj)) {
+        return weakCollectionOf('WeakRef');
+    }
+    if (isNumber(obj)) {
+        return markBoxed(inspect(Number(obj)));
+    }
+    if (isBigInt(obj)) {
+        return markBoxed(inspect(bigIntValueOf.call(obj)));
+    }
+    if (isBoolean(obj)) {
+        return markBoxed(booleanValueOf.call(obj));
+    }
+    if (isString(obj)) {
+        return markBoxed(inspect(String(obj)));
+    }
+    // note: in IE 8, sometimes `global !== window` but both are the prototypes of each other
+    /* eslint-env browser */
+    if (typeof window !== 'undefined' && obj === window) {
+        return '{ [object Window] }';
+    }
+    if (
+        (typeof globalThis !== 'undefined' && obj === globalThis)
+        || (typeof commonjsGlobal !== 'undefined' && obj === commonjsGlobal)
+    ) {
+        return '{ [object globalThis] }';
+    }
+    if (!isDate(obj) && !isRegExp$1(obj)) {
+        var ys = arrObjKeys(obj, inspect);
+        var isPlainObject = gPO ? gPO(obj) === Object.prototype : obj instanceof Object || obj.constructor === Object;
+        var protoTag = obj instanceof Object ? '' : 'null prototype';
+        var stringTag = !isPlainObject && toStringTag && Object(obj) === obj && toStringTag in obj ? $slice.call(toStr$1(obj), 8, -1) : protoTag ? 'Object' : '';
+        var constructorTag = isPlainObject || typeof obj.constructor !== 'function' ? '' : obj.constructor.name ? obj.constructor.name + ' ' : '';
+        var tag = constructorTag + (stringTag || protoTag ? '[' + $join.call($concat$1.call([], stringTag || [], protoTag || []), ': ') + '] ' : '');
+        if (ys.length === 0) { return tag + '{}'; }
+        if (indent) {
+            return tag + '{' + indentedJoin(ys, indent) + '}';
+        }
+        return tag + '{ ' + $join.call(ys, ', ') + ' }';
+    }
+    return String(obj);
+};
+
+function wrapQuotes(s, defaultStyle, opts) {
+    var style = opts.quoteStyle || defaultStyle;
+    var quoteChar = quotes[style];
+    return quoteChar + s + quoteChar;
+}
+
+function quote(s) {
+    return $replace$1.call(String(s), /"/g, '&quot;');
+}
+
+function canTrustToString(obj) {
+    return !toStringTag || !(typeof obj === 'object' && (toStringTag in obj || typeof obj[toStringTag] !== 'undefined'));
+}
+function isArray$3(obj) { return toStr$1(obj) === '[object Array]' && canTrustToString(obj); }
+function isDate(obj) { return toStr$1(obj) === '[object Date]' && canTrustToString(obj); }
+function isRegExp$1(obj) { return toStr$1(obj) === '[object RegExp]' && canTrustToString(obj); }
+function isError(obj) { return toStr$1(obj) === '[object Error]' && canTrustToString(obj); }
+function isString(obj) { return toStr$1(obj) === '[object String]' && canTrustToString(obj); }
+function isNumber(obj) { return toStr$1(obj) === '[object Number]' && canTrustToString(obj); }
+function isBoolean(obj) { return toStr$1(obj) === '[object Boolean]' && canTrustToString(obj); }
+
+// Symbol and BigInt do have Symbol.toStringTag by spec, so that can't be used to eliminate false positives
+function isSymbol(obj) {
+    if (hasShammedSymbols) {
+        return obj && typeof obj === 'object' && obj instanceof Symbol;
+    }
+    if (typeof obj === 'symbol') {
+        return true;
+    }
+    if (!obj || typeof obj !== 'object' || !symToString) {
+        return false;
+    }
+    try {
+        symToString.call(obj);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+function isBigInt(obj) {
+    if (!obj || typeof obj !== 'object' || !bigIntValueOf) {
+        return false;
+    }
+    try {
+        bigIntValueOf.call(obj);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+var hasOwn$1 = Object.prototype.hasOwnProperty || function (key) { return key in this; };
+function has$3(obj, key) {
+    return hasOwn$1.call(obj, key);
+}
+
+function toStr$1(obj) {
+    return objectToString.call(obj);
+}
+
+function nameOf(f) {
+    if (f.name) { return f.name; }
+    var m = $match.call(functionToString.call(f), /^function\s*([\w$]+)/);
+    if (m) { return m[1]; }
+    return null;
+}
+
+function indexOf(xs, x) {
+    if (xs.indexOf) { return xs.indexOf(x); }
+    for (var i = 0, l = xs.length; i < l; i++) {
+        if (xs[i] === x) { return i; }
+    }
+    return -1;
+}
+
+function isMap(x) {
+    if (!mapSize || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        mapSize.call(x);
+        try {
+            setSize.call(x);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof Map; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakMap(x) {
+    if (!weakMapHas || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakMapHas.call(x, weakMapHas);
+        try {
+            weakSetHas.call(x, weakSetHas);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof WeakMap; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakRef(x) {
+    if (!weakRefDeref || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakRefDeref.call(x);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+function isSet(x) {
+    if (!setSize || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        setSize.call(x);
+        try {
+            mapSize.call(x);
+        } catch (m) {
+            return true;
+        }
+        return x instanceof Set; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakSet(x) {
+    if (!weakSetHas || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakSetHas.call(x, weakSetHas);
+        try {
+            weakMapHas.call(x, weakMapHas);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof WeakSet; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isElement(x) {
+    if (!x || typeof x !== 'object') { return false; }
+    if (typeof HTMLElement !== 'undefined' && x instanceof HTMLElement) {
+        return true;
+    }
+    return typeof x.nodeName === 'string' && typeof x.getAttribute === 'function';
+}
+
+function inspectString(str, opts) {
+    if (str.length > opts.maxStringLength) {
+        var remaining = str.length - opts.maxStringLength;
+        var trailer = '... ' + remaining + ' more character' + (remaining > 1 ? 's' : '');
+        return inspectString($slice.call(str, 0, opts.maxStringLength), opts) + trailer;
+    }
+    var quoteRE = quoteREs[opts.quoteStyle || 'single'];
+    quoteRE.lastIndex = 0;
+    // eslint-disable-next-line no-control-regex
+    var s = $replace$1.call($replace$1.call(str, quoteRE, '\\$1'), /[\x00-\x1f]/g, lowbyte);
+    return wrapQuotes(s, 'single', opts);
+}
+
+function lowbyte(c) {
+    var n = c.charCodeAt(0);
+    var x = {
+        8: 'b',
+        9: 't',
+        10: 'n',
+        12: 'f',
+        13: 'r'
+    }[n];
+    if (x) { return '\\' + x; }
+    return '\\x' + (n < 0x10 ? '0' : '') + $toUpperCase.call(n.toString(16));
+}
+
+function markBoxed(str) {
+    return 'Object(' + str + ')';
+}
+
+function weakCollectionOf(type) {
+    return type + ' { ? }';
+}
+
+function collectionOf(type, size, entries, indent) {
+    var joinedEntries = indent ? indentedJoin(entries, indent) : $join.call(entries, ', ');
+    return type + ' (' + size + ') {' + joinedEntries + '}';
+}
+
+function singleLineValues(xs) {
+    for (var i = 0; i < xs.length; i++) {
+        if (indexOf(xs[i], '\n') >= 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function getIndent(opts, depth) {
+    var baseIndent;
+    if (opts.indent === '\t') {
+        baseIndent = '\t';
+    } else if (typeof opts.indent === 'number' && opts.indent > 0) {
+        baseIndent = $join.call(Array(opts.indent + 1), ' ');
+    } else {
+        return null;
+    }
+    return {
+        base: baseIndent,
+        prev: $join.call(Array(depth + 1), baseIndent)
+    };
+}
+
+function indentedJoin(xs, indent) {
+    if (xs.length === 0) { return ''; }
+    var lineJoiner = '\n' + indent.prev + indent.base;
+    return lineJoiner + $join.call(xs, ',' + lineJoiner) + '\n' + indent.prev;
+}
+
+function arrObjKeys(obj, inspect) {
+    var isArr = isArray$3(obj);
+    var xs = [];
+    if (isArr) {
+        xs.length = obj.length;
+        for (var i = 0; i < obj.length; i++) {
+            xs[i] = has$3(obj, i) ? inspect(obj[i], obj) : '';
+        }
+    }
+    var syms = typeof gOPS === 'function' ? gOPS(obj) : [];
+    var symMap;
+    if (hasShammedSymbols) {
+        symMap = {};
+        for (var k = 0; k < syms.length; k++) {
+            symMap['$' + syms[k]] = syms[k];
+        }
+    }
+
+    for (var key in obj) { // eslint-disable-line no-restricted-syntax
+        if (!has$3(obj, key)) { continue; } // eslint-disable-line no-restricted-syntax, no-continue
+        if (isArr && String(Number(key)) === key && key < obj.length) { continue; } // eslint-disable-line no-restricted-syntax, no-continue
+        if (hasShammedSymbols && symMap['$' + key] instanceof Symbol) {
+            // this is to prevent shammed Symbols, which are stored as strings, from being included in the string key section
+            continue; // eslint-disable-line no-restricted-syntax, no-continue
+        } else if ($test.call(/[^\w$]/, key)) {
+            xs.push(inspect(key, obj) + ': ' + inspect(obj[key], obj));
+        } else {
+            xs.push(key + ': ' + inspect(obj[key], obj));
+        }
+    }
+    if (typeof gOPS === 'function') {
+        for (var j = 0; j < syms.length; j++) {
+            if (isEnumerable.call(obj, syms[j])) {
+                xs.push('[' + inspect(syms[j]) + ']: ' + inspect(obj[syms[j]], obj));
+            }
+        }
+    }
+    return xs;
+}
+
+var inspect$3 = objectInspect;
+
+var $TypeError$5 = type;
+
+/*
+* This function traverses the list returning the node corresponding to the given key.
+*
+* That node is also moved to the head of the list, so that if it's accessed again we don't need to traverse the whole list.
+* By doing so, all the recently used nodes can be accessed relatively quickly.
+*/
+/** @type {import('./list.d.ts').listGetNode} */
+// eslint-disable-next-line consistent-return
+var listGetNode = function (list, key, isDelete) {
+	/** @type {typeof list | NonNullable<(typeof list)['next']>} */
+	var prev = list;
+	/** @type {(typeof list)['next']} */
+	var curr;
+	// eslint-disable-next-line eqeqeq
+	for (; (curr = prev.next) != null; prev = curr) {
+		if (curr.key === key) {
+			prev.next = curr.next;
+			if (!isDelete) {
+				// eslint-disable-next-line no-extra-parens
+				curr.next = /** @type {NonNullable<typeof list.next>} */ (list.next);
+				list.next = curr; // eslint-disable-line no-param-reassign
+			}
+			return curr;
+		}
+	}
+};
+
+/** @type {import('./list.d.ts').listGet} */
+var listGet = function (objects, key) {
+	if (!objects) {
+		return void undefined;
+	}
+	var node = listGetNode(objects, key);
+	return node && node.value;
+};
+/** @type {import('./list.d.ts').listSet} */
+var listSet = function (objects, key, value) {
+	var node = listGetNode(objects, key);
+	if (node) {
+		node.value = value;
+	} else {
+		// Prepend the new node to the beginning of the list
+		objects.next = /** @type {import('./list.d.ts').ListNode<typeof value, typeof key>} */ ({ // eslint-disable-line no-param-reassign, no-extra-parens
+			key: key,
+			next: objects.next,
+			value: value
+		});
+	}
+};
+/** @type {import('./list.d.ts').listHas} */
+var listHas = function (objects, key) {
+	if (!objects) {
+		return false;
+	}
+	return !!listGetNode(objects, key);
+};
+/** @type {import('./list.d.ts').listDelete} */
+// eslint-disable-next-line consistent-return
+var listDelete = function (objects, key) {
+	if (objects) {
+		return listGetNode(objects, key, true);
+	}
+};
+
+/** @type {import('.')} */
+var sideChannelList = function getSideChannelList() {
+	/** @typedef {ReturnType<typeof getSideChannelList>} Channel */
+	/** @typedef {Parameters<Channel['get']>[0]} K */
+	/** @typedef {Parameters<Channel['set']>[1]} V */
+
+	/** @type {import('./list.d.ts').RootNode<V, K> | undefined} */ var $o;
+
+	/** @type {Channel} */
+	var channel = {
+		assert: function (key) {
+			if (!channel.has(key)) {
+				throw new $TypeError$5('Side channel does not contain ' + inspect$3(key));
+			}
+		},
+		'delete': function (key) {
+			var root = $o && $o.next;
+			var deletedNode = listDelete($o, key);
+			if (deletedNode && root && root === deletedNode) {
+				$o = void undefined;
+			}
+			return !!deletedNode;
+		},
+		get: function (key) {
+			return listGet($o, key);
+		},
+		has: function (key) {
+			return listHas($o, key);
+		},
+		set: function (key, value) {
+			if (!$o) {
+				// Initialize the linked list as an empty node, so that we don't have to special-case handling of the first node: we can always refer to it as (previous node).next, instead of something like (list).head
+				$o = {
+					next: void undefined
+				};
+			}
+			// eslint-disable-next-line no-extra-parens
+			listSet(/** @type {NonNullable<typeof $o>} */ ($o), key, value);
+		}
+	};
+	// @ts-expect-error TODO: figure out why this is erroring
+	return channel;
+};
+
+/** @type {import('.')} */
+var esObjectAtoms = Object;
+
+/** @type {import('.')} */
+var esErrors = Error;
+
+/** @type {import('./eval')} */
+var _eval = EvalError;
+
+/** @type {import('./range')} */
+var range = RangeError;
+
+/** @type {import('./ref')} */
+var ref = ReferenceError;
+
+/** @type {import('./syntax')} */
+var syntax = SyntaxError;
+
+/** @type {import('./uri')} */
+var uri = URIError;
+
+/** @type {import('./abs')} */
+var abs$1 = Math.abs;
+
+/** @type {import('./floor')} */
+var floor$1 = Math.floor;
+
+/** @type {import('./max')} */
+var max$2 = Math.max;
+
+/** @type {import('./min')} */
+var min$1 = Math.min;
+
+/** @type {import('./pow')} */
+var pow$1 = Math.pow;
+
+/** @type {import('./round')} */
+var round$1 = Math.round;
+
+/** @type {import('./isNaN')} */
+var _isNaN = Number.isNaN || function isNaN(a) {
+	return a !== a;
+};
+
+var $isNaN = _isNaN;
+
+/** @type {import('./sign')} */
+var sign$1 = function sign(number) {
+	if ($isNaN(number) || number === 0) {
+		return number;
+	}
+	return number < 0 ? -1 : +1;
+};
+
+/** @type {import('./gOPD')} */
+var gOPD$1 = Object.getOwnPropertyDescriptor;
+
+/** @type {import('.')} */
+var $gOPD$1 = gOPD$1;
+
+if ($gOPD$1) {
+	try {
+		$gOPD$1([], 'length');
+	} catch (e) {
+		// IE 8 has a broken gOPD
+		$gOPD$1 = null;
+	}
+}
+
+var gopd = $gOPD$1;
+
+/** @type {import('.')} */
+var $defineProperty$1 = Object.defineProperty || false;
+if ($defineProperty$1) {
+	try {
+		$defineProperty$1({}, 'a', { value: 1 });
+	} catch (e) {
+		// IE 8 has a broken defineProperty
+		$defineProperty$1 = false;
+	}
+}
+
+var esDefineProperty = $defineProperty$1;
+
+/** @type {import('./shams')} */
+/* eslint complexity: [2, 18], max-statements: [2, 33] */
+var shams = function hasSymbols() {
+	if (typeof Symbol !== 'function' || typeof Object.getOwnPropertySymbols !== 'function') { return false; }
+	if (typeof Symbol.iterator === 'symbol') { return true; }
+
+	/** @type {{ [k in symbol]?: unknown }} */
+	var obj = {};
+	var sym = Symbol('test');
+	var symObj = Object(sym);
+	if (typeof sym === 'string') { return false; }
+
+	if (Object.prototype.toString.call(sym) !== '[object Symbol]') { return false; }
+	if (Object.prototype.toString.call(symObj) !== '[object Symbol]') { return false; }
+
+	// temp disabled per https://github.com/ljharb/object.assign/issues/17
+	// if (sym instanceof Symbol) { return false; }
+	// temp disabled per https://github.com/WebReflection/get-own-property-symbols/issues/4
+	// if (!(symObj instanceof Symbol)) { return false; }
+
+	// if (typeof Symbol.prototype.toString !== 'function') { return false; }
+	// if (String(sym) !== Symbol.prototype.toString.call(sym)) { return false; }
+
+	var symVal = 42;
+	obj[sym] = symVal;
+	for (var _ in obj) { return false; } // eslint-disable-line no-restricted-syntax, no-unreachable-loop
+	if (typeof Object.keys === 'function' && Object.keys(obj).length !== 0) { return false; }
+
+	if (typeof Object.getOwnPropertyNames === 'function' && Object.getOwnPropertyNames(obj).length !== 0) { return false; }
+
+	var syms = Object.getOwnPropertySymbols(obj);
+	if (syms.length !== 1 || syms[0] !== sym) { return false; }
+
+	if (!Object.prototype.propertyIsEnumerable.call(obj, sym)) { return false; }
+
+	if (typeof Object.getOwnPropertyDescriptor === 'function') {
+		// eslint-disable-next-line no-extra-parens
+		var descriptor = /** @type {PropertyDescriptor} */ (Object.getOwnPropertyDescriptor(obj, sym));
+		if (descriptor.value !== symVal || descriptor.enumerable !== true) { return false; }
+	}
+
+	return true;
+};
+
+var origSymbol = typeof Symbol !== 'undefined' && Symbol;
+var hasSymbolSham = shams;
+
+/** @type {import('.')} */
+var hasSymbols$1 = function hasNativeSymbols() {
+	if (typeof origSymbol !== 'function') { return false; }
+	if (typeof Symbol !== 'function') { return false; }
+	if (typeof origSymbol('foo') !== 'symbol') { return false; }
+	if (typeof Symbol('bar') !== 'symbol') { return false; }
+
+	return hasSymbolSham();
+};
+
+/** @type {import('./Reflect.getPrototypeOf')} */
+var Reflect_getPrototypeOf = (typeof Reflect !== 'undefined' && Reflect.getPrototypeOf) || null;
+
+var $Object$2 = esObjectAtoms;
+
+/** @type {import('./Object.getPrototypeOf')} */
+var Object_getPrototypeOf = $Object$2.getPrototypeOf || null;
+
+/* eslint no-invalid-this: 1 */
+
+var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
+var toStr = Object.prototype.toString;
+var max$1 = Math.max;
+var funcType = '[object Function]';
+
+var concatty = function concatty(a, b) {
+    var arr = [];
+
+    for (var i = 0; i < a.length; i += 1) {
+        arr[i] = a[i];
+    }
+    for (var j = 0; j < b.length; j += 1) {
+        arr[j + a.length] = b[j];
+    }
+
+    return arr;
+};
+
+var slicy = function slicy(arrLike, offset) {
+    var arr = [];
+    for (var i = offset || 0, j = 0; i < arrLike.length; i += 1, j += 1) {
+        arr[j] = arrLike[i];
+    }
+    return arr;
+};
+
+var joiny = function (arr, joiner) {
+    var str = '';
+    for (var i = 0; i < arr.length; i += 1) {
+        str += arr[i];
+        if (i + 1 < arr.length) {
+            str += joiner;
+        }
+    }
+    return str;
+};
+
+var implementation$1 = function bind(that) {
+    var target = this;
+    if (typeof target !== 'function' || toStr.apply(target) !== funcType) {
+        throw new TypeError(ERROR_MESSAGE + target);
+    }
+    var args = slicy(arguments, 1);
+
+    var bound;
+    var binder = function () {
+        if (this instanceof bound) {
+            var result = target.apply(
+                this,
+                concatty(args, arguments)
+            );
+            if (Object(result) === result) {
+                return result;
+            }
+            return this;
+        }
+        return target.apply(
+            that,
+            concatty(args, arguments)
+        );
+
+    };
+
+    var boundLength = max$1(0, target.length - args.length);
+    var boundArgs = [];
+    for (var i = 0; i < boundLength; i++) {
+        boundArgs[i] = '$' + i;
+    }
+
+    bound = Function('binder', 'return function (' + joiny(boundArgs, ',') + '){ return binder.apply(this,arguments); }')(binder);
+
+    if (target.prototype) {
+        var Empty = function Empty() {};
+        Empty.prototype = target.prototype;
+        bound.prototype = new Empty();
+        Empty.prototype = null;
+    }
+
+    return bound;
+};
+
+var implementation = implementation$1;
+
+var functionBind = Function.prototype.bind || implementation;
+
+/** @type {import('./functionCall')} */
+var functionCall = Function.prototype.call;
+
+/** @type {import('./functionApply')} */
+var functionApply = Function.prototype.apply;
+
+/** @type {import('./reflectApply')} */
+var reflectApply = typeof Reflect !== 'undefined' && Reflect && Reflect.apply;
+
+var bind$3 = functionBind;
+
+var $apply$1 = functionApply;
+var $call$2 = functionCall;
+var $reflectApply = reflectApply;
+
+/** @type {import('./actualApply')} */
+var actualApply = $reflectApply || bind$3.call($call$2, $apply$1);
+
+var bind$2 = functionBind;
+var $TypeError$4 = type;
+
+var $call$1 = functionCall;
+var $actualApply = actualApply;
+
+/** @type {(args: [Function, thisArg?: unknown, ...args: unknown[]]) => Function} TODO FIXME, find a way to use import('.') */
+var callBindApplyHelpers = function callBindBasic(args) {
+	if (args.length < 1 || typeof args[0] !== 'function') {
+		throw new $TypeError$4('a function is required');
+	}
+	return $actualApply(bind$2, $call$1, args);
+};
+
+var callBind = callBindApplyHelpers;
+var gOPD = gopd;
+
+var hasProtoAccessor;
+try {
+	// eslint-disable-next-line no-extra-parens, no-proto
+	hasProtoAccessor = /** @type {{ __proto__?: typeof Array.prototype }} */ ([]).__proto__ === Array.prototype;
+} catch (e) {
+	if (!e || typeof e !== 'object' || !('code' in e) || e.code !== 'ERR_PROTO_ACCESS') {
+		throw e;
+	}
+}
+
+// eslint-disable-next-line no-extra-parens
+var desc = !!hasProtoAccessor && gOPD && gOPD(Object.prototype, /** @type {keyof typeof Object.prototype} */ ('__proto__'));
+
+var $Object$1 = Object;
+var $getPrototypeOf = $Object$1.getPrototypeOf;
+
+/** @type {import('./get')} */
+var get = desc && typeof desc.get === 'function'
+	? callBind([desc.get])
+	: typeof $getPrototypeOf === 'function'
+		? /** @type {import('./get')} */ function getDunder(value) {
+			// eslint-disable-next-line eqeqeq
+			return $getPrototypeOf(value == null ? value : $Object$1(value));
+		}
+		: false;
+
+var reflectGetProto = Reflect_getPrototypeOf;
+var originalGetProto = Object_getPrototypeOf;
+
+var getDunderProto = get;
+
+/** @type {import('.')} */
+var getProto$1 = reflectGetProto
+	? function getProto(O) {
+		// @ts-expect-error TS can't narrow inside a closure, for some reason
+		return reflectGetProto(O);
+	}
+	: originalGetProto
+		? function getProto(O) {
+			if (!O || (typeof O !== 'object' && typeof O !== 'function')) {
+				throw new TypeError('getProto: not an object');
+			}
+			// @ts-expect-error TS can't narrow inside a closure, for some reason
+			return originalGetProto(O);
+		}
+		: getDunderProto
+			? function getProto(O) {
+				// @ts-expect-error TS can't narrow inside a closure, for some reason
+				return getDunderProto(O);
+			}
+			: null;
+
+var call = Function.prototype.call;
+var $hasOwn = Object.prototype.hasOwnProperty;
+var bind$1 = functionBind;
+
+/** @type {import('.')} */
+var hasown = bind$1.call(call, $hasOwn);
+
+var undefined$1;
+
+var $Object = esObjectAtoms;
+
+var $Error = esErrors;
+var $EvalError = _eval;
+var $RangeError = range;
+var $ReferenceError = ref;
+var $SyntaxError = syntax;
+var $TypeError$3 = type;
+var $URIError = uri;
+
+var abs = abs$1;
+var floor = floor$1;
+var max = max$2;
+var min = min$1;
+var pow = pow$1;
+var round = round$1;
+var sign = sign$1;
+
+var $Function = Function;
+
+// eslint-disable-next-line consistent-return
+var getEvalledConstructor = function (expressionSyntax) {
+	try {
+		return $Function('"use strict"; return (' + expressionSyntax + ').constructor;')();
+	} catch (e) {}
+};
+
+var $gOPD = gopd;
+var $defineProperty = esDefineProperty;
+
+var throwTypeError = function () {
+	throw new $TypeError$3();
+};
+var ThrowTypeError = $gOPD
+	? (function () {
+		try {
+			// eslint-disable-next-line no-unused-expressions, no-caller, no-restricted-properties
+			arguments.callee; // IE 8 does not throw here
+			return throwTypeError;
+		} catch (calleeThrows) {
+			try {
+				// IE 8 throws on Object.getOwnPropertyDescriptor(arguments, '')
+				return $gOPD(arguments, 'callee').get;
+			} catch (gOPDthrows) {
+				return throwTypeError;
+			}
+		}
+	}())
+	: throwTypeError;
+
+var hasSymbols = hasSymbols$1();
+
+var getProto = getProto$1;
+var $ObjectGPO = Object_getPrototypeOf;
+var $ReflectGPO = Reflect_getPrototypeOf;
+
+var $apply = functionApply;
+var $call = functionCall;
+
+var needsEval = {};
+
+var TypedArray = typeof Uint8Array === 'undefined' || !getProto ? undefined$1 : getProto(Uint8Array);
+
+var INTRINSICS = {
+	__proto__: null,
+	'%AggregateError%': typeof AggregateError === 'undefined' ? undefined$1 : AggregateError,
+	'%Array%': Array,
+	'%ArrayBuffer%': typeof ArrayBuffer === 'undefined' ? undefined$1 : ArrayBuffer,
+	'%ArrayIteratorPrototype%': hasSymbols && getProto ? getProto([][Symbol.iterator]()) : undefined$1,
+	'%AsyncFromSyncIteratorPrototype%': undefined$1,
+	'%AsyncFunction%': needsEval,
+	'%AsyncGenerator%': needsEval,
+	'%AsyncGeneratorFunction%': needsEval,
+	'%AsyncIteratorPrototype%': needsEval,
+	'%Atomics%': typeof Atomics === 'undefined' ? undefined$1 : Atomics,
+	'%BigInt%': typeof BigInt === 'undefined' ? undefined$1 : BigInt,
+	'%BigInt64Array%': typeof BigInt64Array === 'undefined' ? undefined$1 : BigInt64Array,
+	'%BigUint64Array%': typeof BigUint64Array === 'undefined' ? undefined$1 : BigUint64Array,
+	'%Boolean%': Boolean,
+	'%DataView%': typeof DataView === 'undefined' ? undefined$1 : DataView,
+	'%Date%': Date,
+	'%decodeURI%': decodeURI,
+	'%decodeURIComponent%': decodeURIComponent,
+	'%encodeURI%': encodeURI,
+	'%encodeURIComponent%': encodeURIComponent,
+	'%Error%': $Error,
+	'%eval%': eval, // eslint-disable-line no-eval
+	'%EvalError%': $EvalError,
+	'%Float16Array%': typeof Float16Array === 'undefined' ? undefined$1 : Float16Array,
+	'%Float32Array%': typeof Float32Array === 'undefined' ? undefined$1 : Float32Array,
+	'%Float64Array%': typeof Float64Array === 'undefined' ? undefined$1 : Float64Array,
+	'%FinalizationRegistry%': typeof FinalizationRegistry === 'undefined' ? undefined$1 : FinalizationRegistry,
+	'%Function%': $Function,
+	'%GeneratorFunction%': needsEval,
+	'%Int8Array%': typeof Int8Array === 'undefined' ? undefined$1 : Int8Array,
+	'%Int16Array%': typeof Int16Array === 'undefined' ? undefined$1 : Int16Array,
+	'%Int32Array%': typeof Int32Array === 'undefined' ? undefined$1 : Int32Array,
+	'%isFinite%': isFinite,
+	'%isNaN%': isNaN,
+	'%IteratorPrototype%': hasSymbols && getProto ? getProto(getProto([][Symbol.iterator]())) : undefined$1,
+	'%JSON%': typeof JSON === 'object' ? JSON : undefined$1,
+	'%Map%': typeof Map === 'undefined' ? undefined$1 : Map,
+	'%MapIteratorPrototype%': typeof Map === 'undefined' || !hasSymbols || !getProto ? undefined$1 : getProto(new Map()[Symbol.iterator]()),
+	'%Math%': Math,
+	'%Number%': Number,
+	'%Object%': $Object,
+	'%Object.getOwnPropertyDescriptor%': $gOPD,
+	'%parseFloat%': parseFloat,
+	'%parseInt%': parseInt,
+	'%Promise%': typeof Promise === 'undefined' ? undefined$1 : Promise,
+	'%Proxy%': typeof Proxy === 'undefined' ? undefined$1 : Proxy,
+	'%RangeError%': $RangeError,
+	'%ReferenceError%': $ReferenceError,
+	'%Reflect%': typeof Reflect === 'undefined' ? undefined$1 : Reflect,
+	'%RegExp%': RegExp,
+	'%Set%': typeof Set === 'undefined' ? undefined$1 : Set,
+	'%SetIteratorPrototype%': typeof Set === 'undefined' || !hasSymbols || !getProto ? undefined$1 : getProto(new Set()[Symbol.iterator]()),
+	'%SharedArrayBuffer%': typeof SharedArrayBuffer === 'undefined' ? undefined$1 : SharedArrayBuffer,
+	'%String%': String,
+	'%StringIteratorPrototype%': hasSymbols && getProto ? getProto(''[Symbol.iterator]()) : undefined$1,
+	'%Symbol%': hasSymbols ? Symbol : undefined$1,
+	'%SyntaxError%': $SyntaxError,
+	'%ThrowTypeError%': ThrowTypeError,
+	'%TypedArray%': TypedArray,
+	'%TypeError%': $TypeError$3,
+	'%Uint8Array%': typeof Uint8Array === 'undefined' ? undefined$1 : Uint8Array,
+	'%Uint8ClampedArray%': typeof Uint8ClampedArray === 'undefined' ? undefined$1 : Uint8ClampedArray,
+	'%Uint16Array%': typeof Uint16Array === 'undefined' ? undefined$1 : Uint16Array,
+	'%Uint32Array%': typeof Uint32Array === 'undefined' ? undefined$1 : Uint32Array,
+	'%URIError%': $URIError,
+	'%WeakMap%': typeof WeakMap === 'undefined' ? undefined$1 : WeakMap,
+	'%WeakRef%': typeof WeakRef === 'undefined' ? undefined$1 : WeakRef,
+	'%WeakSet%': typeof WeakSet === 'undefined' ? undefined$1 : WeakSet,
+
+	'%Function.prototype.call%': $call,
+	'%Function.prototype.apply%': $apply,
+	'%Object.defineProperty%': $defineProperty,
+	'%Object.getPrototypeOf%': $ObjectGPO,
+	'%Math.abs%': abs,
+	'%Math.floor%': floor,
+	'%Math.max%': max,
+	'%Math.min%': min,
+	'%Math.pow%': pow,
+	'%Math.round%': round,
+	'%Math.sign%': sign,
+	'%Reflect.getPrototypeOf%': $ReflectGPO
+};
+
+if (getProto) {
+	try {
+		null.error; // eslint-disable-line no-unused-expressions
+	} catch (e) {
+		// https://github.com/tc39/proposal-shadowrealm/pull/384#issuecomment-1364264229
+		var errorProto = getProto(getProto(e));
+		INTRINSICS['%Error.prototype%'] = errorProto;
+	}
+}
+
+var doEval = function doEval(name) {
+	var value;
+	if (name === '%AsyncFunction%') {
+		value = getEvalledConstructor('async function () {}');
+	} else if (name === '%GeneratorFunction%') {
+		value = getEvalledConstructor('function* () {}');
+	} else if (name === '%AsyncGeneratorFunction%') {
+		value = getEvalledConstructor('async function* () {}');
+	} else if (name === '%AsyncGenerator%') {
+		var fn = doEval('%AsyncGeneratorFunction%');
+		if (fn) {
+			value = fn.prototype;
+		}
+	} else if (name === '%AsyncIteratorPrototype%') {
+		var gen = doEval('%AsyncGenerator%');
+		if (gen && getProto) {
+			value = getProto(gen.prototype);
+		}
+	}
+
+	INTRINSICS[name] = value;
+
+	return value;
+};
+
+var LEGACY_ALIASES = {
+	__proto__: null,
+	'%ArrayBufferPrototype%': ['ArrayBuffer', 'prototype'],
+	'%ArrayPrototype%': ['Array', 'prototype'],
+	'%ArrayProto_entries%': ['Array', 'prototype', 'entries'],
+	'%ArrayProto_forEach%': ['Array', 'prototype', 'forEach'],
+	'%ArrayProto_keys%': ['Array', 'prototype', 'keys'],
+	'%ArrayProto_values%': ['Array', 'prototype', 'values'],
+	'%AsyncFunctionPrototype%': ['AsyncFunction', 'prototype'],
+	'%AsyncGenerator%': ['AsyncGeneratorFunction', 'prototype'],
+	'%AsyncGeneratorPrototype%': ['AsyncGeneratorFunction', 'prototype', 'prototype'],
+	'%BooleanPrototype%': ['Boolean', 'prototype'],
+	'%DataViewPrototype%': ['DataView', 'prototype'],
+	'%DatePrototype%': ['Date', 'prototype'],
+	'%ErrorPrototype%': ['Error', 'prototype'],
+	'%EvalErrorPrototype%': ['EvalError', 'prototype'],
+	'%Float32ArrayPrototype%': ['Float32Array', 'prototype'],
+	'%Float64ArrayPrototype%': ['Float64Array', 'prototype'],
+	'%FunctionPrototype%': ['Function', 'prototype'],
+	'%Generator%': ['GeneratorFunction', 'prototype'],
+	'%GeneratorPrototype%': ['GeneratorFunction', 'prototype', 'prototype'],
+	'%Int8ArrayPrototype%': ['Int8Array', 'prototype'],
+	'%Int16ArrayPrototype%': ['Int16Array', 'prototype'],
+	'%Int32ArrayPrototype%': ['Int32Array', 'prototype'],
+	'%JSONParse%': ['JSON', 'parse'],
+	'%JSONStringify%': ['JSON', 'stringify'],
+	'%MapPrototype%': ['Map', 'prototype'],
+	'%NumberPrototype%': ['Number', 'prototype'],
+	'%ObjectPrototype%': ['Object', 'prototype'],
+	'%ObjProto_toString%': ['Object', 'prototype', 'toString'],
+	'%ObjProto_valueOf%': ['Object', 'prototype', 'valueOf'],
+	'%PromisePrototype%': ['Promise', 'prototype'],
+	'%PromiseProto_then%': ['Promise', 'prototype', 'then'],
+	'%Promise_all%': ['Promise', 'all'],
+	'%Promise_reject%': ['Promise', 'reject'],
+	'%Promise_resolve%': ['Promise', 'resolve'],
+	'%RangeErrorPrototype%': ['RangeError', 'prototype'],
+	'%ReferenceErrorPrototype%': ['ReferenceError', 'prototype'],
+	'%RegExpPrototype%': ['RegExp', 'prototype'],
+	'%SetPrototype%': ['Set', 'prototype'],
+	'%SharedArrayBufferPrototype%': ['SharedArrayBuffer', 'prototype'],
+	'%StringPrototype%': ['String', 'prototype'],
+	'%SymbolPrototype%': ['Symbol', 'prototype'],
+	'%SyntaxErrorPrototype%': ['SyntaxError', 'prototype'],
+	'%TypedArrayPrototype%': ['TypedArray', 'prototype'],
+	'%TypeErrorPrototype%': ['TypeError', 'prototype'],
+	'%Uint8ArrayPrototype%': ['Uint8Array', 'prototype'],
+	'%Uint8ClampedArrayPrototype%': ['Uint8ClampedArray', 'prototype'],
+	'%Uint16ArrayPrototype%': ['Uint16Array', 'prototype'],
+	'%Uint32ArrayPrototype%': ['Uint32Array', 'prototype'],
+	'%URIErrorPrototype%': ['URIError', 'prototype'],
+	'%WeakMapPrototype%': ['WeakMap', 'prototype'],
+	'%WeakSetPrototype%': ['WeakSet', 'prototype']
+};
+
+var bind = functionBind;
+var hasOwn = hasown;
+var $concat = bind.call($call, Array.prototype.concat);
+var $spliceApply = bind.call($apply, Array.prototype.splice);
+var $replace = bind.call($call, String.prototype.replace);
+var $strSlice = bind.call($call, String.prototype.slice);
+var $exec = bind.call($call, RegExp.prototype.exec);
+
+/* adapted from https://github.com/lodash/lodash/blob/4.17.15/dist/lodash.js#L6735-L6744 */
+var rePropName = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g;
+var reEscapeChar = /\\(\\)?/g; /** Used to match backslashes in property paths. */
+var stringToPath = function stringToPath(string) {
+	var first = $strSlice(string, 0, 1);
+	var last = $strSlice(string, -1);
+	if (first === '%' && last !== '%') {
+		throw new $SyntaxError('invalid intrinsic syntax, expected closing `%`');
+	} else if (last === '%' && first !== '%') {
+		throw new $SyntaxError('invalid intrinsic syntax, expected opening `%`');
+	}
+	var result = [];
+	$replace(string, rePropName, function (match, number, quote, subString) {
+		result[result.length] = quote ? $replace(subString, reEscapeChar, '$1') : number || match;
+	});
+	return result;
+};
+/* end adaptation */
+
+var getBaseIntrinsic = function getBaseIntrinsic(name, allowMissing) {
+	var intrinsicName = name;
+	var alias;
+	if (hasOwn(LEGACY_ALIASES, intrinsicName)) {
+		alias = LEGACY_ALIASES[intrinsicName];
+		intrinsicName = '%' + alias[0] + '%';
+	}
+
+	if (hasOwn(INTRINSICS, intrinsicName)) {
+		var value = INTRINSICS[intrinsicName];
+		if (value === needsEval) {
+			value = doEval(intrinsicName);
+		}
+		if (typeof value === 'undefined' && !allowMissing) {
+			throw new $TypeError$3('intrinsic ' + name + ' exists, but is not available. Please file an issue!');
+		}
+
+		return {
+			alias: alias,
+			name: intrinsicName,
+			value: value
+		};
+	}
+
+	throw new $SyntaxError('intrinsic ' + name + ' does not exist!');
+};
+
+var getIntrinsic = function GetIntrinsic(name, allowMissing) {
+	if (typeof name !== 'string' || name.length === 0) {
+		throw new $TypeError$3('intrinsic name must be a non-empty string');
+	}
+	if (arguments.length > 1 && typeof allowMissing !== 'boolean') {
+		throw new $TypeError$3('"allowMissing" argument must be a boolean');
+	}
+
+	if ($exec(/^%?[^%]*%?$/, name) === null) {
+		throw new $SyntaxError('`%` may not be present anywhere but at the beginning and end of the intrinsic name');
+	}
+	var parts = stringToPath(name);
+	var intrinsicBaseName = parts.length > 0 ? parts[0] : '';
+
+	var intrinsic = getBaseIntrinsic('%' + intrinsicBaseName + '%', allowMissing);
+	var intrinsicRealName = intrinsic.name;
+	var value = intrinsic.value;
+	var skipFurtherCaching = false;
+
+	var alias = intrinsic.alias;
+	if (alias) {
+		intrinsicBaseName = alias[0];
+		$spliceApply(parts, $concat([0, 1], alias));
+	}
+
+	for (var i = 1, isOwn = true; i < parts.length; i += 1) {
+		var part = parts[i];
+		var first = $strSlice(part, 0, 1);
+		var last = $strSlice(part, -1);
+		if (
+			(
+				(first === '"' || first === "'" || first === '`')
+				|| (last === '"' || last === "'" || last === '`')
+			)
+			&& first !== last
+		) {
+			throw new $SyntaxError('property names with quotes must have matching quotes');
+		}
+		if (part === 'constructor' || !isOwn) {
+			skipFurtherCaching = true;
+		}
+
+		intrinsicBaseName += '.' + part;
+		intrinsicRealName = '%' + intrinsicBaseName + '%';
+
+		if (hasOwn(INTRINSICS, intrinsicRealName)) {
+			value = INTRINSICS[intrinsicRealName];
+		} else if (value != null) {
+			if (!(part in value)) {
+				if (!allowMissing) {
+					throw new $TypeError$3('base intrinsic for ' + name + ' exists, but the property is not available.');
+				}
+				return void undefined$1;
+			}
+			if ($gOPD && (i + 1) >= parts.length) {
+				var desc = $gOPD(value, part);
+				isOwn = !!desc;
+
+				// By convention, when a data property is converted to an accessor
+				// property to emulate a data property that does not suffer from
+				// the override mistake, that accessor's getter is marked with
+				// an `originalValue` property. Here, when we detect this, we
+				// uphold the illusion by pretending to see that original data
+				// property, i.e., returning the value rather than the getter
+				// itself.
+				if (isOwn && 'get' in desc && !('originalValue' in desc.get)) {
+					value = desc.get;
+				} else {
+					value = value[part];
+				}
+			} else {
+				isOwn = hasOwn(value, part);
+				value = value[part];
+			}
+
+			if (isOwn && !skipFurtherCaching) {
+				INTRINSICS[intrinsicRealName] = value;
+			}
+		}
+	}
+	return value;
+};
+
+var GetIntrinsic$2 = getIntrinsic;
+
+var callBindBasic = callBindApplyHelpers;
+
+/** @type {(thisArg: string, searchString: string, position?: number) => number} */
+var $indexOf = callBindBasic([GetIntrinsic$2('%String.prototype.indexOf%')]);
+
+/** @type {import('.')} */
+var callBound$2 = function callBoundIntrinsic(name, allowMissing) {
+	/* eslint no-extra-parens: 0 */
+
+	var intrinsic = /** @type {(this: unknown, ...args: unknown[]) => unknown} */ (GetIntrinsic$2(name, !!allowMissing));
+	if (typeof intrinsic === 'function' && $indexOf(name, '.prototype.') > -1) {
+		return callBindBasic(/** @type {const} */ ([intrinsic]));
+	}
+	return intrinsic;
+};
+
+var GetIntrinsic$1 = getIntrinsic;
+var callBound$1 = callBound$2;
+var inspect$2 = objectInspect;
+
+var $TypeError$2 = type;
+var $Map = GetIntrinsic$1('%Map%', true);
+
+/** @type {<K, V>(thisArg: Map<K, V>, key: K) => V} */
+var $mapGet = callBound$1('Map.prototype.get', true);
+/** @type {<K, V>(thisArg: Map<K, V>, key: K, value: V) => void} */
+var $mapSet = callBound$1('Map.prototype.set', true);
+/** @type {<K, V>(thisArg: Map<K, V>, key: K) => boolean} */
+var $mapHas = callBound$1('Map.prototype.has', true);
+/** @type {<K, V>(thisArg: Map<K, V>, key: K) => boolean} */
+var $mapDelete = callBound$1('Map.prototype.delete', true);
+/** @type {<K, V>(thisArg: Map<K, V>) => number} */
+var $mapSize = callBound$1('Map.prototype.size', true);
+
+/** @type {import('.')} */
+var sideChannelMap = !!$Map && /** @type {Exclude<import('.'), false>} */ function getSideChannelMap() {
+	/** @typedef {ReturnType<typeof getSideChannelMap>} Channel */
+	/** @typedef {Parameters<Channel['get']>[0]} K */
+	/** @typedef {Parameters<Channel['set']>[1]} V */
+
+	/** @type {Map<K, V> | undefined} */ var $m;
+
+	/** @type {Channel} */
+	var channel = {
+		assert: function (key) {
+			if (!channel.has(key)) {
+				throw new $TypeError$2('Side channel does not contain ' + inspect$2(key));
+			}
+		},
+		'delete': function (key) {
+			if ($m) {
+				var result = $mapDelete($m, key);
+				if ($mapSize($m) === 0) {
+					$m = void undefined;
+				}
+				return result;
+			}
+			return false;
+		},
+		get: function (key) { // eslint-disable-line consistent-return
+			if ($m) {
+				return $mapGet($m, key);
+			}
+		},
+		has: function (key) {
+			if ($m) {
+				return $mapHas($m, key);
+			}
+			return false;
+		},
+		set: function (key, value) {
+			if (!$m) {
+				// @ts-expect-error TS can't handle narrowing a variable inside a closure
+				$m = new $Map();
+			}
+			$mapSet($m, key, value);
+		}
+	};
+
+	// @ts-expect-error TODO: figure out why TS is erroring here
+	return channel;
+};
+
+var GetIntrinsic = getIntrinsic;
+var callBound = callBound$2;
+var inspect$1 = objectInspect;
+var getSideChannelMap$1 = sideChannelMap;
+
+var $TypeError$1 = type;
+var $WeakMap = GetIntrinsic('%WeakMap%', true);
+
+/** @type {<K extends object, V>(thisArg: WeakMap<K, V>, key: K) => V} */
+var $weakMapGet = callBound('WeakMap.prototype.get', true);
+/** @type {<K extends object, V>(thisArg: WeakMap<K, V>, key: K, value: V) => void} */
+var $weakMapSet = callBound('WeakMap.prototype.set', true);
+/** @type {<K extends object, V>(thisArg: WeakMap<K, V>, key: K) => boolean} */
+var $weakMapHas = callBound('WeakMap.prototype.has', true);
+/** @type {<K extends object, V>(thisArg: WeakMap<K, V>, key: K) => boolean} */
+var $weakMapDelete = callBound('WeakMap.prototype.delete', true);
+
+/** @type {import('.')} */
+var sideChannelWeakmap = $WeakMap
+	? /** @type {Exclude<import('.'), false>} */ function getSideChannelWeakMap() {
+		/** @typedef {ReturnType<typeof getSideChannelWeakMap>} Channel */
+		/** @typedef {Parameters<Channel['get']>[0]} K */
+		/** @typedef {Parameters<Channel['set']>[1]} V */
+
+		/** @type {WeakMap<K & object, V> | undefined} */ var $wm;
+		/** @type {Channel | undefined} */ var $m;
+
+		/** @type {Channel} */
+		var channel = {
+			assert: function (key) {
+				if (!channel.has(key)) {
+					throw new $TypeError$1('Side channel does not contain ' + inspect$1(key));
+				}
+			},
+			'delete': function (key) {
+				if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+					if ($wm) {
+						return $weakMapDelete($wm, key);
+					}
+				} else if (getSideChannelMap$1) {
+					if ($m) {
+						return $m['delete'](key);
+					}
+				}
+				return false;
+			},
+			get: function (key) {
+				if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+					if ($wm) {
+						return $weakMapGet($wm, key);
+					}
+				}
+				return $m && $m.get(key);
+			},
+			has: function (key) {
+				if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+					if ($wm) {
+						return $weakMapHas($wm, key);
+					}
+				}
+				return !!$m && $m.has(key);
+			},
+			set: function (key, value) {
+				if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+					if (!$wm) {
+						$wm = new $WeakMap();
+					}
+					$weakMapSet($wm, key, value);
+				} else if (getSideChannelMap$1) {
+					if (!$m) {
+						$m = getSideChannelMap$1();
+					}
+					// eslint-disable-next-line no-extra-parens
+					/** @type {NonNullable<typeof $m>} */ ($m).set(key, value);
+				}
+			}
+		};
+
+		// @ts-expect-error TODO: figure out why this is erroring
+		return channel;
+	}
+	: getSideChannelMap$1;
+
+var $TypeError = type;
+var inspect = objectInspect;
+var getSideChannelList = sideChannelList;
+var getSideChannelMap = sideChannelMap;
+var getSideChannelWeakMap = sideChannelWeakmap;
+
+var makeChannel = getSideChannelWeakMap || getSideChannelMap || getSideChannelList;
+
+/** @type {import('.')} */
+var sideChannel = function getSideChannel() {
+	/** @typedef {ReturnType<typeof getSideChannel>} Channel */
+
+	/** @type {Channel | undefined} */ var $channelData;
+
+	/** @type {Channel} */
+	var channel = {
+		assert: function (key) {
+			if (!channel.has(key)) {
+				throw new $TypeError('Side channel does not contain ' + inspect(key));
+			}
+		},
+		'delete': function (key) {
+			return !!$channelData && $channelData['delete'](key);
+		},
+		get: function (key) {
+			return $channelData && $channelData.get(key);
+		},
+		has: function (key) {
+			return !!$channelData && $channelData.has(key);
+		},
+		set: function (key, value) {
+			if (!$channelData) {
+				$channelData = makeChannel();
+			}
+
+			$channelData.set(key, value);
+		}
+	};
+	// @ts-expect-error TODO: figure out why this is erroring
+	return channel;
+};
+
+var replace = String.prototype.replace;
+var percentTwenties = /%20/g;
+
+var Format = {
+    RFC1738: 'RFC1738',
+    RFC3986: 'RFC3986'
+};
+
+var formats$3 = {
+    'default': Format.RFC3986,
+    formatters: {
+        RFC1738: function (value) {
+            return replace.call(value, percentTwenties, '+');
+        },
+        RFC3986: function (value) {
+            return String(value);
+        }
+    },
+    RFC1738: Format.RFC1738,
+    RFC3986: Format.RFC3986
+};
+
+var formats$2 = formats$3;
+
+var has$2 = Object.prototype.hasOwnProperty;
+var isArray$2 = Array.isArray;
+
+var hexTable = (function () {
+    var array = [];
+    for (var i = 0; i < 256; ++i) {
+        array.push('%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase());
+    }
+
+    return array;
+}());
+
+var compactQueue = function compactQueue(queue) {
+    while (queue.length > 1) {
+        var item = queue.pop();
+        var obj = item.obj[item.prop];
+
+        if (isArray$2(obj)) {
+            var compacted = [];
+
+            for (var j = 0; j < obj.length; ++j) {
+                if (typeof obj[j] !== 'undefined') {
+                    compacted.push(obj[j]);
+                }
+            }
+
+            item.obj[item.prop] = compacted;
+        }
+    }
+};
+
+var arrayToObject = function arrayToObject(source, options) {
+    var obj = options && options.plainObjects ? Object.create(null) : {};
+    for (var i = 0; i < source.length; ++i) {
+        if (typeof source[i] !== 'undefined') {
+            obj[i] = source[i];
+        }
+    }
+
+    return obj;
+};
+
+var merge = function merge(target, source, options) {
+    /* eslint no-param-reassign: 0 */
+    if (!source) {
+        return target;
+    }
+
+    if (typeof source !== 'object') {
+        if (isArray$2(target)) {
+            target.push(source);
+        } else if (target && typeof target === 'object') {
+            if ((options && (options.plainObjects || options.allowPrototypes)) || !has$2.call(Object.prototype, source)) {
+                target[source] = true;
+            }
+        } else {
+            return [target, source];
+        }
+
+        return target;
+    }
+
+    if (!target || typeof target !== 'object') {
+        return [target].concat(source);
+    }
+
+    var mergeTarget = target;
+    if (isArray$2(target) && !isArray$2(source)) {
+        mergeTarget = arrayToObject(target, options);
+    }
+
+    if (isArray$2(target) && isArray$2(source)) {
+        source.forEach(function (item, i) {
+            if (has$2.call(target, i)) {
+                var targetItem = target[i];
+                if (targetItem && typeof targetItem === 'object' && item && typeof item === 'object') {
+                    target[i] = merge(targetItem, item, options);
+                } else {
+                    target.push(item);
+                }
+            } else {
+                target[i] = item;
+            }
+        });
+        return target;
+    }
+
+    return Object.keys(source).reduce(function (acc, key) {
+        var value = source[key];
+
+        if (has$2.call(acc, key)) {
+            acc[key] = merge(acc[key], value, options);
+        } else {
+            acc[key] = value;
+        }
+        return acc;
+    }, mergeTarget);
+};
+
+var assign = function assignSingleSource(target, source) {
+    return Object.keys(source).reduce(function (acc, key) {
+        acc[key] = source[key];
+        return acc;
+    }, target);
+};
+
+var decode = function (str, decoder, charset) {
+    var strWithoutPlus = str.replace(/\+/g, ' ');
+    if (charset === 'iso-8859-1') {
+        // unescape never throws, no try...catch needed:
+        return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
+    }
+    // utf-8
+    try {
+        return decodeURIComponent(strWithoutPlus);
+    } catch (e) {
+        return strWithoutPlus;
+    }
+};
+
+var encode = function encode(str, defaultEncoder, charset, kind, format) {
+    // This code was originally written by Brian White (mscdex) for the io.js core querystring library.
+    // It has been adapted here for stricter adherence to RFC 3986
+    if (str.length === 0) {
+        return str;
+    }
+
+    var string = str;
+    if (typeof str === 'symbol') {
+        string = Symbol.prototype.toString.call(str);
+    } else if (typeof str !== 'string') {
+        string = String(str);
+    }
+
+    if (charset === 'iso-8859-1') {
+        return escape(string).replace(/%u[0-9a-f]{4}/gi, function ($0) {
+            return '%26%23' + parseInt($0.slice(2), 16) + '%3B';
+        });
+    }
+
+    var out = '';
+    for (var i = 0; i < string.length; ++i) {
+        var c = string.charCodeAt(i);
+
+        if (
+            c === 0x2D // -
+            || c === 0x2E // .
+            || c === 0x5F // _
+            || c === 0x7E // ~
+            || (c >= 0x30 && c <= 0x39) // 0-9
+            || (c >= 0x41 && c <= 0x5A) // a-z
+            || (c >= 0x61 && c <= 0x7A) // A-Z
+            || (format === formats$2.RFC1738 && (c === 0x28 || c === 0x29)) // ( )
+        ) {
+            out += string.charAt(i);
+            continue;
+        }
+
+        if (c < 0x80) {
+            out = out + hexTable[c];
+            continue;
+        }
+
+        if (c < 0x800) {
+            out = out + (hexTable[0xC0 | (c >> 6)] + hexTable[0x80 | (c & 0x3F)]);
+            continue;
+        }
+
+        if (c < 0xD800 || c >= 0xE000) {
+            out = out + (hexTable[0xE0 | (c >> 12)] + hexTable[0x80 | ((c >> 6) & 0x3F)] + hexTable[0x80 | (c & 0x3F)]);
+            continue;
+        }
+
+        i += 1;
+        c = 0x10000 + (((c & 0x3FF) << 10) | (string.charCodeAt(i) & 0x3FF));
+        /* eslint operator-linebreak: [2, "before"] */
+        out += hexTable[0xF0 | (c >> 18)]
+            + hexTable[0x80 | ((c >> 12) & 0x3F)]
+            + hexTable[0x80 | ((c >> 6) & 0x3F)]
+            + hexTable[0x80 | (c & 0x3F)];
+    }
+
+    return out;
+};
+
+var compact = function compact(value) {
+    var queue = [{ obj: { o: value }, prop: 'o' }];
+    var refs = [];
+
+    for (var i = 0; i < queue.length; ++i) {
+        var item = queue[i];
+        var obj = item.obj[item.prop];
+
+        var keys = Object.keys(obj);
+        for (var j = 0; j < keys.length; ++j) {
+            var key = keys[j];
+            var val = obj[key];
+            if (typeof val === 'object' && val !== null && refs.indexOf(val) === -1) {
+                queue.push({ obj: obj, prop: key });
+                refs.push(val);
+            }
+        }
+    }
+
+    compactQueue(queue);
+
+    return value;
+};
+
+var isRegExp = function isRegExp(obj) {
+    return Object.prototype.toString.call(obj) === '[object RegExp]';
+};
+
+var isBuffer = function isBuffer(obj) {
+    if (!obj || typeof obj !== 'object') {
+        return false;
+    }
+
+    return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));
+};
+
+var combine = function combine(a, b) {
+    return [].concat(a, b);
+};
+
+var maybeMap = function maybeMap(val, fn) {
+    if (isArray$2(val)) {
+        var mapped = [];
+        for (var i = 0; i < val.length; i += 1) {
+            mapped.push(fn(val[i]));
+        }
+        return mapped;
+    }
+    return fn(val);
+};
+
+var utils$2 = {
+    arrayToObject: arrayToObject,
+    assign: assign,
+    combine: combine,
+    compact: compact,
+    decode: decode,
+    encode: encode,
+    isBuffer: isBuffer,
+    isRegExp: isRegExp,
+    maybeMap: maybeMap,
+    merge: merge
+};
+
+var getSideChannel = sideChannel;
+var utils$1 = utils$2;
+var formats$1 = formats$3;
+var has$1 = Object.prototype.hasOwnProperty;
+
+var arrayPrefixGenerators = {
+    brackets: function brackets(prefix) {
+        return prefix + '[]';
+    },
+    comma: 'comma',
+    indices: function indices(prefix, key) {
+        return prefix + '[' + key + ']';
+    },
+    repeat: function repeat(prefix) {
+        return prefix;
+    }
+};
+
+var isArray$1 = Array.isArray;
+var split = String.prototype.split;
+var push = Array.prototype.push;
+var pushToArray = function (arr, valueOrArray) {
+    push.apply(arr, isArray$1(valueOrArray) ? valueOrArray : [valueOrArray]);
+};
+
+var toISO = Date.prototype.toISOString;
+
+var defaultFormat = formats$1['default'];
+var defaults$1 = {
+    addQueryPrefix: false,
+    allowDots: false,
+    charset: 'utf-8',
+    charsetSentinel: false,
+    delimiter: '&',
+    encode: true,
+    encoder: utils$1.encode,
+    encodeValuesOnly: false,
+    format: defaultFormat,
+    formatter: formats$1.formatters[defaultFormat],
+    // deprecated
+    indices: false,
+    serializeDate: function serializeDate(date) {
+        return toISO.call(date);
+    },
+    skipNulls: false,
+    strictNullHandling: false
+};
+
+var isNonNullishPrimitive = function isNonNullishPrimitive(v) {
+    return typeof v === 'string'
+        || typeof v === 'number'
+        || typeof v === 'boolean'
+        || typeof v === 'symbol'
+        || typeof v === 'bigint';
+};
+
+var sentinel = {};
+
+var stringify$1 = function stringify(
+    object,
+    prefix,
+    generateArrayPrefix,
+    strictNullHandling,
+    skipNulls,
+    encoder,
+    filter,
+    sort,
+    allowDots,
+    serializeDate,
+    format,
+    formatter,
+    encodeValuesOnly,
+    charset,
+    sideChannel
+) {
+    var obj = object;
+
+    var tmpSc = sideChannel;
+    var step = 0;
+    var findFlag = false;
+    while ((tmpSc = tmpSc.get(sentinel)) !== void undefined && !findFlag) {
+        // Where object last appeared in the ref tree
+        var pos = tmpSc.get(object);
+        step += 1;
+        if (typeof pos !== 'undefined') {
+            if (pos === step) {
+                throw new RangeError('Cyclic object value');
+            } else {
+                findFlag = true; // Break while
+            }
+        }
+        if (typeof tmpSc.get(sentinel) === 'undefined') {
+            step = 0;
+        }
+    }
+
+    if (typeof filter === 'function') {
+        obj = filter(prefix, obj);
+    } else if (obj instanceof Date) {
+        obj = serializeDate(obj);
+    } else if (generateArrayPrefix === 'comma' && isArray$1(obj)) {
+        obj = utils$1.maybeMap(obj, function (value) {
+            if (value instanceof Date) {
+                return serializeDate(value);
+            }
+            return value;
+        });
+    }
+
+    if (obj === null) {
+        if (strictNullHandling) {
+            return encoder && !encodeValuesOnly ? encoder(prefix, defaults$1.encoder, charset, 'key', format) : prefix;
+        }
+
+        obj = '';
+    }
+
+    if (isNonNullishPrimitive(obj) || utils$1.isBuffer(obj)) {
+        if (encoder) {
+            var keyValue = encodeValuesOnly ? prefix : encoder(prefix, defaults$1.encoder, charset, 'key', format);
+            if (generateArrayPrefix === 'comma' && encodeValuesOnly) {
+                var valuesArray = split.call(String(obj), ',');
+                var valuesJoined = '';
+                for (var i = 0; i < valuesArray.length; ++i) {
+                    valuesJoined += (i === 0 ? '' : ',') + formatter(encoder(valuesArray[i], defaults$1.encoder, charset, 'value', format));
+                }
+                return [formatter(keyValue) + (isArray$1(obj) && valuesArray.length === 1 ? '[]' : '') + '=' + valuesJoined];
+            }
+            return [formatter(keyValue) + '=' + formatter(encoder(obj, defaults$1.encoder, charset, 'value', format))];
+        }
+        return [formatter(prefix) + '=' + formatter(String(obj))];
+    }
+
+    var values = [];
+
+    if (typeof obj === 'undefined') {
+        return values;
+    }
+
+    var objKeys;
+    if (generateArrayPrefix === 'comma' && isArray$1(obj)) {
+        // we need to join elements in
+        objKeys = [{ value: obj.length > 0 ? obj.join(',') || null : void undefined }];
+    } else if (isArray$1(filter)) {
+        objKeys = filter;
+    } else {
+        var keys = Object.keys(obj);
+        objKeys = sort ? keys.sort(sort) : keys;
+    }
+
+    var adjustedPrefix = generateArrayPrefix === 'comma' && isArray$1(obj) && obj.length === 1 ? prefix + '[]' : prefix;
+
+    for (var j = 0; j < objKeys.length; ++j) {
+        var key = objKeys[j];
+        var value = typeof key === 'object' && typeof key.value !== 'undefined' ? key.value : obj[key];
+
+        if (skipNulls && value === null) {
+            continue;
+        }
+
+        var keyPrefix = isArray$1(obj)
+            ? typeof generateArrayPrefix === 'function' ? generateArrayPrefix(adjustedPrefix, key) : adjustedPrefix
+            : adjustedPrefix + (allowDots ? '.' + key : '[' + key + ']');
+
+        sideChannel.set(object, step);
+        var valueSideChannel = getSideChannel();
+        valueSideChannel.set(sentinel, sideChannel);
+        pushToArray(values, stringify(
+            value,
+            keyPrefix,
+            generateArrayPrefix,
+            strictNullHandling,
+            skipNulls,
+            encoder,
+            filter,
+            sort,
+            allowDots,
+            serializeDate,
+            format,
+            formatter,
+            encodeValuesOnly,
+            charset,
+            valueSideChannel
+        ));
+    }
+
+    return values;
+};
+
+var normalizeStringifyOptions = function normalizeStringifyOptions(opts) {
+    if (!opts) {
+        return defaults$1;
+    }
+
+    if (opts.encoder !== null && typeof opts.encoder !== 'undefined' && typeof opts.encoder !== 'function') {
+        throw new TypeError('Encoder has to be a function.');
+    }
+
+    var charset = opts.charset || defaults$1.charset;
+    if (typeof opts.charset !== 'undefined' && opts.charset !== 'utf-8' && opts.charset !== 'iso-8859-1') {
+        throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined');
+    }
+
+    var format = formats$1['default'];
+    if (typeof opts.format !== 'undefined') {
+        if (!has$1.call(formats$1.formatters, opts.format)) {
+            throw new TypeError('Unknown format option provided.');
+        }
+        format = opts.format;
+    }
+    var formatter = formats$1.formatters[format];
+
+    var filter = defaults$1.filter;
+    if (typeof opts.filter === 'function' || isArray$1(opts.filter)) {
+        filter = opts.filter;
+    }
+
+    return {
+        addQueryPrefix: typeof opts.addQueryPrefix === 'boolean' ? opts.addQueryPrefix : defaults$1.addQueryPrefix,
+        allowDots: typeof opts.allowDots === 'undefined' ? defaults$1.allowDots : !!opts.allowDots,
+        charset: charset,
+        charsetSentinel: typeof opts.charsetSentinel === 'boolean' ? opts.charsetSentinel : defaults$1.charsetSentinel,
+        delimiter: typeof opts.delimiter === 'undefined' ? defaults$1.delimiter : opts.delimiter,
+        encode: typeof opts.encode === 'boolean' ? opts.encode : defaults$1.encode,
+        encoder: typeof opts.encoder === 'function' ? opts.encoder : defaults$1.encoder,
+        encodeValuesOnly: typeof opts.encodeValuesOnly === 'boolean' ? opts.encodeValuesOnly : defaults$1.encodeValuesOnly,
+        filter: filter,
+        format: format,
+        formatter: formatter,
+        serializeDate: typeof opts.serializeDate === 'function' ? opts.serializeDate : defaults$1.serializeDate,
+        skipNulls: typeof opts.skipNulls === 'boolean' ? opts.skipNulls : defaults$1.skipNulls,
+        sort: typeof opts.sort === 'function' ? opts.sort : null,
+        strictNullHandling: typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults$1.strictNullHandling
+    };
+};
+
+var stringify_1 = function (object, opts) {
+    var obj = object;
+    var options = normalizeStringifyOptions(opts);
+
+    var objKeys;
+    var filter;
+
+    if (typeof options.filter === 'function') {
+        filter = options.filter;
+        obj = filter('', obj);
+    } else if (isArray$1(options.filter)) {
+        filter = options.filter;
+        objKeys = filter;
+    }
+
+    var keys = [];
+
+    if (typeof obj !== 'object' || obj === null) {
+        return '';
+    }
+
+    var arrayFormat;
+    if (opts && opts.arrayFormat in arrayPrefixGenerators) {
+        arrayFormat = opts.arrayFormat;
+    } else if (opts && 'indices' in opts) {
+        arrayFormat = opts.indices ? 'indices' : 'repeat';
+    } else {
+        arrayFormat = 'indices';
+    }
+
+    var generateArrayPrefix = arrayPrefixGenerators[arrayFormat];
+
+    if (!objKeys) {
+        objKeys = Object.keys(obj);
+    }
+
+    if (options.sort) {
+        objKeys.sort(options.sort);
+    }
+
+    var sideChannel = getSideChannel();
+    for (var i = 0; i < objKeys.length; ++i) {
+        var key = objKeys[i];
+
+        if (options.skipNulls && obj[key] === null) {
+            continue;
+        }
+        pushToArray(keys, stringify$1(
+            obj[key],
+            key,
+            generateArrayPrefix,
+            options.strictNullHandling,
+            options.skipNulls,
+            options.encode ? options.encoder : null,
+            options.filter,
+            options.sort,
+            options.allowDots,
+            options.serializeDate,
+            options.format,
+            options.formatter,
+            options.encodeValuesOnly,
+            options.charset,
+            sideChannel
+        ));
+    }
+
+    var joined = keys.join(options.delimiter);
+    var prefix = options.addQueryPrefix === true ? '?' : '';
+
+    if (options.charsetSentinel) {
+        if (options.charset === 'iso-8859-1') {
+            // encodeURIComponent('&#10003;'), the "numeric entity" representation of a checkmark
+            prefix += 'utf8=%26%2310003%3B&';
+        } else {
+            // encodeURIComponent('✓')
+            prefix += 'utf8=%E2%9C%93&';
+        }
+    }
+
+    return joined.length > 0 ? prefix + joined : '';
+};
+
+var utils = utils$2;
+
+var has = Object.prototype.hasOwnProperty;
+var isArray = Array.isArray;
+
+var defaults = {
+    allowDots: false,
+    allowPrototypes: false,
+    allowSparse: false,
+    arrayLimit: 20,
+    charset: 'utf-8',
+    charsetSentinel: false,
+    comma: false,
+    decoder: utils.decode,
+    delimiter: '&',
+    depth: 5,
+    ignoreQueryPrefix: false,
+    interpretNumericEntities: false,
+    parameterLimit: 1000,
+    parseArrays: true,
+    plainObjects: false,
+    strictNullHandling: false
+};
+
+var interpretNumericEntities = function (str) {
+    return str.replace(/&#(\d+);/g, function ($0, numberStr) {
+        return String.fromCharCode(parseInt(numberStr, 10));
+    });
+};
+
+var parseArrayValue = function (val, options) {
+    if (val && typeof val === 'string' && options.comma && val.indexOf(',') > -1) {
+        return val.split(',');
+    }
+
+    return val;
+};
+
+// This is what browsers will submit when the ✓ character occurs in an
+// application/x-www-form-urlencoded body and the encoding of the page containing
+// the form is iso-8859-1, or when the submitted form has an accept-charset
+// attribute of iso-8859-1. Presumably also with other charsets that do not contain
+// the ✓ character, such as us-ascii.
+var isoSentinel = 'utf8=%26%2310003%3B'; // encodeURIComponent('&#10003;')
+
+// These are the percent-encoded utf-8 octets representing a checkmark, indicating that the request actually is utf-8 encoded.
+var charsetSentinel = 'utf8=%E2%9C%93'; // encodeURIComponent('✓')
+
+var parseValues = function parseQueryStringValues(str, options) {
+    var obj = {};
+    var cleanStr = options.ignoreQueryPrefix ? str.replace(/^\?/, '') : str;
+    var limit = options.parameterLimit === Infinity ? undefined : options.parameterLimit;
+    var parts = cleanStr.split(options.delimiter, limit);
+    var skipIndex = -1; // Keep track of where the utf8 sentinel was found
+    var i;
+
+    var charset = options.charset;
+    if (options.charsetSentinel) {
+        for (i = 0; i < parts.length; ++i) {
+            if (parts[i].indexOf('utf8=') === 0) {
+                if (parts[i] === charsetSentinel) {
+                    charset = 'utf-8';
+                } else if (parts[i] === isoSentinel) {
+                    charset = 'iso-8859-1';
+                }
+                skipIndex = i;
+                i = parts.length; // The eslint settings do not allow break;
+            }
+        }
+    }
+
+    for (i = 0; i < parts.length; ++i) {
+        if (i === skipIndex) {
+            continue;
+        }
+        var part = parts[i];
+
+        var bracketEqualsPos = part.indexOf(']=');
+        var pos = bracketEqualsPos === -1 ? part.indexOf('=') : bracketEqualsPos + 1;
+
+        var key, val;
+        if (pos === -1) {
+            key = options.decoder(part, defaults.decoder, charset, 'key');
+            val = options.strictNullHandling ? null : '';
+        } else {
+            key = options.decoder(part.slice(0, pos), defaults.decoder, charset, 'key');
+            val = utils.maybeMap(
+                parseArrayValue(part.slice(pos + 1), options),
+                function (encodedVal) {
+                    return options.decoder(encodedVal, defaults.decoder, charset, 'value');
+                }
+            );
+        }
+
+        if (val && options.interpretNumericEntities && charset === 'iso-8859-1') {
+            val = interpretNumericEntities(val);
+        }
+
+        if (part.indexOf('[]=') > -1) {
+            val = isArray(val) ? [val] : val;
+        }
+
+        if (has.call(obj, key)) {
+            obj[key] = utils.combine(obj[key], val);
+        } else {
+            obj[key] = val;
+        }
+    }
+
+    return obj;
+};
+
+var parseObject = function (chain, val, options, valuesParsed) {
+    var leaf = valuesParsed ? val : parseArrayValue(val, options);
+
+    for (var i = chain.length - 1; i >= 0; --i) {
+        var obj;
+        var root = chain[i];
+
+        if (root === '[]' && options.parseArrays) {
+            obj = [].concat(leaf);
+        } else {
+            obj = options.plainObjects ? Object.create(null) : {};
+            var cleanRoot = root.charAt(0) === '[' && root.charAt(root.length - 1) === ']' ? root.slice(1, -1) : root;
+            var index = parseInt(cleanRoot, 10);
+            if (!options.parseArrays && cleanRoot === '') {
+                obj = { 0: leaf };
+            } else if (
+                !isNaN(index)
+                && root !== cleanRoot
+                && String(index) === cleanRoot
+                && index >= 0
+                && (options.parseArrays && index <= options.arrayLimit)
+            ) {
+                obj = [];
+                obj[index] = leaf;
+            } else if (cleanRoot !== '__proto__') {
+                obj[cleanRoot] = leaf;
+            }
+        }
+
+        leaf = obj;
+    }
+
+    return leaf;
+};
+
+var parseKeys = function parseQueryStringKeys(givenKey, val, options, valuesParsed) {
+    if (!givenKey) {
+        return;
+    }
+
+    // Transform dot notation to bracket notation
+    var key = options.allowDots ? givenKey.replace(/\.([^.[]+)/g, '[$1]') : givenKey;
+
+    // The regex chunks
+
+    var brackets = /(\[[^[\]]*])/;
+    var child = /(\[[^[\]]*])/g;
+
+    // Get the parent
+
+    var segment = options.depth > 0 && brackets.exec(key);
+    var parent = segment ? key.slice(0, segment.index) : key;
+
+    // Stash the parent if it exists
+
+    var keys = [];
+    if (parent) {
+        // If we aren't using plain objects, optionally prefix keys that would overwrite object prototype properties
+        if (!options.plainObjects && has.call(Object.prototype, parent)) {
+            if (!options.allowPrototypes) {
+                return;
+            }
+        }
+
+        keys.push(parent);
+    }
+
+    // Loop through children appending to the array until we hit depth
+
+    var i = 0;
+    while (options.depth > 0 && (segment = child.exec(key)) !== null && i < options.depth) {
+        i += 1;
+        if (!options.plainObjects && has.call(Object.prototype, segment[1].slice(1, -1))) {
+            if (!options.allowPrototypes) {
+                return;
+            }
+        }
+        keys.push(segment[1]);
+    }
+
+    // If there's a remainder, just add whatever is left
+
+    if (segment) {
+        keys.push('[' + key.slice(segment.index) + ']');
+    }
+
+    return parseObject(keys, val, options, valuesParsed);
+};
+
+var normalizeParseOptions = function normalizeParseOptions(opts) {
+    if (!opts) {
+        return defaults;
+    }
+
+    if (opts.decoder !== null && opts.decoder !== undefined && typeof opts.decoder !== 'function') {
+        throw new TypeError('Decoder has to be a function.');
+    }
+
+    if (typeof opts.charset !== 'undefined' && opts.charset !== 'utf-8' && opts.charset !== 'iso-8859-1') {
+        throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined');
+    }
+    var charset = typeof opts.charset === 'undefined' ? defaults.charset : opts.charset;
+
+    return {
+        allowDots: typeof opts.allowDots === 'undefined' ? defaults.allowDots : !!opts.allowDots,
+        allowPrototypes: typeof opts.allowPrototypes === 'boolean' ? opts.allowPrototypes : defaults.allowPrototypes,
+        allowSparse: typeof opts.allowSparse === 'boolean' ? opts.allowSparse : defaults.allowSparse,
+        arrayLimit: typeof opts.arrayLimit === 'number' ? opts.arrayLimit : defaults.arrayLimit,
+        charset: charset,
+        charsetSentinel: typeof opts.charsetSentinel === 'boolean' ? opts.charsetSentinel : defaults.charsetSentinel,
+        comma: typeof opts.comma === 'boolean' ? opts.comma : defaults.comma,
+        decoder: typeof opts.decoder === 'function' ? opts.decoder : defaults.decoder,
+        delimiter: typeof opts.delimiter === 'string' || utils.isRegExp(opts.delimiter) ? opts.delimiter : defaults.delimiter,
+        // eslint-disable-next-line no-implicit-coercion, no-extra-parens
+        depth: (typeof opts.depth === 'number' || opts.depth === false) ? +opts.depth : defaults.depth,
+        ignoreQueryPrefix: opts.ignoreQueryPrefix === true,
+        interpretNumericEntities: typeof opts.interpretNumericEntities === 'boolean' ? opts.interpretNumericEntities : defaults.interpretNumericEntities,
+        parameterLimit: typeof opts.parameterLimit === 'number' ? opts.parameterLimit : defaults.parameterLimit,
+        parseArrays: opts.parseArrays !== false,
+        plainObjects: typeof opts.plainObjects === 'boolean' ? opts.plainObjects : defaults.plainObjects,
+        strictNullHandling: typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults.strictNullHandling
+    };
+};
+
+var parse$1 = function (str, opts) {
+    var options = normalizeParseOptions(opts);
+
+    if (str === '' || str === null || typeof str === 'undefined') {
+        return options.plainObjects ? Object.create(null) : {};
+    }
+
+    var tempObj = typeof str === 'string' ? parseValues(str, options) : str;
+    var obj = options.plainObjects ? Object.create(null) : {};
+
+    // Iterate over the keys and setup the new object
+
+    var keys = Object.keys(tempObj);
+    for (var i = 0; i < keys.length; ++i) {
+        var key = keys[i];
+        var newObj = parseKeys(key, tempObj[key], options, typeof str === 'string');
+        obj = utils.merge(obj, newObj, options);
+    }
+
+    if (options.allowSparse === true) {
+        return obj;
+    }
+
+    return utils.compact(obj);
+};
+
+var stringify = stringify_1;
+var parse = parse$1;
+var formats = formats$3;
+
+var lib = {
+    formats: formats,
+    parse: parse,
+    stringify: stringify
+};
+
+// * 声明一个 Map 用于存储每个请求的标识 和 取消函数
+var pendingMap = new Map();
+// * 序列化参数
+var getPendingUrl = function (config) {
+    return [config.method, config.url, lib.stringify(config.data), lib.stringify(config.params)].join("&");
+};
+// * 判断是否为函数
+var isFunction = function (val) {
+    return Object.prototype.toString.call(val) === "[object Function]";
+};
+var AxiosCanceler = /** @class */ (function () {
+    function AxiosCanceler() {
+    }
+    /**
+     * @description: 添加请求
+     * @param {Object} config
+     */
+    AxiosCanceler.prototype.addPending = function (config) {
+        // * 在请求开始前，对之前的请求做检查取消操作
+        this.removePending(config);
+        var url = getPendingUrl(config);
+        config.cancelToken =
+            config.cancelToken ||
+                new axios$1.CancelToken(function (cancel) {
+                    if (!pendingMap.has(url)) {
+                        // 如果 pending 中不存在当前请求，则添加进去
+                        pendingMap.set(url, cancel);
+                    }
+                });
+    };
+    /**
+     * @description: 移除请求
+     * @param {Object} config
+     */
+    AxiosCanceler.prototype.removePending = function (config) {
+        var url = getPendingUrl(config);
+        if (pendingMap.has(url)) {
+            // 如果在 pending 中存在当前请求标识，需要取消当前请求，并且移除
+            var cancel = pendingMap.get(url);
+            cancel && cancel();
+            pendingMap.delete(url);
+        }
+    };
+    /**
+     * @description: 清空所有pending
+     */
+    AxiosCanceler.prototype.removeAllPending = function () {
+        pendingMap.forEach(function (cancel) {
+            cancel && isFunction(cancel) && cancel();
+        });
+        pendingMap.clear();
+    };
+    /**
+     * @description: 重置
+     */
+    AxiosCanceler.prototype.reset = function () {
+        pendingMap = new Map();
+    };
+    return AxiosCanceler;
+}());
+
 var jsxRuntime = {exports: {}};
 
 var reactJsxRuntime_production_min = {};
@@ -47479,8 +50006,8 @@ var reactJsxRuntime_production_min = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var f=react.exports,k=Symbol.for("react.element"),l=Symbol.for("react.fragment"),m=Object.prototype.hasOwnProperty,n=f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,p={key:!0,ref:!0,__self:!0,__source:!0};
-function q(c,a,g){var b,d={},e=null,h=null;void 0!==g&&(e=""+g);void 0!==a.key&&(e=""+a.key);void 0!==a.ref&&(h=a.ref);for(b in a)m.call(a,b)&&!p.hasOwnProperty(b)&&(d[b]=a[b]);if(c&&c.defaultProps)for(b in a=c.defaultProps,a)void 0===d[b]&&(d[b]=a[b]);return {$$typeof:k,type:c,key:e,ref:h,props:d,_owner:n.current}}reactJsxRuntime_production_min.Fragment=l;reactJsxRuntime_production_min.jsx=q;reactJsxRuntime_production_min.jsxs=q;
+var f=react.exports,k=Symbol.for("react.element"),l=Symbol.for("react.fragment"),m$1=Object.prototype.hasOwnProperty,n=f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,p={key:!0,ref:!0,__self:!0,__source:!0};
+function q(c,a,g){var b,d={},e=null,h=null;void 0!==g&&(e=""+g);void 0!==a.key&&(e=""+a.key);void 0!==a.ref&&(h=a.ref);for(b in a)m$1.call(a,b)&&!p.hasOwnProperty(b)&&(d[b]=a[b]);if(c&&c.defaultProps)for(b in a=c.defaultProps,a)void 0===d[b]&&(d[b]=a[b]);return {$$typeof:k,type:c,key:e,ref:h,props:d,_owner:n.current}}reactJsxRuntime_production_min.Fragment=l;reactJsxRuntime_production_min.jsx=q;reactJsxRuntime_production_min.jsxs=q;
 
 var reactJsxRuntime_development = {};
 
@@ -48802,11 +51329,59 @@ if (process.env.NODE_ENV === 'production') {
   jsxRuntime.exports = reactJsxRuntime_development;
 }
 
+var createRoot;
+
+var m = reactDom.exports;
+if (process.env.NODE_ENV === 'production') {
+  createRoot = m.createRoot;
+  m.hydrateRoot;
+} else {
+  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+  createRoot = function(c, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.createRoot(c, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+}
+
+function styleInject(css, ref) {
+  if ( ref === void 0 ) ref = {};
+  var insertAt = ref.insertAt;
+
+  if (!css || typeof document === 'undefined') { return; }
+
+  var head = document.head || document.getElementsByTagName('head')[0];
+  var style = document.createElement('style');
+  style.type = 'text/css';
+
+  if (insertAt === 'top') {
+    if (head.firstChild) {
+      head.insertBefore(style, head.firstChild);
+    } else {
+      head.appendChild(style);
+    }
+  } else {
+    head.appendChild(style);
+  }
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var css_248z = ".request-loading .ant-spin-text {\r\n  margin-top: 5px;\r\n  font-size: 18px;\r\n  color: #509ff1 !important;\r\n}\r\n.request-loading .ant-spin-dot-item {\r\n  background-color: #509ff1 !important;\r\n}";
+styleInject(css_248z);
+
 // * 全局loading请求数
 var needLoadingRequestCount = 0;
 var Loading = function (_a) {
     var _b = _a.tip, tip = _b === void 0 ? "Loading" : _b;
-    return jsxRuntime.exports.jsx(Spin$1, { tip: tip, size: "large", fullscreen: true });
+    return jsxRuntime.exports.jsx(Spin$1, { tip: tip, size: "large", className: "request-loading", fullscreen: true });
 };
 // * 显示loading
 var showFullScreenLoading = function () {
@@ -48815,7 +51390,9 @@ var showFullScreenLoading = function () {
         dom.setAttribute("id", "loading");
         document.body.appendChild(dom);
         // @ts-ignore
-        ReactDOM.render(jsxRuntime.exports.jsx(Loading, {}), dom);
+        // ReactDOM.render(<Loading />, dom);
+        var root = createRoot(dom);
+        root.render(jsxRuntime.exports.jsx(Loading, {}));
     }
     needLoadingRequestCount++;
 };
@@ -48829,15 +51406,60 @@ var tryHideFullScreenLoading = function () {
     }
 };
 
+var requestTimeout = 10000;
+
+/**
+ * @description: 校验网络请求状态码
+ * @param {Number} status
+ * @return void
+ */
+var checkStatus = function (status) {
+    switch (+status) {
+        case 400:
+            message$1.error("请求失败！请您稍后重试");
+            break;
+        case 401:
+            message$1.error("登录失效！请您重新登录");
+            break;
+        case 403:
+            message$1.error("当前账号无权限访问！");
+            break;
+        case 404:
+            message$1.error("你所访问的资源不存在！");
+            break;
+        case 405:
+            message$1.error("请求方式错误！请您稍后重试");
+            break;
+        case 408:
+            message$1.error("请求超时！请您稍后重试");
+            break;
+        case 500:
+            message$1.error("服务异常！");
+            break;
+        case 502:
+            message$1.error("网关错误！");
+            break;
+        case 503:
+            message$1.error("服务不可用！");
+            break;
+        case 504:
+            message$1.error("网关超时！");
+            break;
+        default:
+            message$1.error("请求失败！");
+    }
+};
+
+var axiosCanceler = new AxiosCanceler();
 var RequestHttp = /** @class */ (function () {
     function RequestHttp(config) {
         var _this = this;
-        this.token = config.token || '';
+        this.token = config.token || "";
         this.baseURL = config.baseURL || location.origin || "";
-        this.timeOut = config.timeout || 10000;
+        this.timeOut = config.timeout || requestTimeout;
         this.withCredentials = config.withCredentials || false;
         this.service = axios$1.create({
-            baseURL: this.baseURL || '',
+            baseURL: this.baseURL || "",
             timeout: this.timeOut || 5000,
             withCredentials: this.withCredentials || false,
         });
@@ -48847,12 +51469,13 @@ var RequestHttp = /** @class */ (function () {
          * token校验(JWT) : 接受服务器返回的token
          */
         this.service.interceptors.request.use(function (config) {
-            console.log(config, 'config--------');
+            console.log(config, "config--------");
+            // NProgress.start();
             // * 将当前请求添加到 pending 中
-            // axiosCanceler.addPending(config);
+            axiosCanceler.addPending(config);
             // * 如果当前请求不需要显示 loading,在api服务中通过指定的第三个参数: { headers: { noLoading: true } }来控制不显示loading
             config.headers.noLoading || showFullScreenLoading();
-            return __assign(__assign({}, config), { headers: __assign(__assign({}, config.headers), { "token": _this.token }) });
+            return __assign(__assign({}, config), { headers: __assign(__assign({}, config.headers), { token: _this.token }) });
         }, function (error) {
             return Promise.reject(error);
         });
@@ -48861,13 +51484,14 @@ var RequestHttp = /** @class */ (function () {
          *  服务器换返回信息 -> [拦截统一处理] -> 客户端JS获取到信息
          */
         this.service.interceptors.response.use(function (response) {
-            console.log(response, 'response--------');
+            console.log(response, "response--------");
+            // NProgress.done();
             var data = response.data, config = response.config, status = response.status;
             // * 在请求结束后，移除本次请求(关闭loading)
-            // axiosCanceler.removePending(config);
+            axiosCanceler.removePending(config);
             tryHideFullScreenLoading();
             return new Promise(function (resolve, reject) {
-                if (status === 200) {
+                if (+status === 200) {
                     // * 如果当前请求不需要显示 message,在api服务中通过指定的第三个参数: { headers: { noMessage: true } }来控制不显示message
                     switch (+data.code) {
                         case 0: // 正常返回
@@ -48879,8 +51503,9 @@ var RequestHttp = /** @class */ (function () {
                             resolve(data);
                             break;
                         // * 处理异常返回
-                        default: // 其余异常
-                            config.headers.noMessage || message$1.error(data.msg);
+                        default:
+                            // config.headers!.noMessage || 
+                            message$1.error(data.msg);
                             reject(data);
                             break;
                     }
@@ -48890,9 +51515,12 @@ var RequestHttp = /** @class */ (function () {
                 }
             });
         }, function (error) { return __awaiter(_this, void 0, void 0, function () {
+            var status;
             return __generator(this, function (_a) {
-                error.request.status;
-                config.headers.noMessage || message$1.error(error.message);
+                status = error.request.status;
+                // NProgress.done();
+                // config.headers!.noMessage || 
+                checkStatus(status);
                 tryHideFullScreenLoading();
                 return [2 /*return*/, Promise.reject(error)];
             });

@@ -32,5 +32,6 @@ export interface AuthState {
     loginInfo: {
         [propName: string]: any;
     };
+    token: string;
 }
 //# sourceMappingURL=index.d.ts.map

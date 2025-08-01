@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { getMenuList } from "@/api/modules/login";
 
 function HomePage(props: any) {
     
   return (
     <>
+    <button onClick={async () => {
+      await getMenuList();
+    }}>request</button>
     <ul>
       <li>1</li>
       <li>2</li>

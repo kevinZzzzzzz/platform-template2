@@ -10,21 +10,23 @@ import Menu from "@/layout/Default/components/Menu";
  */
 // * 用户登录接口
 export const loginApi = (params: Login.ReqLoginForm) => {
-	return http.post<Login.ResLogin>(PORT1 + `/login`, params);
+	return http._post<Login.ResLogin>('oauth/login', params);
 };
 
 // * 获取按钮权限
 export const getAuthorButtons = () => {
-	return http.get<Login.ResAuthButtons>(PORT1 + `/auth/buttons`);
+	return http._get<Login.ResAuthButtons>(PORT1 + `/auth/buttons`);
 };
 
 // * 获取菜单列表
 export const getMenuList = () => {
 	// return http.get<Menu.MenuOptions[]>(PORT1 + `/menu/list`);
-	return http.get<any>('/menu.json');
+	return http.localGet<any>('/menu.json');
 };
 
 // * 获取应用信息
 export const getAppInfo = () => {
-	return http.get<any>('/tmp/app-data.json');
+	return http.localGet<any>('/tmp/app-data.json', null, {
+    headers: { noMessage: true } 
+  });
 };

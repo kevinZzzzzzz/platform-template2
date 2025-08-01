@@ -1,15 +1,20 @@
-import { c as createSlice } from './redux-toolkit.esm-abb17662.js';
+import { c as createSlice } from './redux-toolkit.esm-ca140e18.js';
 
 var _a;
 var authState = {
     authButtons: {},
     authRouter: [],
-    loginInfo: {}
+    loginInfo: {},
+    token: ''
 };
 var authSlice = createSlice({
     name: "auth",
     initialState: authState,
     reducers: {
+        setToken: function (state, _a) {
+            var payload = _a.payload;
+            state.token = payload;
+        },
         setAuthButtons: function (state, _a) {
             var payload = _a.payload;
             state.authButtons = payload;
@@ -24,7 +29,7 @@ var authSlice = createSlice({
         }
     }
 });
-var setAuthButtons = (_a = authSlice.actions, _a.setAuthButtons), setAuthRouter = _a.setAuthRouter;
+var setToken = (_a = authSlice.actions, _a.setToken), setLoginInfo = _a.setLoginInfo, setAuthButtons = _a.setAuthButtons, setAuthRouter = _a.setAuthRouter;
 var auth = authSlice.reducer;
 
-export { auth as default, setAuthButtons, setAuthRouter };
+export { auth as default, setAuthButtons, setAuthRouter, setLoginInfo, setToken };

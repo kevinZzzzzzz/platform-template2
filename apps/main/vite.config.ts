@@ -73,14 +73,14 @@ export default defineConfig((mode: ConfigEnv): any => {
       port: 8881,
       host: true,
       proxy: {
-        "/api": {
-          target: env.VITE_BASE_URL,
+        "/proxyApi": {
+          target: env.VITE_SERVER_URL,
           changeOrigin: true,
           secure: false, // 解决代理https协议报错问题
           headers: {
             'Access-Control-Allow-Origin': '*'
           },
-          rewrite: (path: string) => path.replace(/^\/api/, ""),
+          rewrite: (path: string) => path.replace(/^\/proxyApi/, ""),
         },
       },
     },

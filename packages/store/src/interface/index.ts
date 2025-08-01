@@ -48,4 +48,5 @@ export interface AuthState {
 	loginInfo: {
 		[propName: string]: any;
 	};
+	token: string;
 }

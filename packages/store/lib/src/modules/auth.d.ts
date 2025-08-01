@@ -1,4 +1,6 @@
-export declare const setAuthButtons: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
+export declare const setToken: import("@reduxjs/toolkit").ActionCreatorWithPayload<string, "auth/setToken">, setLoginInfo: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
+    [propName: string]: any;
+}, "auth/setLoginInfo">, setAuthButtons: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     [propName: string]: any;
 }, "auth/setAuthButtons">, setAuthRouter: import("@reduxjs/toolkit").ActionCreatorWithPayload<string[], "auth/setAuthRouter">;
 declare const _default: Reducer<State>;

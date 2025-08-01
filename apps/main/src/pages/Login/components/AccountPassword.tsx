@@ -1,19 +1,80 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./index.module.less";
 import { getAppInfo } from "@/api/modules/login";
 import { Tabs, Form, Input, Checkbox, Button, Flex, Divider } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import http from "@/api";
+import { encrypt } from "@/utils/util";
+import { useNavigate } from "react-router-dom";
+import { HOME_URL } from "@/config/config";
 
 function AccountPassword(props: any) {
-	// const [appInfo, setAppInfo] = useState<any>({});
-	useEffect(() => {
-		// getAppInfo().then(res => {
-		// 	setAppInfo(res);
-		// });
-	}, []);
-	const onFinish = (values: any) => {
-		console.log("Received values of form: ", values);
+  const navigate = useNavigate()
+	const [loginForm] = Form.useForm();
+  const secreted = useRef(false) // 是否已加密
+	const initiaLoginVal = {
+		username: "",
+		password: "",
+		remember: false
+	};
+
+  /* 
+    记住密码操作
+  */
+  const rememberPwdFun = (event: any) => {
+    const {checked} = event.target
+    localStorage.setItem('rememberPwd', checked)
+  }
+  useEffect(() => {
+    const rememberPwd = JSON.parse(localStorage.getItem('rememberPwd'))
+    const userPwdMap = localStorage.getItem('userPwdMap') ? JSON.parse(localStorage.getItem('userPwdMap')) : null
+    // const username = loginForm.getFieldValue('username')
+    if (rememberPwd) {
+      loginForm.setFieldValue('remember', rememberPwd)
+      if (userPwdMap?.user) {
+        loginForm.setFieldValue('username', userPwdMap['user'])
+        loginForm.setFieldValue('password', userPwdMap['pwd'])
+        secreted.current = true // 已加密
+      } else {
+        secreted.current = false
+      }
+    } else {
+      secreted.current = false
+      loginForm.setFieldValue('remember', false)
+      loginForm.setFieldValue('password', '')
+      if (userPwdMap?.user) {
+        loginForm.setFieldValue('username', userPwdMap['user'])
+        localStorage.setItem('userPwdMap', null)
+      }
+    }
+  }, [])
+	const onFinish = async (values: any) => {
+    const { username, password } = values
+    const secretPwd = await encrypt(password, props.publicKey)
+    loginForm.setFieldValue('password', secretPwd)
+    const succLogin = () => {
+      console.log('登录成功')
+      const userPwdMap = {
+        user: loginForm.getFieldValue('username'),
+        pwd: ''
+      }
+      if (loginForm.getFieldValue('remember')) {
+        userPwdMap.pwd = secretPwd
+      }
+      localStorage.setItem('userPwdMap', JSON.stringify(userPwdMap))
+      setTimeout(() => {
+        navigate(HOME_URL)
+      }, 500);
+    }
+    const failLogin = () => {
+      console.log('登录失败')
+      loginForm.setFieldValue('password', '')
+    }
+    
+    props.loginFun({
+      username,
+      password: secretPwd
+    }, succLogin, failLogin)
 	};
 	return (
 		<div className={styles.accountPassword}>
@@ -29,17 +90,17 @@ function AccountPassword(props: any) {
 					}
 				]}
 			/>
-			<Form name="login" initialValues={{ remember: true }} style={{ maxWidth: 360 }} onFinish={onFinish}>
+			<Form name="login" form={loginForm} initialValues={initiaLoginVal} style={{ maxWidth: 360 }} onFinish={onFinish}>
 				<Form.Item name="username" rules={[{ required: true, message: "请输入用户名!" }]}>
-					<Input size="large" prefix={<UserOutlined />} placeholder="用户名" />
+					<Input size="large" prefix={<UserOutlined />} placeholder="请输入用户名" />
 				</Form.Item>
 				<Form.Item name="password" rules={[{ required: true, message: "请输入密码!" }]}>
-					<Input size="large" prefix={<LockOutlined />} type="password" placeholder="密码" />
+					<Input size="large" prefix={<LockOutlined />} type="password" placeholder="请输入密码" />
 				</Form.Item>
 				<Form.Item>
 					<Flex justify="space-between" align="center">
 						<Form.Item name="remember" valuePropName="checked" noStyle>
-							<Checkbox>记住密码</Checkbox>
+							<Checkbox onChange={rememberPwdFun}>记住密码</Checkbox>
 						</Form.Item>
 					</Flex>
 				</Form.Item>
@@ -55,7 +116,8 @@ function AccountPassword(props: any) {
 				<span>
 					Copyright © {new Date().getFullYear()}
 					<Button type="link">{props.appInfo?.app?.company?.name}</Button>
-					出品<Divider type="vertical" />
+					出品
+					<Divider type="vertical" />
 					{props.appInfo?.app?.version}
 				</span>
 			</div>
