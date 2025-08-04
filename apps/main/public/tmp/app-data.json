@@ -1,15 +1,869 @@
 {
-  "code": 200,
-  "version": "3.0.0",
+  "code": "0",
+  "version": "2.1.0",
   "app": {
-    "name": "城市用血实时联网平台",
-    "description": "让每个城市不再缺血",
-    "version": "2.4.3.0",
-    "company": {
-      "name": "穿越医疗",
-      "link": "http://www.stpass.com",
-      "telephone": "",
-      "showLogo": true
-    }
+      "name": "城市用血实时联网平台",
+      "description": "让每个城市不再缺血",
+      "version": "2.4.3.0",
+      "company": {
+          "name": "穿越医疗",
+          "link": "http://www.stpass.com",
+          "telephone": "",
+          "showLogo": true
+      },
+      "isTestEnv": [
+          "localhost",
+          "192.168.120.178",
+          "192.168.110.15"
+      ],
+      "clientE": false,
+      "licence": "",
+      "serialIdLast2": "55",
+      "unitNew": false,
+      "unit": false,
+      "sysOrigin": "http://192.168.110.15:180",
+      "stationOrigin": "http://192.168.110.15:181",
+      "wsDomain": "hoslink.stpass.com",
+      "wsHosPort": "8089",
+      "wsStaPort": "8081",
+      "autoPrintApplication": true,
+      "noCrossMatch": "同型输注",
+      "patientReviewValue": "inpatientNo",
+      "processRecordTemplate": "于【:】开始输入，【】滴/分，【:】测体温【℃】，P【次/分】，R【次/分】，BP【/mmHg】，患者无不适，调滴速为【滴/分】，于【:】输血完毕，无不良反应",
+      "performanceTemplate": "滴数和患者有无不适",
+      "printModule": "123",
+      "bloodDetailsDefault": [
+          {
+              "subtypeId": 5,
+              "filterLeukocyte": null,
+              "irradiation": null,
+              "amount": 0,
+              "unit": "U"
+          },
+          {
+              "subtypeId": 13,
+              "filterLeukocyte": null,
+              "irradiation": null,
+              "amount": 0,
+              "unit": "ml"
+          },
+          {
+              "subtypeId": 41,
+              "filterLeukocyte": null,
+              "irradiation": null,
+              "amount": 0,
+              "unit": "U"
+          },
+          {
+              "subtypeId": 1,
+              "filterLeukocyte": null,
+              "irradiation": null,
+              "amount": 0,
+              "unit": "U"
+          }
+      ],
+      "searchLimitDay": {
+          "id": "startDate",
+          "template": [
+              {
+                  "id": "nowDate",
+                  "name": "当天"
+              },
+              {
+                  "id": "yesterday",
+                  "name": "1天内"
+              },
+              {
+                  "id": "twoDate",
+                  "name": "2天内"
+              },
+              {
+                  "id": "threeDate",
+                  "name": "3天内"
+              },
+              {
+                  "id": "fiveDate",
+                  "name": "5天内"
+              },
+              {
+                  "id": "startDate",
+                  "name": "7天内"
+              },
+              {
+                  "id": "twoWeekDate",
+                  "name": "14天内"
+              },
+              {
+                  "id": "date",
+                  "name": "30天内"
+              }
+          ]
+      },
+      "bloodMap": false,
+      "hideName": true,
+      "transfusionTrigger": false,
+      "showRFIDBtn": {
+          "value": false,
+          "postUrl": ""
+      },
+      "checkPassword": true,
+      "webSocketConnectionSet": true,
+      "transformText": {
+          "patientNumber": "病案号"
+      },
+      "bloodstandard": 1,
+      "custom": {
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "name": "默认"
+              },
+              {
+                  "id": 2,
+                  "name": "无锡"
+              },
+              {
+                  "id": 3,
+                  "name": "南京"
+              },
+              {
+                  "id": 4,
+                  "name": "宝安"
+              },
+              {
+                  "id": 5,
+                  "name": "扬州"
+              },
+              {
+                  "id": 6,
+                  "name": "惠州"
+              }
+          ]
+      },
+      "region": {
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "name": "默认"
+              },
+              {
+                  "id": 2,
+                  "name": "深圳宝安"
+              },
+              {
+                  "id": 3,
+                  "name": "西藏"
+              }
+          ]
+      },
+      "broadcast": 0,
+      "priorityUseBlood": [],
+      "instructionsForInformationEntry": "",
+      "priorityBloodUserApplicationFormRequire": {
+          "bloodUserForm": [
+              {
+                  "label": "亲属关系",
+                  "key": "relationType",
+                  "default": true,
+                  "disable": true
+              },
+              {
+                  "label": "证件类型",
+                  "key": "idType",
+                  "default": true,
+                  "disable": true
+              },
+              {
+                  "label": "证件号码",
+                  "key": "idNumber",
+                  "default": true,
+                  "disable": true
+              },
+              {
+                  "label": "姓名",
+                  "key": "name",
+                  "default": true,
+                  "disable": true
+              },
+              {
+                  "label": "性别",
+                  "key": "gender",
+                  "default": false,
+                  "disable": false
+              },
+              {
+                  "label": "年龄",
+                  "key": "age",
+                  "default": false,
+                  "disable": false
+              },
+              {
+                  "label": "血型",
+                  "key": "aboBloodGroup",
+                  "default": false,
+                  "disable": false
+              },
+              {
+                  "label": "Rh类型",
+                  "key": "rhBloodGroup",
+                  "default": false,
+                  "disable": false
+              },
+              {
+                  "label": "住院号",
+                  "key": "patientId",
+                  "default": true,
+                  "disable": true
+              },
+              {
+                  "label": "病区",
+                  "key": "hospitalArea",
+                  "default": false,
+                  "disable": false
+              },
+              {
+                  "label": "病床号",
+                  "key": "bedNo",
+                  "default": false,
+                  "disable": false
+              },
+              {
+                  "label": "申请科室",
+                  "key": "deptName",
+                  "default": true,
+                  "disable": true
+              },
+              {
+                  "label": "临床诊断",
+                  "key": "diagnosis",
+                  "default": false,
+                  "disable": false
+              },
+              {
+                  "label": "病情简要说明",
+                  "key": "medicalNote",
+                  "default": true,
+                  "disable": true
+              }
+          ]
+      }
+  },
+  "printers": {
+      "PROCESSRECORDS": {
+          "template": "process-records",
+          "printMachine": "PRINT A4",
+          "printTitle": "输血过程记录单",
+          "printTitleUrl": "",
+          "name": "输血过程记录单",
+          "desc": "输血过程记录单相关说明",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "process-records",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "昌都",
+                  "template": "process-records-changdu",
+                  "printTitle": "",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 3,
+                  "text": "惠州三院",
+                  "template": "process-records",
+                  "printTitleUrl": "huizhou_sanyuan.png"
+              }
+          ]
+      },
+      "BLOODAPRAISE": {
+          "template": "blood-appraise",
+          "printMachine": "PRINT A4",
+          "printTitle": "输血后疗效评价",
+          "printTitleUrl": "",
+          "name": "输血后疗效评价打印单据",
+          "desc": "输血后疗效评价打印单据",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "blood-appraise",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "惠州三院 ",
+                  "template": "blood-appraise",
+                  "printTitleUrl": "huizhou_sanyuan.png"
+              }
+          ]
+      },
+      "BLOODMATCLABEL": {
+          "template": "blood-matc-label",
+          "printMachine": "PRINT A4",
+          "printTitleUrl": "",
+          "name": "交叉配血血袋小标签",
+          "desc": "交叉配血血袋小标签",
+          "id": 1,
+          "noPrintTitle": true,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "blood-matc-label",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "湖州三院",
+                  "template": "blood-matc-label-hzsy",
+                  "printTitleUrl": ""
+              }
+          ]
+      },
+      "INTERNETSTORAGE": {
+          "template": "internet-storage",
+          "printMachine": "PRINT A4",
+          "printTitle": "",
+          "printTitleUrl": "",
+          "name": "血袋入库清单",
+          "desc": "血袋入库清单",
+          "id": 1,
+          "noPrintTitle": true,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "internet-storage",
+                  "printTitleUrl": ""
+              }
+          ]
+      },
+      "OUTGOINGLIST": {
+          "template": "outgoing-list",
+          "printMachine": "PRINT A4",
+          "printTitle": "",
+          "printTitleUrl": "",
+          "name": "血袋出库清单",
+          "desc": "血袋出库清单",
+          "id": 1,
+          "noPrintTitle": true,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "outgoing-list",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "三门峡医院",
+                  "template": "outgoing-list-sanmenxia",
+                  "printTitleUrl": "sanmenxia.png"
+              }
+          ]
+      },
+      "BLOODDESTROY": {
+          "template": "blood-destroy",
+          "printMachine": "PRINT A4",
+          "printTitle": "血袋销毁记录单",
+          "printTitleUrl": "血袋销毁记录单",
+          "name": "血袋销毁记录单",
+          "desc": "血袋销毁记录单",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "blood-destroy",
+                  "printTitleUrl": ""
+              }
+          ]
+      },
+      "USEBLOOD": {
+          "template": "use-blood-prove",
+          "printMachine": "PRINT A4",
+          "printTitle": "用血明细",
+          "printTitleUrl": "",
+          "name": "用血证明",
+          "desc": "用血证明",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "use-blood-prove",
+                  "printTitleUrl": ""
+              }
+          ]
+      },
+      "PRETRANSFUSIONASSESS": {
+          "template": "pretransfusion-assess",
+          "printMachine": "PRINT A4",
+          "printTitle": "输血前评估单",
+          "printTitleUrl": "",
+          "name": "输血前评估单",
+          "desc": "输血前评估单",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "pretransfusion-assess",
+                  "printTitleUrl": ""
+              }
+          ]
+      },
+      "BLOODSELFSTORED": {
+          "template": "blood_self_stored",
+          "printMachine": "PRINT A4",
+          "printTitle": "自体血液",
+          "name": "自体血入库血袋单",
+          "desc": "自体血入库血袋单",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "blood_self_stored",
+                  "printTitleUrl": ""
+              }
+          ]
+      },
+      "AUTOLOGOUSTRANSFUSION": {
+          "template": "autologous-transfusion",
+          "printMachine": "PRINT A4",
+          "printTitle": "自体输血申请单",
+          "printTitleUrl": "",
+          "name": "自体血申请单",
+          "desc": "自体血申请单",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "autologous-transfusion",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "惠州三院",
+                  "template": "autologous-transfusion",
+                  "printTitleUrl": "huizhou_sanyuan.png"
+              }
+          ]
+      },
+      "AUTOLOGOUSBLOOD": {
+          "template": "autologous-blood",
+          "printMachine": "PRINT A4",
+          "printTitle": "",
+          "name": "自体血出库血袋单",
+          "desc": "自体血出库血袋单",
+          "id": 1,
+          "noPrintTitle": true,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "autologous-blood",
+                  "printTitleUrl": ""
+              }
+          ]
+      },
+      "AUTOLOGOUSSENDBLOOD": {
+          "template": "autologous-send-blood",
+          "printMachine": "PRINT A4",
+          "printTitle": "",
+          "printTitleUrl": "",
+          "name": "自体发血出库单",
+          "desc": "自体发血出库单;异体血领血凭证单;自体血领血凭证单",
+          "id": 1,
+          "noPrintTitle": true,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "autologous-send-blood",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "惠州三院",
+                  "template": "autologous-send-blood",
+                  "printTitleUrl": "huizhou_sanyuan.png"
+              }
+          ]
+      },
+      "CROSSMATC": {
+          "template": "cross-matc",
+          "printMachine": "PRINT A4",
+          "printTitle": "交叉配血报告单",
+          "printTitleUrl": "",
+          "name": "交叉配血报告单",
+          "desc": "交叉配血报告单",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "cross-matc",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "广西合浦医院",
+                  "template": "cross-matc-hepu",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 3,
+                  "text": "昌都医院",
+                  "template": "cross-matc-changdu",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 4,
+                  "text": "惠州三院",
+                  "template": "cross-matc-huizhou",
+                  "printTitleUrl": "huizhou_sanyuan.png"
+              },
+              {
+                  "id": 5,
+                  "text": "湖州三院",
+                  "template": "cross-matc-hzsy",
+                  "printTitleUrl": ""
+              }
+          ]
+      },
+      "SENDBLOOD": {
+          "template": "send-blood",
+          "printMachine": "PRINT A4",
+          "printTitle": "临床发血出库单",
+          "printTitleUrl": "",
+          "name": "临床发血出库单",
+          "desc": "临床发血出库单",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "send-blood",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "黄河医院",
+                  "template": "send-blood-hh",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 3,
+                  "text": "卢氏县医院",
+                  "template": "send-blood-lushi",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 4,
+                  "text": "惠州三院",
+                  "template": "send-blood-huizhou",
+                  "printTitleUrl": "huizhou_sanyuan.png"
+              },
+              {
+                  "id": 5,
+                  "text": "渑池县医院",
+                  "template": "send-blood-mianchi",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 6,
+                  "text": "商丘雎县",
+                  "template": "send-blood-shangqiu",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 7,
+                  "text": "湖州三院",
+                  "template": "send-blood-hzsy",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 8,
+                  "text": "三门峡中心医院",
+                  "template": "send-blood-smx-center",
+                  "printTitleUrl": ""
+              }
+          ]
+      },
+      "BLOODREACTION": {
+          "template": "blood-reaction",
+          "printMachine": "PRINT A4",
+          "printTitle": "不良反应反馈单",
+          "printTitleUrl": "",
+          "name": "不良反应反馈单",
+          "desc": "不良反应反馈单",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "blood-reaction",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "惠州三院",
+                  "template": "blood-reaction",
+                  "printTitleUrl": "huizhou_sanyuan.png"
+              }
+          ]
+      },
+      "BLOODTYPECHECK": {
+          "template": "blood-type-check",
+          "printMachine": "PRINT A4",
+          "printTitle": "血型复核报告单",
+          "printTitleUrl": "",
+          "name": "血型复核",
+          "desc": "血型复核",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "blood-type-check",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "惠州三院",
+                  "template": "blood-type-check",
+                  "printTitleUrl": "huizhou_sanyuan.png"
+              }
+          ]
+      },
+      "BLOODTRANSFUSION": {
+          "template": "blood-transfusion",
+          "printMachine": "PRINT A4",
+          "printTitle": "临床输⾎申请单",
+          "printTitleUrl": "",
+          "name": "临床输⾎申请单",
+          "desc": "临床输⾎申请单",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "blood-transfusion",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "黄河医院",
+                  "template": "blood-transfusion-hh",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 3,
+                  "text": "合浦医院",
+                  "template": "blood-transfusion-hepu",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 4,
+                  "text": "商丘雎县",
+                  "template": "blood-transfusion-shangqiu",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 5,
+                  "text": "湖州市第三人民医院",
+                  "template": "blood-transfusion-hzsy",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 6,
+                  "text": "惠州三院",
+                  "template": "blood-transfusion",
+                  "printTitleUrl": "huizhou_sanyuan.png",
+                  "isMatch": true
+              }
+          ]
+      },
+      "BLOODPLAN": {
+          "template": "blood-plan",
+          "printMachine": "PRINT A5",
+          "printTitle": "用血计划执行及申请表",
+          "printTitleUrl": "",
+          "name": "用血计划执行及申请表",
+          "desc": "用血计划执行及申请表",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "blood-plan",
+                  "printTitleUrl": ""
+              }
+          ]
+      },
+      "RHBLOODOPINION": {
+          "template": "rhblood-opinion",
+          "printMachine": "PRINT A4",
+          "printTitle": "RH（D）阴性患者输血治疗方案征求意见书",
+          "printTitleUrl": "",
+          "name": "RH（D）阴性患者输血治疗方案征求意见书",
+          "desc": "RH（D）阴性患者输血治疗方案征求意见书",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "rhblood-opinion",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "惠州三院",
+                  "template": "rhblood-opinion",
+                  "printTitleUrl": "huizhou_sanyuan.png"
+              }
+          ]
+      },
+      "INFORMEDCONSEND": {
+          "template": "informed-consent",
+          "printMachine": "PRINT A4",
+          "printTitle": "临床输血知情同意书",
+          "name": "演示模板 临床输血知情同意书",
+          "desc": "演示模板 临床输血知情同意书",
+          "id": 1,
+          "noPrintTitle": true,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "informed-consent",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "惠州三院",
+                  "template": "informed-consent-huizhou",
+                  "printTitleUrl": "huizhou_sanyuan.png"
+              }
+          ]
+      },
+      "BLOODTRANSFUSIONLG": {
+          "template": "blood-transfusion-lg",
+          "printMachine": "PRINT A4",
+          "printTitle": "",
+          "name": "演示模板 医院临床大量输血申请单",
+          "desc": "演示模板 医院临床大量输血申请单",
+          "id": 1,
+          "noPrintTitle": true,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "blood-transfusion-lg",
+                  "printTitleUrl": ""
+              }
+          ]
+      },
+      "BLOODTRANSFUSIONSOS": {
+          "template": "blood-transfusion-sos",
+          "printMachine": "PRINT A4",
+          "printTitle": "",
+          "name": "演示模板 医院临床抢救输血申请单",
+          "desc": "演示模板 医院临床抢救输血申请单",
+          "id": 1,
+          "noPrintTitle": true,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "blood-transfusion-sos",
+                  "printTitleUrl": ""
+              }
+          ]
+      },
+      "SAMPLELABEL": {
+          "template": "sample-label",
+          "printMachine": "PRINT A4",
+          "printTitle": "",
+          "name": "演示模板 样本小标签",
+          "desc": "演示模板 样本小标签",
+          "id": 1,
+          "noPrintTitle": true,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "sample-label",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "河南",
+                  "template": "sample-label-hh",
+                  "printTitleUrl": ""
+              }
+          ]
+      },
+      "BOOKINGBLOODRECORD": {
+          "template": "booking-blood-record",
+          "printMachine": "PRINT A4",
+          "printTitle": "",
+          "name": "血液预订单",
+          "desc": "血液预订单",
+          "id": 1,
+          "noPrintTitle": true,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "booking-blood-record",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 2,
+                  "text": "无锡",
+                  "template": "booking-blood-record-wuxi",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 3,
+                  "text": "南京",
+                  "template": "booking-blood-record-nj2",
+                  "printTitleUrl": ""
+              },
+              {
+                  "id": 4,
+                  "text": "宝安",
+                  "template": "booking-blood-record-ba",
+                  "printTitleUrl": ""
+              }
+          ]
+      },
+      "BLOODBAGCODING": {
+          "template": "blood-coding",
+          "printMachine": "PRINT A4",
+          "printTitle": "血袋编码",
+          "name": "血袋编码",
+          "desc": "血袋编码",
+          "id": 1,
+          "templates": [
+              {
+                  "id": 1,
+                  "text": "默认模板",
+                  "template": "blood-coding",
+                  "printTitleUrl": ""
+              }
+          ]
+      }
   }
-} 
+}

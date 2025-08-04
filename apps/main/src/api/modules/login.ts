@@ -30,3 +30,23 @@ export const getAppInfo = () => {
     headers: { noMessage: true } 
   });
 };
+// * 获取前端配置
+export const getFrontConfig = (params?: {
+  stationId: string;
+}) => {
+  return http._get<any>(`supv/superv/api/frontEnd/config`, params, {
+    headers: { noMessage: true } 
+  });
+}
+// * 更新前端配置
+export const updateFrontConfig = (params: any) => {
+  return http._put<any>(`supv/superv/api/frontEnd/config`, params);
+}
+
+export const getDictList = (dict: string[]) => {
+  return Promise.all(dict.map(item => {
+    return http._get<any>(`supv/superv/api/dict/${item}`, null, {
+      headers: { noMessage: true } 
+    });
+  }))
+}

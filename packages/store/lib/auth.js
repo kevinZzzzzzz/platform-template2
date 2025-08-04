@@ -5,7 +5,8 @@ var authState = {
     authButtons: {},
     authRouter: [],
     loginInfo: {},
-    token: ''
+    token: '',
+    appData: {}
 };
 var authSlice = createSlice({
     name: "auth",
@@ -26,10 +27,14 @@ var authSlice = createSlice({
         setLoginInfo: function (state, _a) {
             var payload = _a.payload;
             state.loginInfo = payload;
+        },
+        setAppData: function (state, _a) {
+            var payload = _a.payload;
+            state.appData = payload;
         }
     }
 });
-var setToken = (_a = authSlice.actions, _a.setToken), setLoginInfo = _a.setLoginInfo, setAuthButtons = _a.setAuthButtons, setAuthRouter = _a.setAuthRouter;
+var setToken = (_a = authSlice.actions, _a.setToken), setLoginInfo = _a.setLoginInfo, setAuthButtons = _a.setAuthButtons, setAuthRouter = _a.setAuthRouter, setAppData = _a.setAppData;
 var auth = authSlice.reducer;
 
-export { auth as default, setAuthButtons, setAuthRouter, setLoginInfo, setToken };
+export { auth as default, setAppData, setAuthButtons, setAuthRouter, setLoginInfo, setToken };

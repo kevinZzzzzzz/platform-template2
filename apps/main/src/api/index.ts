@@ -26,7 +26,6 @@ const completePrefixUrl = (url: string) => {
 };
 
 const http = new RequestHttp(config);
-console.log(http, 'http000')
 // * 本地获取数据
 http.localGet = (url: string, params?: object, _object = {}) => {
   return http.get(url, params, _object)
@@ -48,7 +47,6 @@ http._delete = (url: string, params?: object, _object = {}) => {
   return http.delete(completePrefixUrl(url), params, _object)
 }
 
-console.log(http)
 
 
 export default http;

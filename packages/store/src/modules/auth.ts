@@ -5,7 +5,8 @@ const authState: AuthState = {
 	authButtons: {},
 	authRouter: [],
 	loginInfo: {},
-	token: ''
+	token: '',
+	appData: {}
 };
 
 const authSlice = createSlice({
@@ -23,9 +24,12 @@ const authSlice = createSlice({
 		},
 		setLoginInfo(state: AuthState, { payload }: PayloadAction<{ [propName: string]: any }>) {
 			state.loginInfo = payload;
+		},
+		setAppData(state: AuthState, { payload }: PayloadAction<{ [propName: string]: any }>) {
+			state.appData = payload;
 		}
 	}
 });
 
-export const { setToken, setLoginInfo, setAuthButtons, setAuthRouter } = authSlice.actions;
+export const { setToken, setLoginInfo, setAuthButtons, setAuthRouter, setAppData } = authSlice.actions;
 export default authSlice.reducer;

@@ -2,11 +2,13 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import { TypedUseSelectorHook, useDispatch as useReduxDispatch, useSelector as useReduxSelector } from "react-redux";
 import storage from "redux-persist/lib/storage";
+import localForage from 'localforage';
 // import global from "./modules/global";
 // import menu from "./modules/menu";
 // import tabs from "./modules/tabs";
 // import auth from "./modules/auth";
 // import breadcrumb from "./modules/breadcrumb";
+import dict from "./modules/dict";
 import global from "@repo/store/lib/global";
 import menu from "@repo/store/lib/menu";
 import tabs from "@repo/store/lib/tabs";
@@ -19,13 +21,14 @@ const reducer = combineReducers({
 	menu,
 	tabs,
 	auth,
-	breadcrumb
+	breadcrumb,
+  dict
 });
 
-// redux persist
+// station persist
 const persistConfig = {
-	key: "redux-state",
-	storage: storage
+	key: "station-state",
+	storage: localForage
 };
 const persistReducerConfig = persistReducer(persistConfig, reducer);
 export const store = configureStore({

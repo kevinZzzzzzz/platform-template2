@@ -49,4 +49,7 @@ export interface AuthState {
 		[propName: string]: any;
 	};
 	token: string;
+	appData: {
+		[propName: string]: any;
+	};
 }

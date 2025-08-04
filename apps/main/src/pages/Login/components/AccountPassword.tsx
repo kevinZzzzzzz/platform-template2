@@ -50,7 +50,13 @@ function AccountPassword(props: any) {
   }, [])
 	const onFinish = async (values: any) => {
     const { username, password } = values
-    const secretPwd = await encrypt(password, props.publicKey)
+    /*
+      判断密码是否加过密
+    */
+    const checkPwdIsEncrypt = (pwd = '') => {
+      return pwd.length > 50
+    }
+    const secretPwd = !checkPwdIsEncrypt(password) ? await encrypt(password, props.publicKey) : password
     loginForm.setFieldValue('password', secretPwd)
     const succLogin = () => {
       console.log('登录成功')

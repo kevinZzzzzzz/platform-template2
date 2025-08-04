@@ -1,6 +1,7 @@
 
 // @ts-ignore
 import { RouteObject } from "@/routers/interface";
+import { isObject } from "hoslink-xxx";
 import JSEncrypt from 'jsencrypt/bin/jsencrypt.min'
 
 /**
@@ -230,12 +231,12 @@ export const formatQueryParam = function (obj) {
     return '';
   }
 };
-
+// * 格式化POST请求的参数
 export const formatPostTrim = function (data: Array<any> | Object) {
   everyTrim(data);
   return data;
 };
-
+// * 递归格式化POST请求的参数
 export const everyTrim = function (data: Array<any> | Object) {
   for (const key in data) {
     if (typeof data[key] === 'object') {
@@ -352,4 +353,75 @@ export const Base64 = input => {
     }
     return string;
   }
+};
+
+/**
+ * 对象克隆
+ * @param obj
+ * @returns {any[] | {}}
+ */
+ export const cloneObj = function (obj): any {
+  let str,
+    newobj = obj.constructor === Array ? [] : {};
+  if (typeof obj !== 'object') {
+    return;
+  } else if (JSON) {
+    (str = JSON.stringify(obj)), (newobj = JSON.parse(str));
+  } else {
+    for (const i in obj) {
+      newobj[i] = typeof obj[i] === 'object' ? cloneObj(obj[i]) : obj[i];
+    }
+  }
+  return newobj;
+};
+
+/**
+ * 版本号对比
+ * @param currentV 当前版本号
+ * @param serverV 服务器版本号
+ * @returns {boolean} true:当前版本号大于等于服务器版本号
+ */
+export const compareVer = (currentV, serverV) => {
+  const currentVer = currentV.split('.')
+  const serverVer = serverV.split('.')
+  let bool = false
+  let a = true
+  bool = serverVer.some((e, idx) => {
+    if (Number(currentVer[idx]) < Number(e)) a = false
+    return Number(currentVer[idx]) > Number(e)
+  })
+  return bool && a
+}
+
+/**
+ * 深度合并对象(当前用于合并系统配置文件 app-data.json)
+ * （已存在的属性不覆盖）
+ * @param oldObj 旧对象
+ * @param newObj 新对象
+ * @param keys 强制覆盖属性的数组
+ */
+ export const mergeObj = (oldObj: Object, newObj: Object, keys = [
+  'version',
+  'templates',
+  'bloodUserForm'
+]) => {
+  for (const key in newObj) {
+    if (isObject(newObj[key]) && isObject(oldObj[key])) {
+      oldObj[key] = mergeObj(oldObj[key], newObj[key], keys);
+    } else if (Object.keys(oldObj).includes(key) && !keys.includes(key)) {
+
+    } else {
+      oldObj[key] = newObj[key];
+    }
+
+    // oldObj[key] = isObject(newObj[key]) && isObject(oldObj[key]) && mergeObj(oldObj[key],newObj[key],keys) || Object.keys(oldObj).includes(key) && !keys.includes(key) && oldObj[key] || newObj[key]
+  }
+
+  for (const key in oldObj) {
+    if (newObj[key] === undefined) {
+      delete oldObj[key];
+    }
+  }
+
+  return oldObj;
 };
