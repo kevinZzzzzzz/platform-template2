@@ -15,8 +15,8 @@ const StatusColors = {
 	SEND: "#1E90FF",
 	STORAGE: "#7CCD7C"
 };
-const dictArr = {};
-const dictMapper = {};
+let dictArr: any = {};
+let dictMapper: any = {};
 const DefaultValue = {
 	reviewmethods: "",
 	matchmethods: "",
@@ -35,7 +35,10 @@ const DefaultValue = {
 	ageType: "YEAR",
 	sex: "MALE"
 };
-export const handleSetDict = (dict: any, dictAll,appData, loginInfo) => {
+export const handleSetDict = (dictTemp: any, dictAll, appData, loginInfo) => {
+  let dict = JSON.parse(JSON.stringify(dictTemp))
+  dictArr = {}
+  dictMapper = {}
 	const extra = {
 		appraiseEffect: [
 			{ id: 1, name: "输注疗效好" },
@@ -118,9 +121,10 @@ export const handleSetDict = (dict: any, dictAll,appData, loginInfo) => {
 	console.log("this.dictArr-->", dictArr);
 	console.log("this.dictMapper-->", dictMapper);
 	console.log("this.DefaultValue-->", DefaultValue);
+  dict = null
 	return {
-		dictArr,
-		dictMapper,
+		dictArrT: dictArr,
+		dictMapperT: dictMapper,
 		DefaultValue
 	};
 };

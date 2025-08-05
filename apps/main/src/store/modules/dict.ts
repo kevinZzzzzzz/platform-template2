@@ -2,21 +2,17 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DistState } from "../interface";
 
 const dictState: DistState = {
-	dictArr: {},
-  dictMap: {}
+	dictList: [],
 }
 
 const dictSlice = createSlice({
 	name: "dict",
 	initialState: dictState,
 	reducers: {
-		setDictMap(state, { payload }: PayloadAction<{ [propName: string]: any }>) {
-			state.dictMap = payload;
-		},
-    setDictArr(state, { payload }: PayloadAction<{ [propName: string]: any[] }>) {
-      state.dictArr = payload;
+    setDictList(state, { payload }: PayloadAction<any[]>) {
+      state.dictList = payload;
     }
 	}
 });
 export default dictSlice.reducer;
-export const { setDictMap, setDictArr } = dictSlice.actions;
+export const { setDictList } = dictSlice.actions;

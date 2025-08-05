@@ -1,13 +1,14 @@
-import { getAppInfo, getDictList, getFrontConfig, loginApi, updateFrontConfig } from '@/api/modules/login';
+import { getAppInfo, getDictList, getFrontConfig, getStaDeptUsersList, loginApi, updateFrontConfig } from '@/api/modules/login';
 import React, { useState, useEffect, Suspense, useRef } from 'react';
 import AccountPassword from './components/AccountPassword';
 import styles from './index.module.less';
 import { Base64, cloneObj, compareVer, encrypt, hextoString, mergeObj } from '@/utils/util';
-import { RootState, store, useSelector } from "@/store";
+import { RootState, useSelector, useDispatch } from "@/store";
 import { setToken, setLoginInfo, setAppData } from "@repo/store/lib/auth";
 import { STATIONDICTLIST } from '@/config/config';
 import { handleSetDict } from '@/utils/dict';
-import { setDictArr, setDictMap } from '@/store/modules/dict';
+import { setDictList } from '@/store/modules/dict';
+import { setDeptUserList, setHosStaUserList } from '@/store/modules/dept';
 
 // 根据环境变量决定使用哪个组件
 let AccountPasswordComp = AccountPassword
@@ -21,6 +22,7 @@ const loadRemoteComp = async () => {
 function LoginPage(_props: any) {
   const [appInfo, setAppInfo] = useState<any>({});
   const [publicKey, setPublicKey] = useState('') // 公钥
+	const dispatch = useDispatch();
 	const { appData, loginInfo } = useSelector((state: RootState) => state.auth);
 
   const loginFun = async (data: any, succLogin: () => void, failLogin: () => void) => {
@@ -33,11 +35,12 @@ function LoginPage(_props: any) {
         res.user.role.menuList = hextoString(Base64(res.user.role.menuList));
       }
       succLogin()
-      store.dispatch(setToken(res.token))
+      dispatch(setToken(res.token))
       window.localStorage.setItem('token', res.token)
-      store.dispatch(setLoginInfo(res.user))
+      dispatch(setLoginInfo(res.user))
       handleConfig(res.user.dept.parentId)
       handleDict()
+      handleDept(res)
     }).catch(err => {
       failLogin()
     })
@@ -55,9 +58,20 @@ function LoginPage(_props: any) {
         // 更新当前配置
         updateConfig(deptId, mergeResult)
       } else {
-        store.dispatch(setAppData(serverConfig));
+        dispatch(setAppData(serverConfig));
       }
     }
+  }
+  // * 处理部门字典
+  const handleDept = async (res) => {
+    const {users: deptUserList} = await getStaDeptUsersList({
+      deptId: res.user.deptId
+    })
+    const {users: hosStaUserList} = await getStaDeptUsersList({
+      deptParentId: res.user.dept.parentId
+    })
+    dispatch(setDeptUserList(deptUserList))
+    dispatch(setHosStaUserList(hosStaUserList))
   }
   // * 初始化字典
   const handleDict = async () => {
@@ -74,9 +88,7 @@ function LoginPage(_props: any) {
       }
     });
     const res = await getDictList(dictAll)
-    const {dictArr, dictMapper} = handleSetDict(res, STATIONDICTLIST, appData, loginInfo)
-    store.dispatch(setDictMap(dictMapper))
-    store.dispatch(setDictArr(dictArr))
+    dispatch(setDictList(res))
   }
   // * 更新当前配置
   const updateConfig = (deptId: string, config: any) => {
@@ -93,7 +105,7 @@ function LoginPage(_props: any) {
       })
       getAppInfo().then(data => {
         setAppInfo(data);
-        store.dispatch(setAppData(data))
+        dispatch(setAppData(data))
       });
     })
   }, [])

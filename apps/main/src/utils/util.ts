@@ -3,6 +3,7 @@
 import { RouteObject } from "@/routers/interface";
 import { isObject } from "hoslink-xxx";
 import JSEncrypt from 'jsencrypt/bin/jsencrypt.min'
+import localForage from 'localforage';
 
 /**
  * @description 获取localStorage
@@ -425,3 +426,16 @@ export const compareVer = (currentV, serverV) => {
 
   return oldObj;
 };
+
+// * 设置localForage
+export const setLocalForage = async (key: string, value: any) => {
+  await localForage.setItem(key, value);
+}
+// * 获取localForage
+export const getLocalForage = async (key: string) => {
+  return await localForage.getItem(key);
+}
+// * 移除localForage
+export const removeLocalForage = async (key: string) => {
+  await localForage.removeItem(key);
+}

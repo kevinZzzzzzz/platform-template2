@@ -7,6 +7,7 @@ import { setToken } from "@repo/store/lib/auth";
 import PasswordModal from "./PasswordModal";
 import InfoModal from "./InfoModal";
 import avatar from "@/assets/images/avatar.png";
+import { removeLocalForage } from "@/utils/util";
 
 const AvatarIcon = () => {
 	const dispatch = useDispatch();
@@ -24,10 +25,14 @@ const AvatarIcon = () => {
 			content: "是否确认退出登录？",
 			okText: "确认",
 			cancelText: "取消",
-			onOk: () => {
+			onOk: async () => {
+        // await removeLocalForage("persist:station-state")
 				dispatch(setToken(""));
+        localStorage.removeItem("token")
+        localStorage.removeItem("userPwdMap")
 				message.success("退出登录成功！");
 				navigate("/login");
+        // dispatch({ type: 'RESET_STATE' })
 			}
 		});
 	};
@@ -50,8 +55,11 @@ const AvatarIcon = () => {
     },
     {
       key: "3",
-      label: <span onClick={logout} className="dropdown-item">退出登录</span>,
-      icon: <LogoutOutlined />
+      label: <span className="dropdown-item">退出登录</span>,
+      icon: <LogoutOutlined />,
+      onClick: () => {
+        logout()
+      }
     }
   ]
 	return (

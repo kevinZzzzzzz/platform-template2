@@ -42,11 +42,18 @@ export const getFrontConfig = (params?: {
 export const updateFrontConfig = (params: any) => {
   return http._put<any>(`supv/superv/api/frontEnd/config`, params);
 }
-
+// 获取字典数据
 export const getDictList = (dict: string[]) => {
   return Promise.all(dict.map(item => {
     return http._get<any>(`supv/superv/api/dict/${item}`, null, {
       headers: { noMessage: true } 
     });
   }))
+}
+
+// 获取部门用户列表
+export const getStaDeptUsersList = (params) => {
+  return http._get<any>(`uaa/api/dept/users`, params, {
+    headers: { noMessage: true } 
+  });
 }

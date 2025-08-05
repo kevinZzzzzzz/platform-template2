@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { getMenuList } from "@/api/modules/login";
+import useDept from '@/hooks/useDept';
+import useDict from '@/hooks/useDict';
 
 function HomePage(props: any) {
-    
+  const { deptUserList, hosStaUserList } = useDept();
+  const { dictArr, dictMapper } = useDict();
+  // useEffect(() => {
+  // }, [dictArr, dictMapper])
   return (
     <>
     <button onClick={async () => {
