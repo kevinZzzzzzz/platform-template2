@@ -45,8 +45,9 @@ class RequestHttp {
 
 				// * 将当前请求添加到 pending 中
 				// axiosCanceler.addPending(config);
-				// * 如果当前请求不需要显示 loading,在api服务中通过指定的第三个参数: { headers: { noLoading: true } }来控制不显示loading
-				config.headers!.noLoading || showFullScreenLoading();
+				// * 如果当前请求需要显示 loading,在api服务中通过指定的第三个参数: { headers: { showLoading: true } }来控制显示loading
+				config.headers!.showLoading && showFullScreenLoading();
+
         
 				return { ...config, headers: { ...config.headers, "token": this.token || window.localStorage.getItem('token') }, };
       },
@@ -68,15 +69,15 @@ class RequestHttp {
 				tryHideFullScreenLoading();
         return new Promise((resolve, reject) => {
           if (status === 200) {
-				// * 如果当前请求不需要显示 message,在api服务中通过指定的第三个参数: { headers: { noMessage: true } }来控制不显示message
+				// * 如果当前请求需要显示 message,在api服务中通过指定的第三个参数: { headers: { showMessage: true } }来控制显示message
             switch (+data.code) {
               case 0: // 正常返回
-                config.headers!.noMessage || (data.msg && message.success(data.msg));
+                config.headers!.showMessage && (data.msg && message.success(data.msg));
                 resolve(data)
                 break
               // * 处理异常返回
               default: // 其余异常
-                config.headers!.noMessage || (data.msg && message.error(data.msg));
+                config.headers!.showMessage && (data.msg && message.error(data.msg));
                 break
             }
           } else {
@@ -88,7 +89,7 @@ class RequestHttp {
         const {
           request: { status },
         } = error
-        config.headers!.noMessage || (error.message && message.error(error.message));
+        config.headers!.showMessage && (error.message && message.error(error.message));
         tryHideFullScreenLoading();
         return Promise.reject(error)
       }

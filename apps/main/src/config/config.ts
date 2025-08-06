@@ -44,3 +44,8 @@ export const STATIONDICTLIST = [
   'feature', // 上报操作
   'errorType',
 ];
+
+export const exePrintMachine = {
+  'PRINT A4': 'PRINT A4',
+  'PRINT A5': 'PRINT A5'
+};

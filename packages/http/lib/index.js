@@ -48899,8 +48899,8 @@ var RequestHttp = /** @class */ (function () {
         this.service.interceptors.request.use(function (config) {
             // * 将当前请求添加到 pending 中
             // axiosCanceler.addPending(config);
-            // * 如果当前请求不需要显示 loading,在api服务中通过指定的第三个参数: { headers: { noLoading: true } }来控制不显示loading
-            config.headers.noLoading || showFullScreenLoading();
+            // * 如果当前请求需要显示 loading,在api服务中通过指定的第三个参数: { headers: { showLoading: true } }来控制显示loading
+            config.headers.showLoading && showFullScreenLoading();
             return __assign(__assign({}, config), { headers: __assign(__assign({}, config.headers), { "token": _this.token || window.localStorage.getItem('token') }) });
         }, function (error) {
             return Promise.reject(error);
@@ -48917,15 +48917,15 @@ var RequestHttp = /** @class */ (function () {
             tryHideFullScreenLoading();
             return new Promise(function (resolve, reject) {
                 if (status === 200) {
-                    // * 如果当前请求不需要显示 message,在api服务中通过指定的第三个参数: { headers: { noMessage: true } }来控制不显示message
+                    // * 如果当前请求需要显示 message,在api服务中通过指定的第三个参数: { headers: { showMessage: true } }来控制显示message
                     switch (+data.code) {
                         case 0: // 正常返回
-                            config.headers.noMessage || (data.msg && message$1.success(data.msg));
+                            config.headers.showMessage && (data.msg && message$1.success(data.msg));
                             resolve(data);
                             break;
                         // * 处理异常返回
                         default: // 其余异常
-                            config.headers.noMessage || (data.msg && message$1.error(data.msg));
+                            config.headers.showMessage && (data.msg && message$1.error(data.msg));
                             break;
                     }
                 }
@@ -48936,7 +48936,7 @@ var RequestHttp = /** @class */ (function () {
         }, function (error) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 error.request.status;
-                config.headers.noMessage || (error.message && message$1.error(error.message));
+                config.headers.showMessage && (error.message && message$1.error(error.message));
                 tryHideFullScreenLoading();
                 return [2 /*return*/, Promise.reject(error)];
             });

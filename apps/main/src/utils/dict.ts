@@ -35,7 +35,10 @@ const DefaultValue = {
 	ageType: "YEAR",
 	sex: "MALE"
 };
-export const handleSetDict = (dictTemp: any, dictAll, appData, loginInfo) => {
+export const handleSetDict = (dictTemp: any[], dictAll, appData, loginInfo) => {
+  // if (!dictTemp || !dictTemp.length) {
+  //   return
+  // }
   let dict = JSON.parse(JSON.stringify(dictTemp))
   dictArr = {}
   dictMapper = {}

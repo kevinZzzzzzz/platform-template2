@@ -9,7 +9,9 @@ import localForage from 'localforage';
 // import auth from "./modules/auth";
 // import breadcrumb from "./modules/breadcrumb";
 import dict from "./modules/dict";
-import dept from "./modules/dept";
+import deptUser from "./modules/deptUser";
+import message from "./modules/message";
+
 import global from "@repo/store/lib/global";
 import menu from "@repo/store/lib/menu";
 import tabs from "@repo/store/lib/tabs";
@@ -24,7 +26,8 @@ const reducer = combineReducers({
 	auth,
 	breadcrumb,
   dict,
-  dept
+  deptUser,
+  message
 });
 
 // station persist

@@ -1,12 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { getMenuList } from "@/api/modules/login";
-import useDept from '@/hooks/useDept';
+import useDeptUsers from '@/hooks/useDeptUsers';
 import useDict from '@/hooks/useDict';
 
 function HomePage(props: any) {
-  const { deptUserList, hosStaUserList } = useDept();
+  const { usersAll,users,usersA,usersB,usersYW,depts,deptsALL,depts0,depts0ALL,deptsHos,deptScopesAll,roleScopesAll,noBloodDepts, } = useDeptUsers();
   const { dictArr, dictMapper } = useDict();
   // useEffect(() => {
+  //   console.log(usersAll, 'usersAll2')
+  //   console.log(depts, 'depts')
+  //   console.log(deptScopesAll, 'deptScopesAll')
+  //   console.log(roleScopesAll, 'roleScopesAll')
+  //   console.log(noBloodDepts, 'noBloodDepts')
+  //   console.log(users, 'users')
+  //   console.log(usersA, 'usersA')
+  //   console.log(usersB, 'usersB')
+  //   console.log(usersYW, 'usersYW')
+  //   console.log(deptsALL, 'deptsALL')
+  //   console.log(depts0, 'depts0')
+  //   console.log(depts0ALL, 'depts0ALL')
+  //   console.log(deptsHos, 'deptsHos')
   // }, [dictArr, dictMapper])
   return (
     <>

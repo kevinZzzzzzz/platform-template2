@@ -33,7 +33,7 @@ http.localGet = (url: string, params?: object, _object = {}) => {
 // * 格式化GET请求的参数
 http._get = (url: string, params?: object, _object = {}) => {
   const _url = params ? `${url}${formatQueryParam(params)}` : url;
-  return http.get(completePrefixUrl(_url), params, _object)
+  return http.get(completePrefixUrl(_url), null, _object)
 }
 // * 格式化POST请求的参数
 http._post = (url: string, params?: object, _object = {}) => {

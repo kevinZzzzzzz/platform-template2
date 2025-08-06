@@ -1,4 +1,4 @@
-import { getAppInfo, getDictList, getFrontConfig, getStaDeptUsersList, loginApi, updateFrontConfig } from '@/api/modules/login';
+import { getAppInfo, getDeptList, getDeptListAll, getDeptScopes, getDictList, getFrontConfig, getMessage, getRoleScopes, getStaDeptUsersList, loginApi, updateFrontConfig } from '@/api/modules/login';
 import React, { useState, useEffect, Suspense, useRef } from 'react';
 import AccountPassword from './components/AccountPassword';
 import styles from './index.module.less';
@@ -6,9 +6,9 @@ import { Base64, cloneObj, compareVer, encrypt, hextoString, mergeObj } from '@/
 import { RootState, useSelector, useDispatch } from "@/store";
 import { setToken, setLoginInfo, setAppData } from "@repo/store/lib/auth";
 import { STATIONDICTLIST } from '@/config/config';
-import { handleSetDict } from '@/utils/dict';
 import { setDictList } from '@/store/modules/dict';
-import { setDeptUserList, setHosStaUserList } from '@/store/modules/dept';
+import { setDeptList, setDeptListAll, setDeptScopes, setDeptUserList, setHosStaUserList, setRoleScopes } from '@/store/modules/deptUser';
+import { setMessage } from '@/store/modules/message';
 
 // 根据环境变量决定使用哪个组件
 let AccountPasswordComp = AccountPassword
@@ -23,6 +23,7 @@ function LoginPage(_props: any) {
   const [appInfo, setAppInfo] = useState<any>({});
   const [publicKey, setPublicKey] = useState('') // 公钥
 	const dispatch = useDispatch();
+  // @ts-ignore
 	const { appData, loginInfo } = useSelector((state: RootState) => state.auth);
 
   const loginFun = async (data: any, succLogin: () => void, failLogin: () => void) => {
@@ -40,7 +41,8 @@ function LoginPage(_props: any) {
       dispatch(setLoginInfo(res.user))
       handleConfig(res.user.dept.parentId)
       handleDict()
-      handleDept(res)
+      handleDeptUser(res)
+      handleMessage()
     }).catch(err => {
       failLogin()
     })
@@ -62,8 +64,15 @@ function LoginPage(_props: any) {
       }
     }
   }
-  // * 处理部门字典
-  const handleDept = async (res) => {
+  // * 处理消息
+  const handleMessage = async () => {
+    const {list: messageList} = await getMessage({
+      beenRead: 0,
+    })
+    dispatch(setMessage(messageList))
+  }
+  // * 处理部门单位及用户字典
+  const handleDeptUser = async (res) => {
     const {users: deptUserList} = await getStaDeptUsersList({
       deptId: res.user.deptId
     })
@@ -72,6 +81,17 @@ function LoginPage(_props: any) {
     })
     dispatch(setDeptUserList(deptUserList))
     dispatch(setHosStaUserList(hosStaUserList))
+
+    const {menus: deptList} = await getDeptList()
+    const {menus: deptListAll} = await getDeptListAll()
+    dispatch(setDeptList(deptList))
+    dispatch(setDeptListAll(deptListAll))
+    // 获取科室类别列表
+    const {list: deptScopes} = await getDeptScopes()
+    dispatch(setDeptScopes(deptScopes))
+    // 获取角色类别列表
+    const {list: roleScopes} = await getRoleScopes()
+    dispatch(setRoleScopes(roleScopes))
   }
   // * 初始化字典
   const handleDict = async () => {
@@ -105,6 +125,7 @@ function LoginPage(_props: any) {
       })
       getAppInfo().then(data => {
         setAppInfo(data);
+        document.title = data.app.name
         dispatch(setAppData(data))
       });
     })
