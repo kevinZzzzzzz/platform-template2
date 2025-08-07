@@ -10,10 +10,11 @@ import LayoutHeader from "./components/Header";
 import LayoutTabs from "./components/Tabs";
 import LayoutFooter from "./components/Footer";
 import "./index.less";
+import AuthRouter from "@/router/utils/authRouter";
 
 const DefaultLayout = ({children, ...props}) => {
 	const dispatch = useDispatch();
-  
+  // @ts-ignore
 	const { isCollapse } = useSelector((state: RootState) => state.menu);
 
 	const { Sider, Content } = Layout;
@@ -54,7 +55,9 @@ const DefaultLayout = ({children, ...props}) => {
 					{/* <TransitionGroup className="content"> */}
 					{/* exit：表示退出当前页面的时候是否有动画 */}
 					{/* <CSSTransition key={pathname} timeout={200} classNames="fade" exit={false}> */}
-					<Outlet></Outlet>
+          <AuthRouter>
+            <Outlet></Outlet>
+          </AuthRouter>
 					{/* </CSSTransition> */}
 					{/* </TransitionGroup> */}
 				</Content>

@@ -19,7 +19,6 @@ function useDict() {
   const [dictMapper, setDictMapper] = useState<any>({});
 
   useEffect(() => {
-    console.log(appData, loginInfo)
     const {dictArrT, dictMapperT} = handleSetDict(dictList, STATIONDICTLIST, appData, loginInfo)
     setDictArr(dictArrT)
     setDictMapper(dictMapperT)

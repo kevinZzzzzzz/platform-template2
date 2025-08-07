@@ -29,7 +29,6 @@ const AvatarIcon = () => {
         // await removeLocalForage("persist:station-state")
 				dispatch(setToken(""));
         localStorage.removeItem("token")
-        localStorage.removeItem("userPwdMap")
 				message.success("退出登录成功！");
 				navigate("/login");
         // dispatch({ type: 'RESET_STATE' })

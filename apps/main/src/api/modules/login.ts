@@ -53,7 +53,6 @@ export const getDictList = (dict: string[]) => {
 
 // 获取部门用户列表
 export const getStaDeptUsersList = params => {
-  console.log(params, '------------')
 	return http._get<any>(`uaa/api/dept/users`, params);
 };
 // 获取当前医院或血站下的科室

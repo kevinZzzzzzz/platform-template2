@@ -49,3 +49,7 @@ export const exePrintMachine = {
   'PRINT A4': 'PRINT A4',
   'PRINT A5': 'PRINT A5'
 };
+
+// 空数据显示
+export const VIEWNULL = '--';
+export const LOGIN_URL = '/login'

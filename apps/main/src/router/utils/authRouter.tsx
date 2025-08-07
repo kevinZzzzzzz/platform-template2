@@ -1,27 +1,26 @@
 import { useLocation, Navigate } from "react-router-dom";
-import { searchRoute } from "@/utils/util";
+import { isEmptyObject, searchRoute } from "@/utils/util";
 
-// @ts-ignore
-import { rootRouter } from "@/routers/index";
 import { HOME_URL } from "@/config/config";
 import { RootState, useSelector } from "@/store";
+import { message } from "antd";
 
 /**
  * @description 路由守卫组件
  * */
 const AuthRouter = (props: { children: JSX.Element }) => {
-	const { token } = useSelector((state: RootState) => state.global);
+	const token = localStorage.getItem('token')
+  const tokenAble = !!token // 判断token是否存在
 	// * Dynamic Router(动态路由，根据后端返回的菜单数据生成的一维数组)
-	const { authRouter } = useSelector((state: RootState) => state.auth);
+  // @ts-ignore
+	const { authRouter, loginInfo } = useSelector((state: RootState) => state.auth);
 
 	const { pathname } = useLocation();
-	const route = searchRoute(pathname, rootRouter);
-
-	// * 判断当前路由是否需要访问权限(不需要权限直接放行)
-	if (!route.meta?.requiresAuth) return props.children;
-
 	// * 判断是否有Token
-	if (!token) return <Navigate to="/login" replace />;
+	if (!tokenAble || isEmptyObject(loginInfo)) {
+    message.info('登录过期,请重新登陆')
+    return <Navigate to="/login" replace />
+  };
 
 	// * Static Router(静态路由，必须配置首页地址，否则不能进首页获取菜单、按钮权限等数据)，获取数据的时候会loading，所有配置首页地址也没问题
 	const staticRouter = [HOME_URL, "/403"];

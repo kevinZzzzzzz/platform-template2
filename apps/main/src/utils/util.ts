@@ -1,5 +1,6 @@
 
 // @ts-ignore
+import { VIEWNULL } from "@/config/config";
 import { RouteObject } from "@/routers/interface";
 import { isObject } from "hoslink-xxx";
 import JSEncrypt from 'jsencrypt/bin/jsencrypt.min'
@@ -438,4 +439,27 @@ export const getLocalForage = async (key: string) => {
 // * 移除localForage
 export const removeLocalForage = async (key: string) => {
   await localForage.removeItem(key);
+}
+
+/**
+ * 获取对象属性值
+ * @param args
+ * @returns {string}
+ */
+ export const getV = (...args) =>
+ args.length >= 2
+   ? args.reduce((a, b) => (a && a.hasOwnProperty(b+'A') ? a[b+'A'] : a && a.hasOwnProperty(b) ? a[b] : VIEWNULL))
+   : VIEWNULL;
+
+/**
+ * 判断对象是否为空
+ * @param obj 
+ * @returns 
+ */
+
+export function isEmptyObject(obj) {
+  if (obj === null || obj === undefined) return true;
+  if (typeof obj !== 'object') return true; // 非对象直接判空
+  // 进一步检测是否为空对象
+  return Object.keys(obj).length === 0;;
 }

@@ -11,6 +11,7 @@ const config = {
 	timeout: 10000,
 	// 跨域时候允许携带凭证
 	withCredentials: true,
+  // @ts-ignore
   token: store.getState().auth?.token || '',
 };
 
