@@ -1,5 +1,5 @@
 import { getAppInfo, getDeptList, getDeptListAll, getDeptScopes, getDictList, getFrontConfig, getMessage, getRoleScopes, getStaDeptUsersList, loginApi, updateFrontConfig } from '@/api/modules/login';
-import React, { useState, useEffect, Suspense, useRef } from 'react';
+import React, { useState, useEffect, Suspense, useRef, useCallback } from 'react';
 import AccountPassword from './components/AccountPassword';
 import styles from './index.module.less';
 import { Base64, cloneObj, compareVer, encrypt, hextoString, mergeObj } from '@/utils/util';
@@ -26,7 +26,7 @@ function LoginPage(_props: any) {
   // @ts-ignore
 	const { appData, loginInfo } = useSelector((state: RootState) => state.auth);
 
-  const loginFun = async (data: any, succLogin: () => void, failLogin: () => void) => {
+  const loginFun = useCallback(() => async (data: any, succLogin: () => void, failLogin: () => void) => {
     const { username, password } = data
     loginApi({
       username,
@@ -46,7 +46,7 @@ function LoginPage(_props: any) {
     }).catch(err => {
       failLogin()
     })
-  }
+  }, [])
   // * 初始化本地配置， 登录初始化本地配置
   const handleConfig = async (deptId: string) => {
     let currentConfig: any = cloneObj(appData);
