@@ -4,8 +4,8 @@ import useDeptUsers from '@/hooks/useDeptUsers';
 import useDict from '@/hooks/useDict';
 
 function HomePage(props: any) {
-  const { usersAll,users,usersA,usersB,usersYW,depts,deptsALL,depts0,depts0ALL,deptsHos,deptScopesAll,roleScopesAll,noBloodDepts, } = useDeptUsers();
-  const { dictArr, dictMapper } = useDict();
+  // const { usersAll,users,usersA,usersB,usersYW,depts,deptsALL,depts0,depts0ALL,deptsHos,deptScopesAll,roleScopesAll,noBloodDepts, } = useDeptUsers();
+  // const { dictArr, dictMapper } = useDict();
   // useEffect(() => {
   //   console.log(usersAll, 'usersAll2')
   //   console.log(depts, 'depts')
@@ -20,7 +20,7 @@ function HomePage(props: any) {
   //   console.log(depts0, 'depts0')
   //   console.log(depts0ALL, 'depts0ALL')
   //   console.log(deptsHos, 'deptsHos')
-  // }, [dictArr, dictMapper])
+  // }, [usersAll, depts])
   return (
     <>
     <button onClick={async () => {

@@ -26,7 +26,7 @@ function LoginPage(_props: any) {
   // @ts-ignore
 	const { appData, loginInfo } = useSelector((state: RootState) => state.auth);
 
-  const loginFun = useCallback(() => async (data: any, succLogin: () => void, failLogin: () => void) => {
+  const loginFun = useCallback((data: any, succLogin: () => void, failLogin: () => void) => {
     const { username, password } = data
     loginApi({
       username,
@@ -47,6 +47,7 @@ function LoginPage(_props: any) {
       failLogin()
     })
   }, [])
+
   // * 初始化本地配置， 登录初始化本地配置
   const handleConfig = async (deptId: string) => {
     let currentConfig: any = cloneObj(appData);

@@ -5,9 +5,11 @@ export const HOME_URL: string = "/home";
 
 // * Tabs（黑名单地址，不需要添加到 tabs 的路由地址，暂时没用）
 export const TABS_BLACK_LIST: string[] = ["/403", "/404", "/500", "/layout", "/login", "/dataScreen"];
-
+// * Menus（不需要添加到menus的路由地址）
+export const MENU_BLACK_LIST: string[] = ["/403", "/404", "/personal-center"];
 // * 高德地图key
 export const MAP_KEY: string = "";
+
 
 export const STATIONDICTLIST = [
   'type', // 血液大类

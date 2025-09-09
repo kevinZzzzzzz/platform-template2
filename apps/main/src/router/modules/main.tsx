@@ -31,6 +31,16 @@ const mainRouter: Array<RouteObject> = [
       title: "首页",
       key: "home"
     }
+  },
+  {
+    path: "/personal-center",
+    // @ts-ignore
+    element: lazyLoad(lazy(() => import(/* webpackChunkName: "personalCenter" */ '@/pages/PersonalCenter/index'))),
+    meta: {
+      requiresAuth: true,
+      title: "个人中心",
+      key: "personal-center"
+    }
   }
 ];
 

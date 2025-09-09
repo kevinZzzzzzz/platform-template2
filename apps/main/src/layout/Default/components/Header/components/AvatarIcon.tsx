@@ -41,6 +41,9 @@ const AvatarIcon = () => {
     {
       key: "1",
       label:<span className="dropdown-item">个人中心</span>,
+      onClick: () => {
+        navigate("/personal-center")
+      },
       icon: <UserOutlined />,
     },
     {

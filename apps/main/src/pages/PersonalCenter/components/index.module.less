@@ -1,0 +1,57 @@
+.baseInfo {
+  width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+  &_left {
+    width: 100%;
+  }
+  &_right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    img {
+      margin: 5px 0 10px;
+      width: 60%;
+      object-fit: cover;
+    }
+  }
+  &_bottom {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+.avatarList {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 10px;
+  &_avatarItem {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    &_avatarItemSelected {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 2px solid #1890ff;
+    }
+  }
+}
+.inputText {
+  font-size: 20px;
+  color: #333;
+  font-weight: bold;
+}
+
+
+:global(.ant-form-item-required) {
+  color: #f5222d !important;
+}
