@@ -10,7 +10,6 @@ export const MENU_BLACK_LIST: string[] = ["/403", "/404", "/personal-center"];
 // * 高德地图key
 export const MAP_KEY: string = "";
 
-
 export const STATIONDICTLIST = [
   'type', // 血液大类
   'subtype', // 血液中类

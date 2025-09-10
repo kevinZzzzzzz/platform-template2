@@ -6,12 +6,25 @@ import { useDispatch } from "@/store";
 import { setToken } from "@repo/store/lib/auth";
 import PasswordModal from "./PasswordModal";
 import InfoModal from "./InfoModal";
-import avatar from "@/assets/images/avatar.png";
 import { removeLocalForage } from "@/utils/util";
+import useUserInfo from "@/hooks/useUserInfo";
+import {useMemo, useState} from "react";
+import styles from './index.module.less'
 
 const AvatarIcon = () => {
+  const { userInfo } = useUserInfo();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+  const { avatarUrl } = userInfo;
+
+  // 监听avatarPath变化
+  const avatar = useMemo(() => {
+    return import.meta.env.VITE_SERVER_URL + '/' + avatarUrl
+  }, [avatarUrl])
+  const username = useMemo(() => {
+    return userInfo?.nickName + '-' + userInfo?.dept?.name
+    // return `${userInfo.nickName}-${userInfo.dept.name}`
+  }, [userInfo])
 
 	interface ModalProps {
 		showModal: (params: { name: number }) => void;
@@ -67,9 +80,9 @@ const AvatarIcon = () => {
 	return (
 		<>
 			<Dropdown menu={{items}} placement="bottom" arrow trigger={["hover"]}>
-				<div className="avatar">
-          <Avatar size="large" src={avatar} />
-          <span className="username">Hooks</span>
+				<div className='avatar'>
+          <Avatar size="large" src={<img src={avatar} />} />
+          <p className={styles.username}>{username}</p>
         </div>
 			</Dropdown>
 		</>

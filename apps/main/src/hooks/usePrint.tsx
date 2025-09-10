@@ -44,7 +44,8 @@ function usePrint() {
 	const { dictArr, dictMapper } = useDict();
 
 	const parentId = loginInfo.dept.parentId;
-	const printers = appData["printers"];
+	const [printers, setPrinters] = useState(appData["printers"]);
+  const [printMachine, setPrintMachine] = useState(exePrintMachine);
   let timer = null;
   const printModule = appData['printModule'];
   const printUri = import.meta.env.VITE_PRINT_URL || window.location.origin;
@@ -75,7 +76,7 @@ function usePrint() {
         custom: appData.custom['id'],
         // imageUrl: GETSERVICE()
       }),
-      printMachine: exePrintMachine[printData.printMachine]
+      printMachine: printMachine[printData.printMachine]
     }
     toPrint(dataT, printData);
 	};
@@ -294,7 +295,9 @@ function usePrint() {
     }
   }
 	return {
-		print
+		print,
+    printers,
+    printMachine
 	};
 }
 

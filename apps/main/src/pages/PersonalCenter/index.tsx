@@ -22,7 +22,6 @@ function PersonalCenterPage(props: any) {
 		setActiveTabKey(key);
 	};
 	const componentRef = useMemo(() => {
-		console.log(componentMap[activeTabKey]);
 		return componentMap[activeTabKey];
 	}, [activeTabKey]);
 	return (

@@ -117,6 +117,7 @@ function LoginPage(_props: any) {
       hospitalId: deptId,
       config: JSON.stringify(config)
     })
+    dispatch(setAppData(config));
   }
   useEffect(() => {
     loadRemoteComp().then(res => {

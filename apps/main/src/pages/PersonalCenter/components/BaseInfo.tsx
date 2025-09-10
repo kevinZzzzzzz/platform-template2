@@ -4,23 +4,24 @@ import styles from "./index.module.less";
 import useUserInfo from "@/hooks/useUserInfo";
 import { getV } from "hoslink-xxx";
 import useDeptUsers from "@/hooks/useDeptUsers";
+import { updateUserApi } from "@/api/modules/user";
 
 const AvatarMap = {
-  1: '/assets/images/01.jpg',
-  2: '/assets/images/02.jpg',
-  3: '/assets/images/03.jpg',
-  4: '/assets/images/04.jpg',
-  5: '/assets/images/05.jpg',
-  6: '/assets/images/06.jpg',
-  7: '/assets/images/07.jpg',
-  8: '/assets/images/08.jpg',
-  9: '/assets/images/09.jpg',
-  10: '/assets/images/10.jpg',
-  11: '/assets/images/11.jpg',
-  12: '/assets/images/12.jpg',
+  1: '/assets/tmp/img/01.jpg',
+  2: '/assets/tmp/img/02.jpg',
+  3: '/assets/tmp/img/03.jpg',
+  4: '/assets/tmp/img/04.jpg',
+  5: '/assets/tmp/img/05.jpg',
+  6: '/assets/tmp/img/06.jpg',
+  7: '/assets/tmp/img/07.jpg',
+  8: '/assets/tmp/img/08.jpg',
+  9: '/assets/tmp/img/09.jpg',
+  10: '/assets/tmp/img/10.jpg',
+  11: '/assets/tmp/img/11.jpg',
+  12: '/assets/tmp/img/12.jpg',
 }
 function BaseInfoComp(props: any) {
-  const { userInfo } = useUserInfo();
+  const { userInfo, updateUserInfo } = useUserInfo();
   const { transDepts0ById } = useDeptUsers();
   const [form] = Form.useForm();
   const [avatarPath, setAvatarPath] = useState('');
@@ -28,6 +29,7 @@ function BaseInfoComp(props: any) {
   const [selAvatarIdx, setSelAvatarIdx] = useState(null);
 
   useEffect(() => {
+    console.log(userInfo)
     form.setFieldsValue({
       nickName: userInfo.nickName,
       defaultPage: userInfo.content ? JSON.parse(userInfo.content)?.homepage : '/dashboard/home',
@@ -45,7 +47,7 @@ function BaseInfoComp(props: any) {
 
   // 监听avatarPath变化
   const avatar = useMemo(() => {
-    return 'src/' + avatarPath
+    return import.meta.env.VITE_SERVER_URL + '/' + avatarPath
   }, [avatarPath])
 
   const roleOption = useMemo(() => {
@@ -55,20 +57,36 @@ function BaseInfoComp(props: any) {
       value: '/dashboard/home',
     }]
   }, [userInfo])
+
+  // 处理选择头像弹窗确认事件
   const handleAvatarModelOk = () => {
     setAvatarPath(AvatarMap[selAvatarIdx]);
+    form.setFieldValue('avatar', AvatarMap[selAvatarIdx]);
     setAvatarModel(false);
   }
+  // 处理选择头像弹窗取消事件
   const handleAvatarModelCancel = () => {
     setAvatarModel(false);
   }
+  // 每次打开头像弹窗前
   const openModelBefore = () => {
     const idx = Object.keys(AvatarMap).find((item) => AvatarMap[item] === avatarPath);
     setSelAvatarIdx(idx || null);
     setAvatarModel(true);
   }
-	const onFinish = (values: any) => {
-		console.log(values);
+	const updateBaseInfo = async () => {
+    const values = await form.validateFields();
+    console.log(values);
+		console.log(form.getFieldValue('avatar'));
+    const params = {
+      ...userInfo,
+      ...values,
+      avatarUrl: form.getFieldValue('avatar'),
+    }
+    updateUserApi(params).then(res => {
+      console.log(res);
+      updateUserInfo(params)
+    })
 	};
 	return (
 		<div className={styles.baseInfo}>
@@ -93,19 +111,13 @@ function BaseInfoComp(props: any) {
             <Select options={roleOption} />
 					</Form.Item>
 					<Form.Item label="循环播放同时">
-						<Form.Item noStyle  name="loop">
-							<InputNumber  />
+						<Form.Item noStyle  name="loop" >
+							<InputNumber />
 						</Form.Item>
 						<span className="ant-form-text" style={{ marginInlineStart: 8 }}>
 							秒
 						</span>
 					</Form.Item>
-
-					{/* <Form.Item label={null}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item> */}
 				</Form>
 			</div>
       <div className={styles.baseInfo_right}>
@@ -115,7 +127,7 @@ function BaseInfoComp(props: any) {
         }}>修改头像</Button>
       </div>
       <div className={styles.baseInfo_bottom}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" onClick={updateBaseInfo}>
           更新个人信息
         </Button>
       </div>
@@ -135,7 +147,7 @@ function BaseInfoComp(props: any) {
                 <div className={styles.avatarList_avatarItem} key={item} onClick={() => {
                   setSelAvatarIdx(item);
                 }}>
-                  <Image src={'src/' + AvatarMap[item]} preview={false} />
+                  <Image src={import.meta.env.VITE_SERVER_URL + '/' + AvatarMap[item]} preview={false} />
                   {
                     selAvatarIdx === item && <div className={styles.avatarList_avatarItem_avatarItemSelected} />
                   }
