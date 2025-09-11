@@ -5,6 +5,8 @@ const authState: AuthState = {
 	authButtons: {},
 	authRouter: [],
 	loginInfo: {},
+	userpwd: '',
+	publicKey: '',
 	token: '',
 	appData: {}
 };
@@ -19,6 +21,12 @@ const authSlice = createSlice({
 		setAuthButtons(state: AuthState, { payload }: PayloadAction<{ [propName: string]: any }>) {
 			state.authButtons = payload;
 		},
+		setUserPwd(state: AuthState, { payload }: PayloadAction<string>) {
+			state.userpwd = payload;
+		},
+		setPublicKey(state: AuthState, { payload }: PayloadAction<string>) {
+			state.publicKey = payload;
+		},
 		setAuthRouter(state: AuthState, { payload }: PayloadAction<string[]>) {
 			state.authRouter = payload;
 		},
@@ -31,5 +39,5 @@ const authSlice = createSlice({
 	}
 });
 
-export const { setToken, setLoginInfo, setAuthButtons, setAuthRouter, setAppData } = authSlice.actions;
+export const { setToken, setLoginInfo, setAuthButtons, setAuthRouter, setAppData, setUserPwd, setPublicKey } = authSlice.actions;
 export default authSlice.reducer;

@@ -54,34 +54,20 @@ function useDeptUsers() {
 		const hosStaUserListT = JSON.parse(JSON.stringify(hosStaUserList));
 		const deptUserListT = JSON.parse(JSON.stringify(deptUserList));
 		setUsersAll(
-			deptScope === "B"
-				? hosStaUserListT
-						.filter(d => d.status === "NORMAL")
-						.map((e: any) => {
-							e.name = e.nickName + "-" + e.username + "-" + e.dept.name;
-							return e;
-						})
-				: hosStaUserListT
-						.filter(d => d.status === "NORMAL" && d.dept.deptScope !== "B")
-						.map((e: any) => {
-							e.name = e.nickName + "-" + e.username + "-" + e.dept.name;
-							return e;
-						})
+      hosStaUserListT
+        .filter(d => d.status === "NORMAL" && (deptScope !== "B" ? d.dept.deptScope !== "B" : true))
+        .map((e: any) => {
+          e.name = e.nickName + "-" + e.username + "-" + e.dept.name;
+          return e;
+        })
 		);
 		setUsers(
-			deptScope === "B"
-				? deptUserListT
-						.filter(d => d.status === "NORMAL")
-						.map((e: any) => {
-							e.name = e.nickName + "-" + e.username + "-" + e.dept.name;
-							return e;
-						})
-				: deptUserListT
-						.filter(d => d.status === "NORMAL" && d.dept.deptScope !== "B")
-						.map((e: any) => {
-							e.name = e.nickName + "-" + e.username + "-" + e.dept.name;
-							return e;
-						})
+      deptUserListT
+        .filter(d => d.status === "NORMAL" && (deptScope !== "B" ? d.dept.deptScope !== "B" : true))
+        .map((e: any) => {
+          e.name = e.nickName + "-" + e.username + "-" + e.dept.name;
+          return e;
+        })
 		);
 		setUsersA(
 			deptUserListT

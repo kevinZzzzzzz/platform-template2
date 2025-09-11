@@ -48897,10 +48897,11 @@ var RequestHttp = /** @class */ (function () {
          * token校验(JWT) : 接受服务器返回的token
          */
         this.service.interceptors.request.use(function (config) {
+            var _a;
             // * 将当前请求添加到 pending 中
             // axiosCanceler.addPending(config);
             // * 如果当前请求需要显示 loading,在api服务中通过指定的第三个参数: { headers: { showLoading: true } }来控制显示loading
-            config.headers.showLoading && showFullScreenLoading();
+            ((_a = config.headers) === null || _a === void 0 ? void 0 : _a.showLoading) && showFullScreenLoading();
             return __assign(__assign({}, config), { headers: __assign(__assign({}, config.headers), { "token": _this.token || window.localStorage.getItem('token') }) });
         }, function (error) {
             return Promise.reject(error);
@@ -48911,21 +48912,21 @@ var RequestHttp = /** @class */ (function () {
          */
         this.service.interceptors.response.use(function (response) {
             var data = response.data, config = response.config, status = response.status;
-            console.log(response, response.config.url);
             // * 在请求结束后，移除本次请求(关闭loading)
             // axiosCanceler.removePending(config);
             tryHideFullScreenLoading();
             return new Promise(function (resolve, reject) {
+                var _a, _b;
                 if (status === 200) {
                     // * 如果当前请求需要显示 message,在api服务中通过指定的第三个参数: { headers: { showMessage: true } }来控制显示message
                     switch (+data.code) {
                         case 0: // 正常返回
-                            config.headers.showMessage && (data.msg && message$1.success(data.msg));
+                            ((_a = config.headers) === null || _a === void 0 ? void 0 : _a.showMessage) && (data.msg && message$1.success(data.msg));
                             resolve(data);
                             break;
                         // * 处理异常返回
                         default: // 其余异常
-                            config.headers.showMessage && (data.msg && message$1.error(data.msg));
+                            ((_b = config.headers) === null || _b === void 0 ? void 0 : _b.showMessage) && (data.msg && message$1.error(data.msg));
                             break;
                     }
                 }
@@ -48934,9 +48935,17 @@ var RequestHttp = /** @class */ (function () {
                 }
             });
         }, function (error) { return __awaiter(_this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                error.request.status;
-                config.headers.showMessage && (error.message && message$1.error(error.message));
+            var status;
+            var _a;
+            return __generator(this, function (_b) {
+                status = error.request.status;
+                if ([401, 403].includes(status)) {
+                    message$1.error('登录失效，请重新登录');
+                    setTimeout(function () {
+                        window.location.hash = '/login';
+                    }, 1000);
+                }
+                ((_a = config.headers) === null || _a === void 0 ? void 0 : _a.showMessage) && (error.message && message$1.error(error.message));
                 tryHideFullScreenLoading();
                 return [2 /*return*/, Promise.reject(error)];
             });

@@ -14,6 +14,7 @@ import "./index.less";
 
 const LayoutMenu = () => {
 	const dispatch = useDispatch();
+  // @ts-ignore
 	const { isCollapse, menuList: reduxMenuList } = useSelector((state: RootState) => state.menu);
 	const { pathname } = useLocation();
 	const [selectedKeys, setSelectedKeys] = useState<string[]>([pathname]);

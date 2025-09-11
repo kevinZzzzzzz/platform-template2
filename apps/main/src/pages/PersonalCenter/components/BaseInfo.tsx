@@ -29,7 +29,6 @@ function BaseInfoComp(props: any) {
   const [selAvatarIdx, setSelAvatarIdx] = useState(null);
 
   useEffect(() => {
-    console.log(userInfo)
     form.setFieldsValue({
       nickName: userInfo.nickName,
       defaultPage: userInfo.content ? JSON.parse(userInfo.content)?.homepage : '/dashboard/home',
@@ -76,15 +75,12 @@ function BaseInfoComp(props: any) {
   }
 	const updateBaseInfo = async () => {
     const values = await form.validateFields();
-    console.log(values);
-		console.log(form.getFieldValue('avatar'));
     const params = {
       ...userInfo,
       ...values,
       avatarUrl: form.getFieldValue('avatar'),
     }
     updateUserApi(params).then(res => {
-      console.log(res);
       updateUserInfo(params)
     })
 	};

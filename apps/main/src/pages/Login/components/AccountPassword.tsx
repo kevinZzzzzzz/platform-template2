@@ -59,7 +59,6 @@ function AccountPassword(props: any) {
     const secretPwd = !checkPwdIsEncrypt(password) ? await encrypt(password, props.publicKey) : password
     loginForm.setFieldValue('password', secretPwd)
     const succLogin = () => {
-      console.log('登录成功')
       const userPwdMap = {
         user: loginForm.getFieldValue('username'),
         pwd: ''
@@ -73,7 +72,6 @@ function AccountPassword(props: any) {
       }, 500);
     }
     const failLogin = () => {
-      console.log('登录失败')
       loginForm.setFieldValue('password', '')
     }
     

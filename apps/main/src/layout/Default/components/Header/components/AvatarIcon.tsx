@@ -12,7 +12,7 @@ import {useMemo, useState} from "react";
 import styles from './index.module.less'
 
 const AvatarIcon = () => {
-  const { userInfo } = useUserInfo();
+  const { userInfo, logoutFun } = useUserInfo();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
   const { avatarUrl } = userInfo;
@@ -39,11 +39,12 @@ const AvatarIcon = () => {
 			okText: "确认",
 			cancelText: "取消",
 			onOk: async () => {
+        logoutFun()
         // await removeLocalForage("persist:station-state")
-				dispatch(setToken(""));
-        localStorage.removeItem("token")
+				// dispatch(setToken(""));
+        // localStorage.removeItem("token")
 				message.success("退出登录成功！");
-				navigate("/login");
+				// navigate("/login");
         // dispatch({ type: 'RESET_STATE' })
 			}
 		});

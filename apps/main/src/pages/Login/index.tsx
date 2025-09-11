@@ -4,7 +4,7 @@ import AccountPassword from './components/AccountPassword';
 import styles from './index.module.less';
 import { Base64, cloneObj, compareVer, encrypt, hextoString, mergeObj } from '@/utils/util';
 import { RootState, useSelector, useDispatch } from "@/store";
-import { setToken, setLoginInfo, setAppData } from "@repo/store/lib/auth";
+import { setToken, setLoginInfo, setAppData, setUserPwd, setPublicKey } from "@repo/store/lib/auth";
 import { STATIONDICTLIST } from '@/config/config';
 import { setDictList } from '@/store/modules/dict';
 import { setDeptList, setDeptListAll, setDeptScopes, setDeptUserList, setHosStaUserList, setRoleScopes } from '@/store/modules/deptUser';
@@ -21,13 +21,14 @@ const loadRemoteComp = async () => {
 }
 function LoginPage(_props: any) {
   const [appInfo, setAppInfo] = useState<any>({});
-  const [publicKey, setPublicKey] = useState('') // 公钥
+  const [publicTKey, setPublicTKey] = useState('') // 公钥
 	const dispatch = useDispatch();
   // @ts-ignore
 	const { appData, loginInfo } = useSelector((state: RootState) => state.auth);
 
   const loginFun = useCallback((data: any, succLogin: () => void, failLogin: () => void) => {
     const { username, password } = data
+    dispatch(setUserPwd(password))
     loginApi({
       username,
       password
@@ -60,9 +61,10 @@ function LoginPage(_props: any) {
         const mergeResult = mergeObj(serverConfig, currentConfig);
         // 更新当前配置
         updateConfig(deptId, mergeResult)
-      } else {
-        dispatch(setAppData(serverConfig));
       }
+      //  else {
+      //   dispatch(setAppData(serverConfig));
+      // }
     }
   }
   // * 处理消息
@@ -123,7 +125,8 @@ function LoginPage(_props: any) {
     loadRemoteComp().then(res => {
       AccountPasswordComp = res.default || res
       import('./publicKey.json').then((res: any) => {
-        setPublicKey(res.default.key)
+        setPublicTKey(res.default.key)
+        dispatch(setPublicKey(res.default.key))
       })
       getAppInfo().then(data => {
         setAppInfo(data);
@@ -135,7 +138,7 @@ function LoginPage(_props: any) {
   return (
     <div className={styles.loginPage}>
       <Suspense fallback={<div>Loading</div>}>
-        <AccountPasswordComp appInfo={appInfo} publicKey={publicKey} loginFun={loginFun} />
+        <AccountPasswordComp appInfo={appInfo} publicKey={publicTKey} loginFun={loginFun} />
       </Suspense>
     </div>
   )

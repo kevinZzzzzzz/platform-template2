@@ -2,6 +2,7 @@
 // @ts-ignore
 import { VIEWNULL } from "@/config/config";
 import { RouteObject } from "@/routers/interface";
+import * as md5 from 'js-md5'
 import { isObject } from "hoslink-xxx";
 import JSEncrypt from 'jsencrypt/bin/jsencrypt.min'
 import localForage from 'localforage';
@@ -279,7 +280,26 @@ export const encrypt = (pwd: string, key: string) => {
   const secretPwd = encrypt.encrypt(pwd)
   return secretPwd
 }
-
+/**
+ * @description 密码加密
+ * @param str 密码
+ * @returns 加密后的密码
+ */
+export const pwdencryptMD5 = function (str: string) {
+  if (!str) {
+    return '';
+  }
+  if (/^@@@chuanyue/.test(str)){
+    return str
+  }
+  const identifying = '@@@chuanyue';
+  str = trim(str).toString();
+  if (str.search(identifying) === 0) {
+    return str;
+  } else {
+    return identifying + md5.hex(str);
+  }
+}
 // * 16进制字符串转普通字符串
 export const hextoString = (hex: string) => {
   let arr = hex.split("")

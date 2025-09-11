@@ -48,6 +48,8 @@ export interface AuthState {
 	loginInfo: {
 		[propName: string]: any;
 	};
+	userpwd: string;
+	publicKey: string;
 	token: string;
 	appData: {
 		[propName: string]: any;
