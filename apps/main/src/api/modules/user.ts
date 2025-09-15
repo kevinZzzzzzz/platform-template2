@@ -19,3 +19,12 @@ export const updateUserApi = (params: any) => {
 export const getUserInfoApi = () => {
 	return http._get<any>(`uaa/api/user`);
 };
+// * 获取区域信息
+export const getAreaApi = (params) => {
+	return http._get<any>(`uaa/api/area/selectArea`, params);
+}
+
+// * 获取所有科室列表
+export const getDeptListAllApi = (parentId) => {
+	return http._get<any>(`uaa/api/admin/depts/${parentId}`);
+}

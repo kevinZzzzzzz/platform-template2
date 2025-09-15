@@ -5,6 +5,18 @@
       "icon": "HomeOutlined",
       "title": "标准版-首页",
       "path": "/home"
+    },
+    {
+      "icon": "UserOutlined",
+      "title": "权限管理",
+      "path": "/authority",
+      "children": [
+        {
+          "icon": "UserOutlined",
+          "title": "用户管理",
+          "path": "/authority/users"
+        }
+      ]
     }
   ],
   "msg": "成功"

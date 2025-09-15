@@ -41,6 +41,25 @@ const mainRouter: Array<RouteObject> = [
       title: "个人中心",
       key: "personal-center"
     }
+  },
+  {
+    path: '/authority',
+    meta: {
+      requiresAuth: true,
+      title: "权限管理",
+      key: "authority"
+    },
+    children: [
+      {
+        path: '/authority/users',
+        meta: {
+          requiresAuth: true,
+          title: "用户管理",
+          key: "users"
+        },
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "usersV2" */ '@/pages/Authority/Users/index'))),
+      }
+    ]
   }
 ];
 

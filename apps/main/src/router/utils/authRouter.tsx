@@ -24,24 +24,24 @@ const AuthRouter = (props: { children: JSX.Element }) => {
 	const { pathname } = useLocation();
 
   useEffect(() => {
+    getUserInfoApi().then(res => {
+      dispatch(setLoginInfo(res.user))
+    })
+    getFrontConfig().then((res: any) => {
+      const {list} = res
+      const serverConfig = (list.config && JSON.parse(list.config)) || {};
+      dispatch(setAppData(serverConfig));
+    })
+  }, [])
+  useEffect(() => {
     // * 判断是否有Token
     if (!tokenAble || isEmptyObject(loginInfo)) {
       message.info('登录过期,请重新登陆')
       // 以replace的方式跳转登录页
       navigate('/login', { replace: true })
       // return <Navigate to="/login" replace />
-    } else {
-      getUserInfoApi().then(res => {
-        dispatch(setLoginInfo(res.user))
-      })
-      getFrontConfig().then((res: any) => {
-        const {list} = res
-        const serverConfig = (list.config && JSON.parse(list.config)) || {};
-        dispatch(setAppData(serverConfig));
-      })
     }
-  }, [])
-
+  }, [pathname])
 
 	// * Static Router(静态路由，必须配置首页地址，否则不能进首页获取菜单、按钮权限等数据)，获取数据的时候会loading，所有配置首页地址也没问题
 	const staticRouter = [...MENU_BLACK_LIST];

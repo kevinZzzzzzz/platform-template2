@@ -21,6 +21,7 @@ function useUserInfo() {
   // 更新用户信息
   const updateUserInfo = (params: any) => {
     setUserInfo(params);
+    dispatch(setLoginInfo(params))
   }
   // 退出登录
   const logoutFun = () => {

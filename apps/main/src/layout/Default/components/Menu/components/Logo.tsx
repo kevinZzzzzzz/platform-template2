@@ -12,7 +12,6 @@ const Logo = ({ isCollapse }: { isCollapse: boolean }) => {
   const {depts0} = useDeptUsers()
 	const parentId = loginInfo.dept.parentId;
   const expandedText = useMemo(() => {
-    console.log('parentId', parentId, depts0.filter(d => d.deptId === parentId))
     return getV(depts0.filter(d => d.deptId === parentId), 0, 'name')
   }, [loginInfo, depts0])
 	return (
