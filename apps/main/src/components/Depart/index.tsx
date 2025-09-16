@@ -23,19 +23,18 @@ function DepartComp(props: any) {
       return data.map((item) => {
         const strTitle = item.areaName || item.name;
         const index = strTitle.indexOf(searchValue);
-        if (index !== -1) {
-          return {
-            ...item,
-            title: strTitle,
-            key: (item.id && `area-${item.id}`) || (item.deptId && `dept-${item.deptId}`),
-            children: loop(item.dept || []),
-          }
-        }
-        return item;
+        const beforeStr = strTitle.substring(0, index);
+        const afterStr = strTitle.slice(index + searchValue.length);
+        return {
+          ...item,
+          title: index !== -1 ? <p>{beforeStr}<span style={{color: '#f5222d'}}>{searchValue}</span>{afterStr}</p> : strTitle,
+          key: (item.id && `area-${item.id}`) || (item.deptId && `dept-${item.deptId}`),
+          children: ('id' in item)  ?
+          loop(item.dept?.filter(dp => !dp.parentId) || []) :
+          loop(dept.filter(dept => dept.parentId === item.deptId))
+        };
       })
-    }
-    console.log(area, 2222222)
-    console.log(loop(area),   111111111)
+    };
     return loop(area)
   }, [area, searchValue])
   
@@ -58,6 +57,7 @@ function DepartComp(props: any) {
       </div>
       <div className={styles.depart_tree}>
         <Tree
+          showLine
           treeData={treeNodes}
         />
       </div>
