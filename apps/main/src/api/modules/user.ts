@@ -28,3 +28,24 @@ export const getAreaApi = (params) => {
 export const getDeptListAllApi = (parentId) => {
 	return http._get<any>(`uaa/api/admin/depts/${parentId}`);
 }
+
+// * 获取用户列表
+export const getUserListApi = (deptId?: number, hospitalId?: number, isAll?: boolean) => {
+  if (hospitalId) {
+    return http._get<any>(`uaa/api/users?hospitalId=${hospitalId}&isAll=${isAll}`);
+  }
+  if (deptId) {
+    return http._get<any>(`uaa/api/users?dept=${deptId}`);
+  } else {
+    return http._get<any>(`uaa/api/users`);
+  }
+}
+
+// * 获取角色列表
+export const getRoleListApi = (deptId?: any) => {
+  if (deptId) {
+    return http._get<any>(`uaa/api/roles?dept=${deptId}`);
+  } else {
+    return http._get<any>(`uaa/api/roles`);
+  }
+};
