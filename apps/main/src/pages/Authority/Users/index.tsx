@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import styles from "./index.module.less";
 import DepartComp from "@/components/Depart";
-import { Button, Col, Form, Input, Row, Table } from "antd";
+import { Button, Col, Form, Input, Modal, Row, Table } from "antd";
 import { VerticalAlignBottomOutlined, VerticalAlignTopOutlined } from "@ant-design/icons";
 import { getRoleListApi, getUserListApi } from "@/api/modules/user";
 import useDeptUsers from "@/hooks/useDeptUsers";
+
+enum userModalTypeMap {
+  add = '新增',
+  edit = '编辑',
+}
 function AuthorityUsersPage(props: any) {
 	const { transDepts0ById } = useDeptUsers();
 	const departRef = useRef(null);
@@ -12,6 +17,9 @@ function AuthorityUsersPage(props: any) {
 	const [dataSet, setDataSet] = useState([]);
 	const usersRef = useRef([]);
 	const [roles, setRoles] = useState([]);
+  const [addUserModal, setAddUserModal] = useState(null);
+  const [userModalType, setUserModalType] = useState('add');
+  const [userForm] = Form.useForm();
 
 	useEffect(() => {
 		searchForm.setFieldsValue({
@@ -25,11 +33,22 @@ function AuthorityUsersPage(props: any) {
 		let dataSetT = [];
     const {username, nickName} = searchForm.getFieldsValue()
     if (!username && !nickName) {
-      dataSetT = usersRef.current
+      dataSetT = usersRef.current?.map((d, idx) => {
+				return {
+					...d,
+					idx,
+				};
+			})?.sort((a: any, b: any) => b.statusSort - a.statusSort);
     } else {
       dataSetT = usersRef.current.filter((d) => {
-        return d.username.includes(username) || d.nickName.includes(nickName)
-      })
+        return (username && d.username.includes(username)) || (nickName && d.nickName.includes(nickName));
+      })?.map((d, idx) => {
+				return {
+					...d,
+					idx,
+				};
+			})
+			?.sort((a: any, b: any) => b.statusSort - a.statusSort);
     }
     setDataSet(dataSetT || []);
   };
@@ -191,9 +210,16 @@ function AuthorityUsersPage(props: any) {
 	 * 刷新数据
 	 */
 	const onloadData = () => {
+    searchForm.resetFields()
     departRef.current.initSelect()
     getUserList(-1)
     getRolesList(-1)
+  }
+  /**
+	 * 添加用户
+	 */
+	const addUser = () => {
+    setAddUserModal(true)
   }
 	return (
 		<div className={styles.authorityUsers}>
@@ -203,12 +229,12 @@ function AuthorityUsersPage(props: any) {
 					<Row gutter={16}>
 						<Col span={8}>
 							<Form.Item label="用户名" name="username">
-								<Input />
+								<Input placeholder="请输入用户名"/>
 							</Form.Item>
 						</Col>
 						<Col span={8}>
 							<Form.Item label="姓名" name="nickName">
-								<Input />
+								<Input placeholder="请输入姓名"/>
 							</Form.Item>
 						</Col>
 						<Col span={8}>
@@ -227,7 +253,9 @@ function AuthorityUsersPage(props: any) {
                   }}>
 										刷新
 									</Button>
-									<Button type="primary">添加用户</Button>
+									<Button type="primary" onClick={() => {
+                    addUser()
+                  }}>添加用户</Button>
 								</div>
 							</Form.Item>
 						</Col>
@@ -257,6 +285,24 @@ function AuthorityUsersPage(props: any) {
 					pagination={{ align: "center", pageSize: 10, total: dataSet.length, showTotal: (total, range) => `共 ${total} 条` }}
 				/>
 			</div>
+      <Modal
+        title={userModalTypeMap[userModalType]}
+        open={addUserModal}
+        cancelText='取消'
+        okText='保存'
+        // onOk={() => setAddUserModal(false)}
+        onCancel={() => setAddUserModal(false)}
+      >
+        <Form form={userForm} style={{width: '80%', margin: '0 auto'}}>
+          <Form.Item label="所属省份" name="province">
+            {userForm.getFieldValue('province')}
+          </Form.Item>
+          <Form.Item label="所属地域" name="areaName">
+            {userForm.getFieldValue('areaName')}
+          </Form.Item>
+
+        </Form>
+      </Modal>
 		</div>
 	);
 }
