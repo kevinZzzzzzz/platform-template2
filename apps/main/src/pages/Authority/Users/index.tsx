@@ -300,6 +300,12 @@ function AuthorityUsersPage(props: any) {
           <Form.Item label="所属地域" name="areaName">
             {userForm.getFieldValue('areaName')}
           </Form.Item>
+          <Form.Item label="一级部门" name="deptName">
+            {userForm.getFieldValue('deptName')}
+          </Form.Item>
+          <Form.Item label="二级部门" name="deptName">
+            {userForm.getFieldValue('deptName')}
+          </Form.Item>
 
         </Form>
       </Modal>
