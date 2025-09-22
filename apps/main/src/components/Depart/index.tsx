@@ -11,9 +11,7 @@ const DepartComp = forwardRef((props: any, ref: any) => {
   const { clickChange } = props
   const [area, setArea] = useState<any[]>([])
   const [dept, setDept] = useState<any[]>([])
-  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [searchValue, setSearchValue] = useState('');
-  const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
     
   useEffect(() => {
@@ -24,7 +22,8 @@ const DepartComp = forwardRef((props: any, ref: any) => {
   // 暴露给父组件的属性
   useImperativeHandle(ref, () => ({
     initTreeMotion,
-    initSelect
+    initSelect,
+    dept
   }));
   const treeNodes: TreeDataNode[] = useMemo(() => {
     const loop = (data: any[]) => {

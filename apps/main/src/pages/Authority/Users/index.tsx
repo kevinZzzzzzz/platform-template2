@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import styles from "./index.module.less";
 import DepartComp from "@/components/Depart";
-import { Button, Col, Form, Input, Modal, Row, Table } from "antd";
+import { Button, Col, Form, Input, Modal, Row, Select, Table } from "antd";
 import { VerticalAlignBottomOutlined, VerticalAlignTopOutlined } from "@ant-design/icons";
 import { getRoleListApi, getUserListApi } from "@/api/modules/user";
 import useDeptUsers from "@/hooks/useDeptUsers";
@@ -10,6 +10,20 @@ enum userModalTypeMap {
   add = '新增',
   edit = '编辑',
 }
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+const statusList = [
+  {
+    label: '正常',
+    value: 'NORMAL',
+  },
+  {
+    label: '禁止',
+    value: 'FORBIDDEN',
+  }
+];
 function AuthorityUsersPage(props: any) {
 	const { transDepts0ById } = useDeptUsers();
 	const departRef = useRef(null);
@@ -20,6 +34,9 @@ function AuthorityUsersPage(props: any) {
   const [addUserModal, setAddUserModal] = useState(null);
   const [userModalType, setUserModalType] = useState('add');
   const [userForm] = Form.useForm();
+  const [deptOptions, setDeptOptions] = useState([]);
+  const [secondDeptOptions, setSecondDeptOptions] = useState([]);
+  const [roleOptions, setRoleOptions] = useState([]);
 
 	useEffect(() => {
 		searchForm.setFieldsValue({
@@ -127,9 +144,28 @@ function AuthorityUsersPage(props: any) {
 			title: "操作",
 			dataIndex: "",
 			key: "edit",
-			render: () => <a>编辑</a>
+			render: (text, record, index) => <a onClick={() => handleEdit(record)}>编辑</a>
 		}
 	];
+  /**
+   * 处理编辑用户
+   */
+  const handleEdit = (record: any) => {
+    setUserModalType('edit');
+    openUserModel();
+    onChangeDept(record.dept?.parentId)
+    userForm.setFieldsValue({
+      province: record.area?.province,
+      areaName: record.area?.areaName,
+      parentId: record.dept?.parentId,
+      deptId: record.dept?.deptId,
+      roleId: record.role?.roleId,
+      username: record.username,
+      password: record.password || '',
+      nickName: record.nickName,
+      status: record.status,
+    })
+  }
   /**
 	 * 获取用户列表
 	 */
@@ -161,49 +197,69 @@ function AuthorityUsersPage(props: any) {
 	 */
 	const changeDataSetByArea = useCallback(value => {
 		const area = value?.node;
-
+    const selected = value?.selected
 		const matches = area.pos.match(/-/g);
 		let dataSetT = [];
-		switch (matches?.length) {
-			case 1:
-				dataSetT = usersRef.current
-					.filter(user => area.dept.find(dp => dp.deptId === user.dept.parentId))
-					?.map((d, idx) => {
-						return {
-							...d,
-							idx,
-							statusSort: Number(d.status === "NORMAL")
-						};
-					})
-					?.sort((a: any, b: any) => b.statusSort - a.statusSort);
-				break;
-			case 2:
-				dataSetT = usersRef.current
-					.filter(user => user.dept.parentId === area.deptId)
-					?.map((d, idx) => {
-						return {
-							...d,
-							idx,
-							statusSort: Number(d.status === "NORMAL")
-						};
-					})
-					?.sort((a: any, b: any) => b.statusSort - a.statusSort);
-				break;
-			case 3:
-				dataSetT = usersRef.current
-					.filter(user => user.deptId === area.deptId)
-					?.map((d, idx) => {
-						return {
-							...d,
-							idx,
-							statusSort: Number(d.status === "NORMAL")
-						};
-					})
-					?.sort((a: any, b: any) => b.statusSort - a.statusSort);
-				break;
-			default:
-				break;
-		}
+    if (selected) {
+      switch (matches?.length) {
+        case 1:
+          dataSetT = usersRef.current
+            .filter(user => area.dept.find(dp => dp.deptId === user.dept.parentId))
+            ?.map((d, idx) => {
+              return {
+                ...d,
+                idx,
+                statusSort: Number(d.status === "NORMAL")
+              };
+            })
+            ?.sort((a: any, b: any) => b.statusSort - a.statusSort);
+          break;
+        case 2:
+          dataSetT = usersRef.current
+            .filter(user => user.dept.parentId === area.deptId)
+            ?.map((d, idx) => {
+              return {
+                ...d,
+                idx,
+                statusSort: Number(d.status === "NORMAL")
+              };
+            })
+            ?.sort((a: any, b: any) => b.statusSort - a.statusSort);
+          break;
+        case 3:
+          dataSetT = usersRef.current
+            .filter(user => user.deptId === area.deptId)
+            ?.map((d, idx) => {
+              return {
+                ...d,
+                idx,
+                statusSort: Number(d.status === "NORMAL")
+              };
+            })
+            ?.sort((a: any, b: any) => b.statusSort - a.statusSort);
+          break;
+        default:
+          break;
+      }
+      userForm.setFieldsValue({
+        province: area.province,
+        areaName: area.areaName,
+      })
+    } else {
+      dataSetT = usersRef.current
+			?.map((d, idx) => {
+				return {
+					...d,
+					idx,
+					statusSort: Number(d.status === "NORMAL")
+				};
+			})
+			?.sort((a: any, b: any) => b.statusSort - a.statusSort);
+      userForm.setFieldsValue({
+        province: '',
+        areaName: '',
+      })
+    }
 		setDataSet(dataSetT || []);
 	}, []);
   /**
@@ -218,8 +274,28 @@ function AuthorityUsersPage(props: any) {
   /**
 	 * 添加用户
 	 */
-	const addUser = () => {
+	const openUserModel = () => {
     setAddUserModal(true)
+    const deptOptionsT = departRef.current.dept?.filter(d => d.parentId === 0)?.map(d => ({
+      label: d.name,
+      value: d.deptId,
+    })) || []
+    setDeptOptions(deptOptionsT)
+  }
+  /**
+   * 一级部门切换，二级部门选项、角色选项更新
+   */
+  const onChangeDept = (value: number) => {
+    const secondDeptArr = departRef.current.dept?.filter(dept => dept.parentId === value)?.map(d => ({
+      label: d.name,
+      value: d.deptId,
+    })) || []
+    setSecondDeptOptions(secondDeptArr)
+    const roleOptionsT = roles.filter(role => role.deptId === value)?.map(d => ({
+      label: d.roleName,
+      value: d.roleId,
+    })) || []
+    setRoleOptions(roleOptionsT)
   }
 	return (
 		<div className={styles.authorityUsers}>
@@ -254,7 +330,7 @@ function AuthorityUsersPage(props: any) {
 										刷新
 									</Button>
 									<Button type="primary" onClick={() => {
-                    addUser()
+                    openUserModel()
                   }}>添加用户</Button>
 								</div>
 							</Form.Item>
@@ -275,7 +351,7 @@ function AuthorityUsersPage(props: any) {
 				</Form>
 
 				<Table
-					scroll={{ y: 55 * 8 }}
+					scroll={{ y: 55 * 8.5 }}
 					bordered
 					rowKey={record => record.idx}
 					size={"small"}
@@ -290,23 +366,49 @@ function AuthorityUsersPage(props: any) {
         open={addUserModal}
         cancelText='取消'
         okText='保存'
+        destroyOnHidden={true}
         // onOk={() => setAddUserModal(false)}
         onCancel={() => setAddUserModal(false)}
+        afterClose={() => {
+          userForm.setFieldsValue({
+            parentId: null,
+            deptId: null,
+            roleId: null,
+            username: '',
+            password: '',
+            nickName: '',
+            status: 'NORMAL',
+          })
+        }}
       >
-        <Form form={userForm} style={{width: '80%', margin: '0 auto'}}>
+        <Form form={userForm} {...layout} style={{width: '80%', margin: '0 auto'}}>
           <Form.Item label="所属省份" name="province">
-            {userForm.getFieldValue('province')}
+            {userForm.getFieldValue('province') || '--'}
           </Form.Item>
           <Form.Item label="所属地域" name="areaName">
-            {userForm.getFieldValue('areaName')}
+            {userForm.getFieldValue('areaName') || '--'}
           </Form.Item>
-          <Form.Item label="一级部门" name="deptName">
-            {userForm.getFieldValue('deptName')}
+          <Form.Item label="一级部门" name="parentId">
+            <Select options={deptOptions} onChange={onChangeDept} placeholder="请选择一级部门"/>
           </Form.Item>
-          <Form.Item label="二级部门" name="deptName">
-            {userForm.getFieldValue('deptName')}
+          <Form.Item label="二级部门" name="deptId">
+            <Select options={secondDeptOptions} placeholder="请选择二级部门"/>
           </Form.Item>
-
+          <Form.Item label="角色" name="roleId">
+            <Select options={roleOptions} placeholder="请选择角色"/>
+          </Form.Item>
+          <Form.Item label="用户名" name="username">
+            <Input placeholder="请输入用户名"/>
+          </Form.Item>
+          <Form.Item label="密码" name="password">
+            <Input.Password placeholder="请输入密码"/>
+          </Form.Item>
+          <Form.Item label="姓名" name="nickName">
+            <Input placeholder="请输入姓名"/>
+          </Form.Item>
+          <Form.Item label="状态" name="status">
+            <Select options={statusList} placeholder="请选择状态"/>
+          </Form.Item>
         </Form>
       </Modal>
 		</div>
