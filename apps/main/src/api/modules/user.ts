@@ -49,3 +49,17 @@ export const getRoleListApi = (deptId?: any) => {
     return http._get<any>(`uaa/api/roles`);
   }
 };
+
+// * 添加用户
+export const addUserApi = (params: any) => {
+  return http._post<any>(`uaa/api/user`, params, {
+    headers: { showMessage: true }
+  });
+}
+
+// * 批量添加用户
+export const addUserBatchApi = (params: any) => {
+  return http._post<any>(`uaa/api/users`, params, {
+    headers: { showMessage: true }
+  });
+}

@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import styles from "./index.module.less";
 import DepartComp from "@/components/Depart";
-import { Button, Col, Form, Input, Modal, Row, Select, Table } from "antd";
+import { Button, Col, Form, Input, message, Modal, Row, Select, Table } from "antd";
 import { VerticalAlignBottomOutlined, VerticalAlignTopOutlined } from "@ant-design/icons";
-import { getRoleListApi, getUserListApi } from "@/api/modules/user";
+import { addUserApi, addUserBatchApi, getRoleListApi, getUserListApi, updateUserApi } from "@/api/modules/user";
 import useDeptUsers from "@/hooks/useDeptUsers";
+import { keyToZhEnum, UserScopeEnum } from "@/enums";
+import { pwdencryptMD5 } from "@/utils/util";
+import { readExcelJson } from "@/utils/file";
 
 enum userModalTypeMap {
   add = '新增',
@@ -25,7 +28,7 @@ const statusList = [
   }
 ];
 function AuthorityUsersPage(props: any) {
-	const { transDepts0ById } = useDeptUsers();
+	const { transDepts0ById, depts0, depts} = useDeptUsers();
 	const departRef = useRef(null);
 	const [searchForm] = Form.useForm();
 	const [dataSet, setDataSet] = useState([]);
@@ -37,6 +40,8 @@ function AuthorityUsersPage(props: any) {
   const [deptOptions, setDeptOptions] = useState([]);
   const [secondDeptOptions, setSecondDeptOptions] = useState([]);
   const [roleOptions, setRoleOptions] = useState([]);
+  const editUserIdRef = useRef(null); // 编辑处理的userId
+  const [tableLoading, setTableLoading] = useState(false);
 
 	useEffect(() => {
 		searchForm.setFieldsValue({
@@ -47,6 +52,7 @@ function AuthorityUsersPage(props: any) {
 		getRolesList(-1);
 	}, []);
 	const searchQueueData = () => {
+    setTableLoading(true)
 		let dataSetT = [];
     const {username, nickName} = searchForm.getFieldsValue()
     if (!username && !nickName) {
@@ -68,6 +74,7 @@ function AuthorityUsersPage(props: any) {
 			?.sort((a: any, b: any) => b.statusSort - a.statusSort);
     }
     setDataSet(dataSetT || []);
+    setTableLoading(false)
   };
 	const dataColumns = [
 		{
@@ -165,6 +172,7 @@ function AuthorityUsersPage(props: any) {
       nickName: record.nickName,
       status: record.status,
     })
+    editUserIdRef.current = record.userId;
   }
   /**
 	 * 获取用户列表
@@ -183,6 +191,7 @@ function AuthorityUsersPage(props: any) {
 			})
 			?.sort((a: any, b: any) => b.statusSort - a.statusSort);
 		setDataSet(usersT || []);
+    setTableLoading(false)
 	};
   /**
 	 * 获取角色列表
@@ -196,6 +205,7 @@ function AuthorityUsersPage(props: any) {
 	 * 处理部门切换，根据部门类型筛选用户数据
 	 */
 	const changeDataSetByArea = useCallback(value => {
+    setTableLoading(true)
 		const area = value?.node;
     const selected = value?.selected
 		const matches = area.pos.match(/-/g);
@@ -261,11 +271,13 @@ function AuthorityUsersPage(props: any) {
       })
     }
 		setDataSet(dataSetT || []);
+    setTableLoading(false)
 	}, []);
   /**
 	 * 刷新数据
 	 */
 	const onloadData = () => {
+    setTableLoading(true)
     searchForm.resetFields()
     departRef.current.initSelect()
     getUserList(-1)
@@ -296,6 +308,91 @@ function AuthorityUsersPage(props: any) {
       value: d.roleId,
     })) || []
     setRoleOptions(roleOptionsT)
+  }
+  /**
+   * 处理用户表单提交
+   */
+  const handleUserFormSubmit = async () => {
+    const valid = await userForm.validateFields();
+    if (!valid) {
+      return
+    }
+    const values = userForm.getFieldsValue();
+    let deptScope = departRef.current.dept?.find(dept => dept.deptId === values.parentId)?.deptScope;
+    const deptScopeName = UserScopeEnum[deptScope]
+
+    if (userModalType === 'add') {
+      await addUserApi({
+        ...values,
+        scope: deptScopeName,
+        password: pwdencryptMD5(values.password),
+      });
+    } else {
+      await updateUserApi({
+        ...values,
+        userId: editUserIdRef.current,
+        password: pwdencryptMD5(values.password),
+      });
+    }
+    editUserIdRef.current = null;
+    onloadData();
+    setAddUserModal(false);
+  }
+  /**
+   * 批量导入账号
+   */
+  const importXlsx = async (e) => {
+    let postUsers = [];
+    let valid = true;
+    const ZhToKeyObj = Object.entries(keyToZhEnum).reduce((acc, [key, value]) => {
+      acc[value] = key; // 将原枚举的值作为键，键作为值
+      return acc;
+    }, {} as Record<string, string>);
+    const file = e.target.files?.[0]
+    if (file) {
+      const data = await readExcelJson(file)
+      if (!data?.length) {
+        return
+      }
+      let firstLine = data.shift()
+      for (let i = 0; i < data.length; i++) {
+        let row = data[i]
+        let user = {}
+        for (let k in row) {
+          if (!ZhToKeyObj[firstLine[k]]) {``
+            continue
+          }
+          user[ZhToKeyObj[firstLine[k]]] = row[k]
+          if (ZhToKeyObj[firstLine[k]] === 'hospitalName') {
+            const hospitalInfo = depts0.filter(v => v.name === row[k])
+            if (!hospitalInfo || !hospitalInfo.length) {
+              valid = false
+              continue
+            }
+            user['hospitalId'] = hospitalInfo?.[0]?.[
+              'deptId'
+            ] || '';
+          }
+        }
+        postUsers.push(user)
+      }
+      if (valid) {
+        addUserBatchApi({
+          userList: postUsers,
+        }).then(res => {
+          message.success('导入成功')
+          onloadData()
+        })
+      } else {
+        message.error('请检查导入数据，存在医院不存在的情况')
+      }
+      console.log('postUsers', postUsers)
+    }
+    // const [file] = await uploadFileApi({
+    //   file: await uploadFileComp?.upload(),
+    // })
+    // const data = await readExcelJson(file)
+    // console.log('data', data)
   }
 	return (
 		<div className={styles.authorityUsers}>
@@ -340,7 +437,12 @@ function AuthorityUsersPage(props: any) {
 						<Col span={8}>
 							<Form.Item>
 								<div className={styles.authorityUsers_content_btn}>
-									<Button icon={<VerticalAlignTopOutlined />}>批量导入账号</Button>
+                  <input type="file" style={{display: 'none'}}  onChange={(e) => {
+										importXlsx(e)
+									}} id="importXlsx"/>
+									<Button icon={<VerticalAlignTopOutlined />} onClick={() => {
+										document.getElementById('importXlsx')?.click()
+									}}>批量导入账号</Button>
 									<Button icon={<VerticalAlignBottomOutlined />}>下载批量导入模板</Button>
 								</div>
 							</Form.Item>
@@ -351,6 +453,7 @@ function AuthorityUsersPage(props: any) {
 				</Form>
 
 				<Table
+          loading={tableLoading}
 					scroll={{ y: 55 * 8.5 }}
 					bordered
 					rowKey={record => record.idx}
@@ -367,7 +470,9 @@ function AuthorityUsersPage(props: any) {
         cancelText='取消'
         okText='保存'
         destroyOnHidden={true}
-        // onOk={() => setAddUserModal(false)}
+        onOk={() => {
+          handleUserFormSubmit()
+        }}
         onCancel={() => setAddUserModal(false)}
         afterClose={() => {
           userForm.setFieldsValue({
@@ -388,25 +493,39 @@ function AuthorityUsersPage(props: any) {
           <Form.Item label="所属地域" name="areaName">
             {userForm.getFieldValue('areaName') || '--'}
           </Form.Item>
-          <Form.Item label="一级部门" name="parentId">
+          <Form.Item required label="一级部门" name="parentId" rules={[
+            { required: true, message: '请选择一级部门' },
+          ]}>
             <Select options={deptOptions} onChange={onChangeDept} placeholder="请选择一级部门"/>
           </Form.Item>
-          <Form.Item label="二级部门" name="deptId">
+          <Form.Item required label="二级部门" name="deptId" rules={[
+            { required: true, message: '请选择二级部门' },
+          ]}>
             <Select options={secondDeptOptions} placeholder="请选择二级部门"/>
           </Form.Item>
-          <Form.Item label="角色" name="roleId">
+          <Form.Item required label="角色" name="roleId" rules={[
+            { required: true, message: '请选择角色' },
+          ]}>
             <Select options={roleOptions} placeholder="请选择角色"/>
           </Form.Item>
-          <Form.Item label="用户名" name="username">
+          <Form.Item required label="用户名" name="username" rules={[
+            { required: true, message: '请输入用户名' },
+          ]}>
             <Input placeholder="请输入用户名"/>
           </Form.Item>
-          <Form.Item label="密码" name="password">
+          <Form.Item required={userModalType === 'add'} label="密码" name="password" rules={[
+            { required: userModalType === 'add', message: '请输入密码' },
+          ]}>
             <Input.Password placeholder="请输入密码"/>
           </Form.Item>
-          <Form.Item label="姓名" name="nickName">
+          <Form.Item required label="姓名" name="nickName" rules={[
+            { required: true, message: '请输入姓名' },
+          ]}>
             <Input placeholder="请输入姓名"/>
           </Form.Item>
-          <Form.Item label="状态" name="status">
+          <Form.Item required label="状态" name="status" rules={[
+            { required: true, message: '请选择状态' },
+          ]}>
             <Select options={statusList} placeholder="请选择状态"/>
           </Form.Item>
         </Form>
