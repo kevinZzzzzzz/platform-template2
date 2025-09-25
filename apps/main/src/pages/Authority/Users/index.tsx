@@ -5,14 +5,21 @@ import { Button, Col, Form, Input, message, Modal, Row, Select, Table } from "an
 import { VerticalAlignBottomOutlined, VerticalAlignTopOutlined } from "@ant-design/icons";
 import { addUserApi, addUserBatchApi, getRoleListApi, getUserListApi, updateUserApi } from "@/api/modules/user";
 import useDeptUsers from "@/hooks/useDeptUsers";
-import { keyToZhEnum, UserScopeEnum } from "@/enums";
+import { modalTypeEnum, UserScopeEnum } from "@/enums";
 import { pwdencryptMD5 } from "@/utils/util";
 import { readExcelJson } from "@/utils/file";
 
-enum userModalTypeMap {
-  add = '新增',
-  edit = '编辑',
+enum keyToZhEnum {
+  hospitalName = '医院名称',
+  username = '用户名',
+  nickName = '姓名',
+  password = '密码',
+  deptName = '科室',
+  roleName = '角色',
+  mobile = '手机号',
+  email = '邮箱',
 }
+
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -34,14 +41,16 @@ function AuthorityUsersPage(props: any) {
 	const [dataSet, setDataSet] = useState([]);
 	const usersRef = useRef([]);
 	const [roles, setRoles] = useState([]);
-  const [addUserModal, setAddUserModal] = useState(null);
+  const [editUserModal, setEditUserModal] = useState(null);
   const [userModalType, setUserModalType] = useState('add');
-  const [userForm] = Form.useForm();
   const [deptOptions, setDeptOptions] = useState([]);
   const [secondDeptOptions, setSecondDeptOptions] = useState([]);
   const [roleOptions, setRoleOptions] = useState([]);
   const editUserIdRef = useRef(null); // 编辑处理的userId
   const [tableLoading, setTableLoading] = useState(false);
+  const [userForm] = Form.useForm();
+  const userFormProvince = Form.useWatch('province', userForm);
+  const userFormAreaName = Form.useWatch('areaName', userForm);
 
 	useEffect(() => {
 		searchForm.setFieldsValue({
@@ -287,7 +296,7 @@ function AuthorityUsersPage(props: any) {
 	 * 添加用户
 	 */
 	const openUserModel = () => {
-    setAddUserModal(true)
+    setEditUserModal(true)
     const deptOptionsT = departRef.current.dept?.filter(d => d.parentId === 0)?.map(d => ({
       label: d.name,
       value: d.deptId,
@@ -336,7 +345,7 @@ function AuthorityUsersPage(props: any) {
     }
     editUserIdRef.current = null;
     onloadData();
-    setAddUserModal(false);
+    setEditUserModal(false);
   }
   /**
    * 批量导入账号
@@ -352,6 +361,7 @@ function AuthorityUsersPage(props: any) {
     if (file) {
       const data = await readExcelJson(file)
       if (!data?.length) {
+        message.error('文件为空')
         return
       }
       let firstLine = data.shift()
@@ -359,10 +369,9 @@ function AuthorityUsersPage(props: any) {
         let row = data[i]
         let user = {}
         for (let k in row) {
-          if (!ZhToKeyObj[firstLine[k]]) {``
+          if (!ZhToKeyObj[firstLine[k]]) {
             continue
           }
-          user[ZhToKeyObj[firstLine[k]]] = row[k]
           if (ZhToKeyObj[firstLine[k]] === 'hospitalName') {
             const hospitalInfo = depts0.filter(v => v.name === row[k])
             if (!hospitalInfo || !hospitalInfo.length) {
@@ -372,27 +381,29 @@ function AuthorityUsersPage(props: any) {
             user['hospitalId'] = hospitalInfo?.[0]?.[
               'deptId'
             ] || '';
+          } else if (ZhToKeyObj[firstLine[k]] === 'password') {
+            user['password'] = pwdencryptMD5(row[k])
+          } else {
+            user[ZhToKeyObj[firstLine[k]]] = row[k]
           }
         }
         postUsers.push(user)
       }
       if (valid) {
-        addUserBatchApi({
-          userList: postUsers,
-        }).then(res => {
-          message.success('导入成功')
+        addUserBatchApi(postUsers).then(res => {
+          message.success('您已成功导入一大波用户，请查询试试看！')
           onloadData()
         })
       } else {
-        message.error('请检查导入数据，存在医院不存在的情况')
+        message.error('文件解析错误，请仔细检查导入的数据格式是否有误！')
       }
-      console.log('postUsers', postUsers)
     }
-    // const [file] = await uploadFileApi({
-    //   file: await uploadFileComp?.upload(),
-    // })
-    // const data = await readExcelJson(file)
-    // console.log('data', data)
+  }
+  /**
+   * 下载批量导入模板
+   */
+  const downLoadTemplate = () => {
+    window.location.href = '/tmp/批量帐号导入模板.xlsx'
   }
 	return (
 		<div className={styles.authorityUsers}>
@@ -443,7 +454,9 @@ function AuthorityUsersPage(props: any) {
 									<Button icon={<VerticalAlignTopOutlined />} onClick={() => {
 										document.getElementById('importXlsx')?.click()
 									}}>批量导入账号</Button>
-									<Button icon={<VerticalAlignBottomOutlined />}>下载批量导入模板</Button>
+									<Button icon={<VerticalAlignBottomOutlined />} onClick={() => {
+                    downLoadTemplate()
+                  }}>下载批量导入模板</Button>
 								</div>
 							</Form.Item>
 						</Col>
@@ -454,10 +467,9 @@ function AuthorityUsersPage(props: any) {
 
 				<Table
           loading={tableLoading}
-					scroll={{ y: 55 * 8.5 }}
+					scroll={{ y: 55 * 8 }}
 					bordered
 					rowKey={record => record.idx}
-					size={"small"}
 					dataSource={dataSet}
 					columns={dataColumns}
 					rowClassName="editable-row"
@@ -465,15 +477,15 @@ function AuthorityUsersPage(props: any) {
 				/>
 			</div>
       <Modal
-        title={userModalTypeMap[userModalType]}
-        open={addUserModal}
+        title={modalTypeEnum[userModalType]}
+        open={editUserModal}
         cancelText='取消'
         okText='保存'
         destroyOnHidden={true}
         onOk={() => {
           handleUserFormSubmit()
         }}
-        onCancel={() => setAddUserModal(false)}
+        onCancel={() => setEditUserModal(false)}
         afterClose={() => {
           userForm.setFieldsValue({
             parentId: null,
@@ -488,10 +500,10 @@ function AuthorityUsersPage(props: any) {
       >
         <Form form={userForm} {...layout} style={{width: '80%', margin: '0 auto'}}>
           <Form.Item label="所属省份" name="province">
-            {userForm.getFieldValue('province') || '--'}
+            <span>{userFormProvince || '--'}</span>
           </Form.Item>
           <Form.Item label="所属地域" name="areaName">
-            {userForm.getFieldValue('areaName') || '--'}
+            <span>{userFormAreaName || '--'}</span>
           </Form.Item>
           <Form.Item required label="一级部门" name="parentId" rules={[
             { required: true, message: '请选择一级部门' },

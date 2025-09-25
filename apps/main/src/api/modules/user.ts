@@ -19,10 +19,6 @@ export const updateUserApi = (params: any) => {
 export const getUserInfoApi = () => {
 	return http._get<any>(`uaa/api/user`);
 };
-// * 获取区域信息
-export const getAreaApi = (params) => {
-	return http._get<any>(`uaa/api/area/selectArea`, params);
-}
 
 // * 获取所有科室列表
 export const getDeptListAllApi = (parentId) => {
@@ -62,4 +58,24 @@ export const addUserBatchApi = (params: any) => {
   return http._post<any>(`uaa/api/users`, params, {
     headers: { showMessage: true }
   });
+}
+
+
+// * 获取区域信息
+export const getAreaApi = (params) => {
+	return http._get<any>(`uaa/api/area/selectArea`, params);
+}
+
+// * 新增区域
+export const addAreaApi = (params: any) => {
+	return http._post<any>(`uaa/api/area/addArea`, params, {
+		headers: { showMessage: true }
+	});
+}
+
+// * 修改区域
+export const updateAreaApi = (params: any) => {
+	return http._post<any>(`uaa/api/area/updateArea`, params, {
+		headers: { showMessage: true }
+	});
 }

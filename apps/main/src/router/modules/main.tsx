@@ -58,6 +58,15 @@ const mainRouter: Array<RouteObject> = [
           key: "users"
         },
         element: lazyLoad(lazy(() => import(/* webpackChunkName: "usersV2" */ '@/pages/Authority/Users/index'))),
+      },
+      {
+        path: '/authority/area',
+        meta: {
+          requiresAuth: true,
+          title: "地域管理",
+          key: "area"
+        },
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "area" */ '@/pages/Authority/Area/index'))),
       }
     ]
   }

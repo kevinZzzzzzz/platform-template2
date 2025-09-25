@@ -15,6 +15,11 @@
           "icon": "UserOutlined",
           "title": "用户管理",
           "path": "/authority/users"
+        },
+        {
+          "icon": "UserOutlined",
+          "title": "区域管理",
+          "path": "/authority/area"
         }
       ]
     }

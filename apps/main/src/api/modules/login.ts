@@ -84,3 +84,4 @@ export const getRoleScopes = () => {
 }) => {
   return http._get(`uaa/api/messages`, params);
 }
+
