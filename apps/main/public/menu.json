@@ -20,6 +20,11 @@
           "icon": "UserOutlined",
           "title": "区域管理",
           "path": "/authority/area"
+        },
+        {
+          "icon": "UserOutlined",
+          "title": "机构管理",
+          "path": "/authority/department"
         }
       ]
     }

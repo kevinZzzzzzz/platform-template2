@@ -57,7 +57,7 @@ const mainRouter: Array<RouteObject> = [
           title: "用户管理",
           key: "users"
         },
-        element: lazyLoad(lazy(() => import(/* webpackChunkName: "usersV2" */ '@/pages/Authority/Users/index'))),
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "users" */ '@/pages/Authority/Users/index'))),
       },
       {
         path: '/authority/area',
@@ -67,6 +67,15 @@ const mainRouter: Array<RouteObject> = [
           key: "area"
         },
         element: lazyLoad(lazy(() => import(/* webpackChunkName: "area" */ '@/pages/Authority/Area/index'))),
+      },
+      {
+        path: '/authority/department',
+        meta: {
+          requiresAuth: true,
+          title: "机构管理",
+          key: "department"
+        },
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "department" */ '@/pages/Authority/Department/index'))),
       }
     ]
   }

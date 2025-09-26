@@ -88,7 +88,7 @@ function AuthorityUsersPage(props: any) {
 	const dataColumns = [
 		{
 			title: "序号",
-			width: 60,
+			width: 100,
 			dataIndex: "index",
 			render: (text, record, index) => index + 1
 		},

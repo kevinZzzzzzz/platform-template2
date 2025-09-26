@@ -1,14 +1,13 @@
 import React, { useState, useEffect, memo, useRef, useMemo, forwardRef, useImperativeHandle } from 'react';
 import styles from './index.module.less'
-import { Input, Tree } from 'antd';
+import { Button, Input, Space, Tree } from 'antd';
 import type { TreeDataNode } from 'antd';
 import { getAreaApi, getDeptListAllApi } from '@/api/modules/user';
 
-const { Search } = Input;
 
 
 const DepartComp = forwardRef((props: any, ref: any) => {
-  const { clickChange } = props
+  const { clickChange, needBtn, btnText, initDept } = props
   const [area, setArea] = useState<any[]>([])
   const [dept, setDept] = useState<any[]>([])
   const [searchValue, setSearchValue] = useState('');
@@ -56,12 +55,15 @@ const DepartComp = forwardRef((props: any, ref: any) => {
       const {list: deptList = []} = res[1]
       setArea(areaList.filter(data => !data.delFlagArea))
       setDept(deptList)
+      initDept && initDept(deptList)
     })
   }
+  // 处理搜索框输入
   const onChangeVal = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSearchValue(value);
   }
+  // 处理部门选择
   const onSelectClick = (key: any[], event: any) => {
     setSelectedKeys(key)
     clickChange(event)
@@ -69,7 +71,12 @@ const DepartComp = forwardRef((props: any, ref: any) => {
   return (
     <div className={styles.depart}>
       <div className={styles.depart_search}>
-        <Search placeholder="请输入" allowClear onChange={onChangeVal} />
+        <Space>
+          <Input placeholder="请输入" allowClear onChange={onChangeVal} />
+          {
+            needBtn && btnText && <Button disabled={!selectedKeys.length}>{btnText}</Button>
+          }
+        </Space>
       </div>
       <div className={styles.depart_tree}>
         <Tree
