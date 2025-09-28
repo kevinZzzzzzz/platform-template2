@@ -21,7 +21,7 @@ const scopes = [
   { value: 'C', label: '其他业务部门' },
 ]
 function EditDept(props: any) {
-  const {editType, staHosList} = props;
+  const {editType, staHosList, changeEditObjectType, editData} = props;
 	const [editDeptForm] = Form.useForm();
   
   useEffect(() => {
@@ -29,13 +29,20 @@ function EditDept(props: any) {
       editDeptForm.setFieldsValue({
         name: '',
         deptScope: 0,
-        parentId: null,
+        parentId: editData.parentId || null,
         scope: null,
         delFlag: false,
         orderNum: null
       })
+    } else {
+      editDeptForm.setFieldsValue({
+        ...editData,
+        deptScope: 0,
+        scope: editData.deptScope || null,
+        delFlag: !!editData.delFlag
+      })
     }
-  }, [editType])
+  }, [editType, editData])
 
   const submitFun = async() => {
     const valid = await editDeptForm.validateFields();
@@ -52,7 +59,7 @@ function EditDept(props: any) {
         <Input placeholder='输血科室名称，如: 输血科' allowClear/>
       </Form.Item>
       <Form.Item name='deptScope' label="机构类型" rules={[{ required: true, message: '请选择机构类型' }]}>
-        <Select options={deptScopes} allowClear placeholder='请选择机构类型' />
+        <Select options={deptScopes} allowClear placeholder='请选择机构类型' onChange={(v) => changeEditObjectType(v)}/>
       </Form.Item>
       <Form.Item name='parentId' label="所属机构" rules={[{ required: true, message: '请选择所属机构' }]}>
         <Select options={staHosList} allowClear placeholder='请选择所属机构' />
@@ -61,9 +68,7 @@ function EditDept(props: any) {
         <Select options={scopes} allowClear placeholder='请选择科室类型' />
       </Form.Item>
       <Form.Item name='delFlag' label="是否启用">
-        <Switch checkedChildren="开启" unCheckedChildren="关闭"
-          defaultChecked
-        />
+        <Switch defaultChecked/>
       </Form.Item>
       <Form.Item name="orderNum" label="排序" rules={[{ required: true, message: '请输入排序' }]}>
         <InputNumber />

@@ -15,12 +15,8 @@ const deptScopes = [
   // { value: 'G', label: '监管平台' },
   { value: 0, label: '科室' },
 ];
-const developCompany = [
-  { value: 0, label: '穿越' },
-  { value: 1, label: '唐山' }
-]
 function EditStation(props: any) {
-  const {editType, dictArea, changeEditObjectType, editData} = props;
+  const {editType, dictArea, stationList, changeEditObjectType, editData} = props;
 	const [editStationForm] = Form.useForm();
   
   useEffect(() => {
@@ -28,10 +24,10 @@ function EditStation(props: any) {
       editStationForm.setFieldsValue({
         areaId: !('areaId' in editData) ? editData.id : null,
         name: '',
-        deptScope: 'F',
+        deptScope: 'E',
         parentId: null,
-        developCompany: null,
-        stationIp: '',
+        deptId: null,
+        telAccount: '',
         coordinates: '',
         deptNo: '',
         scope: null,
@@ -41,7 +37,8 @@ function EditStation(props: any) {
     } else {
       editStationForm.setFieldsValue({
         ...editData,
-        deptScope: 'F',
+        deptScope: 'E',
+        deptId: editData.deptId,
         delFlag: !!editData.delFlag
       })
     }
@@ -52,7 +49,7 @@ function EditStation(props: any) {
       return;
     }
     const values = editStationForm.getFieldsValue();
-    console.log(values);
+    console.log(editData, stationList);
   }
     
   return (
@@ -66,11 +63,11 @@ function EditStation(props: any) {
       <Form.Item name='deptScope' label="机构类型" rules={[{ required: true, message: '请选择机构类型' }]}>
         <Select options={deptScopes} allowClear placeholder='请选择机构类型' onChange={(v) => changeEditObjectType(v)}/>
       </Form.Item>
-      <Form.Item name='developCompany' label="血站厂商" rules={[{ required: true, message: '请选择血站厂商' }]}>
-        <Select options={developCompany} allowClear placeholder='' />
+      <Form.Item name='stationId' label="所属血站" rules={[{ required: true, message: '请选择所属血站' }]}>
+        <Select options={stationList} allowClear placeholder='请选择所属血站' />
       </Form.Item>
-      <Form.Item name='stationIp' label="血站接口">
-        <Input placeholder='' allowClear />
+      <Form.Item name='telAccount' label="业务系统医院账号">
+        <Input suffix={<Button size='small' type='primary'>生成密码</Button>} placeholder='业务系统医院账号，例：账号#密码' allowClear />
       </Form.Item>
       <Form.Item name='coordinates' label="地理坐标">
         <Input placeholder='经度,纬度。例如：106.66, 88.88' allowClear />

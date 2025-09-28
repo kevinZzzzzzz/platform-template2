@@ -7,7 +7,7 @@ import { getAreaApi, getDeptListAllApi } from '@/api/modules/user';
 
 
 const DepartComp = forwardRef((props: any, ref: any) => {
-  const { clickChange, needBtn, btnText, initDept } = props
+  const { clickChange, needBtn, btnText, initDept, btnDeptFun } = props
   const [area, setArea] = useState<any[]>([])
   const [dept, setDept] = useState<any[]>([])
   const [searchValue, setSearchValue] = useState('');
@@ -55,7 +55,7 @@ const DepartComp = forwardRef((props: any, ref: any) => {
       const {list: deptList = []} = res[1]
       setArea(areaList.filter(data => !data.delFlagArea))
       setDept(deptList)
-      initDept && initDept(deptList)
+      initDept(deptList, areaList)
     })
   }
   // 处理搜索框输入
@@ -74,7 +74,7 @@ const DepartComp = forwardRef((props: any, ref: any) => {
         <Space>
           <Input placeholder="请输入" allowClear onChange={onChangeVal} />
           {
-            needBtn && btnText && <Button disabled={!selectedKeys.length}>{btnText}</Button>
+            needBtn && btnText && <Button type="primary" disabled={!selectedKeys.length} onClick={() => btnDeptFun()}>{btnText}</Button>
           }
         </Space>
       </div>
