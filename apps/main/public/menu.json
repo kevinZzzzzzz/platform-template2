@@ -25,6 +25,11 @@
           "icon": "UserOutlined",
           "title": "机构管理",
           "path": "/authority/department"
+        },
+        {
+          "icon": "UserOutlined",
+          "title": "角色管理",
+          "path": "/authority/role"
         }
       ]
     }

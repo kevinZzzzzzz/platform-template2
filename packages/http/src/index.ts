@@ -77,6 +77,7 @@ class RequestHttp {
               // * 处理异常返回
               default: // 其余异常
                 config.headers?.showMessage && (data.msg && message.error(data.msg));
+                reject(data)
                 break
             }
           } else {

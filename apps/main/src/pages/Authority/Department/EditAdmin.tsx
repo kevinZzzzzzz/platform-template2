@@ -16,12 +16,12 @@ const deptScopes = [
   { value: 0, label: '科室' },
 ];
 function EditStation(props: any) {
-  const {editType, dictArea, editData} = props;
-	const [editStationForm] = Form.useForm();
+  const {editType, dictArea, editData, handleSaveFun} = props;
+	const [editAdminForm] = Form.useForm();
   
   useEffect(() => {
     if (editType === 'add') {
-      editStationForm.setFieldsValue({
+      editAdminForm.setFieldsValue({
         areaId: null,
         name: '',
         parentId: null,
@@ -34,23 +34,25 @@ function EditStation(props: any) {
         orderNum: null
       })
     } else {
-      editStationForm.setFieldsValue({
+      editAdminForm.setFieldsValue({
         ...editData,
         delFlag: !!editData.delFlag
       })
     }
   }, [editType, editData])
   const submitFun = async() => {
-    const valid = await editStationForm.validateFields();
+    const valid = await editAdminForm.validateFields();
     if (!valid) {
       return;
     }
-    const values = editStationForm.getFieldsValue();
-    console.log(values);
+		const values = editAdminForm.getFieldsValue();
+		handleSaveFun(values, () => {
+      editAdminForm.resetFields();
+    });
   }
     
   return (
-    <Form form={editStationForm} {...layout} onFinish={submitFun}>
+    <Form form={editAdminForm} {...layout} onFinish={submitFun}>
       <Form.Item name="areaId" label="所属地域" rules={[{ required: true, message: '请选择所属地域' }]}>
         <Select options={dictArea} allowClear placeholder='请选择所属地域' />
       </Form.Item>

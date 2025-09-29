@@ -79,3 +79,17 @@ export const updateAreaApi = (params: any) => {
 		headers: { showMessage: true }
 	});
 }
+
+// * 新增科室
+export const saveDeptApi = (params: any) => {
+	return http._post<any>(`uaa/api/dept`, params, {
+		headers: { showMessage: true, showLoading: true }
+	});
+}
+
+// * 更新科室
+export const updateDeptApi = (params: any) => {
+	return http._put<any>(`uaa/api/dept`, params, {
+		headers: { showMessage: true, showLoading: true }
+	});
+}

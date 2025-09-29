@@ -48927,6 +48927,7 @@ var RequestHttp = /** @class */ (function () {
                         // * 处理异常返回
                         default: // 其余异常
                             ((_b = config.headers) === null || _b === void 0 ? void 0 : _b.showMessage) && (data.msg && message$1.error(data.msg));
+                            reject(data);
                             break;
                     }
                 }

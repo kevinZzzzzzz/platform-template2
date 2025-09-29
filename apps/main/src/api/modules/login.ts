@@ -85,3 +85,10 @@ export const getRoleScopes = () => {
   return http._get(`uaa/api/messages`, params);
 }
 
+
+// * 血站端 验证业务系统账密的接口
+export const testTelAccountApi = (params: any) => {
+	return http._post<any>(`supv/superv/api/loginStation`, params, {
+		headers: { showMessage: true, showLoading: true }
+	});
+}

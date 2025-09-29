@@ -20,7 +20,7 @@ const developCompany = [
   { value: 1, label: '唐山' }
 ]
 function EditStation(props: any) {
-  const {editType, dictArea, changeEditObjectType, editData} = props;
+  const {editType, dictArea, changeEditObjectType, editData, handleSaveFun} = props;
 	const [editStationForm] = Form.useForm();
   
   useEffect(() => {
@@ -51,8 +51,10 @@ function EditStation(props: any) {
     if (!valid) {
       return;
     }
-    const values = editStationForm.getFieldsValue();
-    console.log(values);
+		const values = editStationForm.getFieldsValue();
+		handleSaveFun(values, () => {
+      editStationForm.resetFields();
+    });
   }
     
   return (

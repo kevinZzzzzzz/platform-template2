@@ -76,6 +76,15 @@ const mainRouter: Array<RouteObject> = [
           key: "department"
         },
         element: lazyLoad(lazy(() => import(/* webpackChunkName: "department" */ '@/pages/Authority/Department/index'))),
+      },
+      {
+        path: '/authority/role',
+        meta: {
+          requiresAuth: true,
+          title: "角色管理",
+          key: "role"
+        },
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "role" */ '@/pages/Authority/Role/index'))),
       }
     ]
   }
