@@ -12,24 +12,24 @@
       "path": "/authority",
       "children": [
         {
-          "icon": "UserOutlined",
-          "title": "用户管理",
-          "path": "/authority/users"
-        },
-        {
-          "icon": "UserOutlined",
+          "icon": "",
           "title": "区域管理",
           "path": "/authority/area"
         },
         {
-          "icon": "UserOutlined",
+          "icon": "",
           "title": "机构管理",
           "path": "/authority/department"
         },
         {
-          "icon": "UserOutlined",
+          "icon": "",
           "title": "角色管理",
           "path": "/authority/role"
+        },
+        {
+          "icon": "",
+          "title": "用户管理",
+          "path": "/authority/users"
         }
       ]
     }

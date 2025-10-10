@@ -114,14 +114,37 @@ function useDeptUsers() {
 		setDeptScopesAll(deptScopes);
 		setRoleScopesAll(roleScopes);
 	};
-
-  const transDepts0ById = (id: any): any => {
+  /**
+   * 根据科室ID获取科室名称
+   * @param id 科室ID
+   * @returns 科室名称
+   */
+  const transDepts0ById = (id: number | string): string => {
     if (id) {
       const hospitalName = depts0.find(d => {
         return d.deptId == id;
       });
       if (hospitalName) {
         return hospitalName.name;
+      } else {
+        return VIEWNULL;
+      }
+    } else {
+      return VIEWNULL;
+    }
+  }
+  /**
+   * 根据角色ID获取角色名称
+   * @param id 角色ID
+   * @returns 角色名称
+   */
+  const transRoleScopeById = (id: number | string): string => {
+    if (id) {
+      const roleScope = roleScopesAll.find(d => {
+        return d.id == id;
+      });
+      if (roleScope) {
+        return roleScope.desc;
       } else {
         return VIEWNULL;
       }
@@ -148,7 +171,8 @@ function useDeptUsers() {
 		roleScopesAll,
 		noBloodDepts,
 		// deptsFromSta: deptsFromSta.current,
-    transDepts0ById
+    transDepts0ById,
+    transRoleScopeById
 	};
 }
 

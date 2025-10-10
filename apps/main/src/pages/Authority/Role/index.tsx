@@ -4,16 +4,18 @@ import DepartComp from "@/components/Depart";
 import { Button, Space, Table } from "antd";
 import { getRoleListApi, getUserListApi } from "@/api/modules/user";
 import useDeptUsers from "@/hooks/useDeptUsers";
+import { VIEWNULL } from "@/config/config";
 
 function AuthorityRolePage(props: any) {
-	const { transDepts0ById, depts0, depts } = useDeptUsers();
+	const { transDepts0ById, transRoleScopeById, depts0, depts } = useDeptUsers();
 	const departRef = useRef(null);
 	const [tableLoading, setTableLoading] = useState(false);
 	const [dataSet, setDataSet] = useState([]);
 	const [deptList, setDeptList] = useState<any>([]);
 	const [dictArea, setDictArea] = useState<any>([]);
 	const usersRef = useRef([]);
-	const [roles, setRoles] = useState([]);
+	const rolesAll = useRef([]);
+  const [oneLevel, setOneLevel] = useState(null);
 
 	const dataColumns = [
 		{
@@ -23,67 +25,38 @@ function AuthorityRolePage(props: any) {
 			render: (text, record, index) => index + 1
 		},
 		{
-			title: "所属省份",
-			dataIndex: "province",
+			title: "机构名称",
+			dataIndex: "deptId",
 			render: (text, record, index) => {
-				return (record.area && record.area.province) || "-";
+				return (record.deptId && transDepts0ById(record.deptId));
 			}
 		},
 		{
-			title: "所属地域",
-			dataIndex: "areaName",
+			title: "角色类别",
+			dataIndex: "roleScope",
 			render: (text, record, index) => {
-				return (record.area && record.area.areaName) || "-";
+				return (record.roleScope && transRoleScopeById(record.roleScope));
 			}
 		},
 		{
-			title: "一级部门",
-			dataIndex: "parentId",
+			title: "角色名称",
+			dataIndex: "roleName",
 			render: (text, record, index) => {
-				return (record.dept && record.dept.parentId && transDepts0ById(record.dept.parentId)) || "-";
+				return (record.roleName) || VIEWNULL;
 			}
 		},
 		{
-			title: "二级部门",
-			dataIndex: "name",
+			title: "角色描述",
+			dataIndex: "remark",
 			render: (text, record, index) => {
-				return (record.dept && record.dept.name) || "-";
+				return (record.remark) || VIEWNULL;
 			}
 		},
 		{
-			title: "用户名",
-			dataIndex: "username",
+			title: "创建时间",
+			dataIndex: "createTime",
 			render: (text, record, index) => {
-				return text || "-";
-			}
-		},
-		{
-			title: "姓名",
-			dataIndex: "nickName",
-			render: (text, record, index) => {
-				return text || "-";
-			}
-		},
-		{
-			title: "角色",
-			dataIndex: "name",
-			render: (text, record, index) => {
-				return (record.role && record.role.roleName) || "-";
-			}
-		},
-		{
-			title: "状态",
-			dataIndex: "status",
-			render: (text, record, index) => {
-				return text === "NORMAL" ? "正常" : "锁定" || "-";
-			}
-		},
-		{
-			title: "最近登录",
-			width: 120,
-			dataIndex: "lastLoginDate",
-			render: (text, record, index) => {
-				return text || "-";
+				return text || VIEWNULL;
 			}
 		},
 		{
@@ -94,8 +67,8 @@ function AuthorityRolePage(props: any) {
 		}
 	];
 	useEffect(() => {
-		getUserList(-1);
-		getRolesList(-1);
+    console.log(depts0, 'depts0----------');
+    onloadData()
 	}, []);
 	// 初始化部门数据和地域数据
 	const initDept = useCallback((dept, area) => {
@@ -143,21 +116,30 @@ function AuthorityRolePage(props: any) {
 	const getRolesList = async (dept: number = -1) => {
 		const res = await getRoleListApi(dept);
 		const { roles } = res;
-		setRoles(roles || []);
+    roles.map(d => {
+      d.menuList = d.menuList.split(',');
+      return d;
+    });
+		rolesAll.current = roles || [];
+		setTableLoading(false);
+    if (dept === -1) {
+      setOneLevel(null);
+    }
 	};
 	/**
 	 * 刷新数据
 	 */
-	const onloadData = () => {
+	const onloadData = async () => {
 		setTableLoading(true);
 		departRef.current.initSelect();
-		getUserList(-1);
-		getRolesList(-1);
+		// getUserList(-1);
+		await getRolesList(-1);
+		setDataSet(rolesAll.current || []);
 	};
 	/**
 	 * 处理部门切换，根据部门类型筛选用户数据
 	 */
-	const changeDataSetByArea = useCallback(value => {
+	const changeDataSetByArea = useCallback(async value => {
 		setTableLoading(true);
 		const area = value?.node;
 		const selected = value?.selected;
@@ -166,54 +148,25 @@ function AuthorityRolePage(props: any) {
 		if (selected) {
 			switch (matches?.length) {
 				case 1:
-					dataSetT = usersRef.current
-						.filter(user => area.dept.find(dp => dp.deptId === user.dept.parentId))
-						?.map((d, idx) => {
-							return {
-								...d,
-								idx,
-								statusSort: Number(d.status === "NORMAL")
-							};
-						})
-						?.sort((a: any, b: any) => b.statusSort - a.statusSort);
+          await getRolesList(-1)
+					dataSetT = rolesAll.current.filter(item => area.dept.find(dp => dp.deptId === item.deptId));
 					break;
 				case 2:
-					dataSetT = usersRef.current
-						.filter(user => user.dept.parentId === area.deptId)
-						?.map((d, idx) => {
-							return {
-								...d,
-								idx,
-								statusSort: Number(d.status === "NORMAL")
-							};
-						})
-						?.sort((a: any, b: any) => b.statusSort - a.statusSort);
+          setOneLevel(area.deptId)
+          await getRolesList(area.deptId)
+					dataSetT = rolesAll.current
 					break;
 				case 3:
-					dataSetT = usersRef.current
-						.filter(user => user.deptId === area.deptId)
-						?.map((d, idx) => {
-							return {
-								...d,
-								idx,
-								statusSort: Number(d.status === "NORMAL")
-							};
-						})
-						?.sort((a: any, b: any) => b.statusSort - a.statusSort);
+          // setOneLevel(area.deptId)
+          // await getRolesList(area.deptId)
+					// dataSetT = rolesAll.current
 					break;
 				default:
 					break;
 			}
 		} else {
-			dataSetT = usersRef.current
-				?.map((d, idx) => {
-					return {
-						...d,
-						idx,
-						statusSort: Number(d.status === "NORMAL")
-					};
-				})
-				?.sort((a: any, b: any) => b.statusSort - a.statusSort);
+      await getRolesList(-1)
+			dataSetT = rolesAll.current
 		}
 		setDataSet(dataSetT || []);
 		setTableLoading(false);
