@@ -4,7 +4,6 @@ import DepartComp from "@/components/Depart";
 import { modalTypeEnum } from "@/enums";
 import EditDept from "./EditDept";
 import EditStation from "./EditStation";
-import { getAreaApi } from "@/api/modules/user";
 import EditHospital from "./EditHospital";
 import EditAdmin from "./EditAdmin";
 import { saveDeptApi, updateDeptApi } from "@/api/modules/user";

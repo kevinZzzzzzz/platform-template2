@@ -25,6 +25,10 @@ export const getMenuList = () => {
 	// return http.get<Menu.MenuOptions[]>(PORT1 + `/menu/list`);
 	return http.localGet<any>("/menu.json", null);
 };
+// * 获取菜单权限列表
+export const getAuthorityList = () => {
+	return http.localGet<any>("/authority.stable.json", null);
+};
 
 // * 获取应用信息
 export const getAppInfo = () => {

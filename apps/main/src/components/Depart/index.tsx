@@ -3,7 +3,7 @@ import styles from './index.module.less'
 import { Button, Input, Space, Tree } from 'antd';
 import type { TreeDataNode } from 'antd';
 import { getAreaApi, getDeptListAllApi } from '@/api/modules/user';
-
+import useDeptUsers from "@/hooks/useDeptUsers";
 
 
 const DepartComp = forwardRef((props: any, ref: any) => {

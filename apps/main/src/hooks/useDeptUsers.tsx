@@ -165,6 +165,7 @@ function useDeptUsers() {
 		depts,
 		deptsALL,
 		depts0,
+    setDepts0,
 		depts0ALL,
 		deptsHos,
 		deptScopesAll,

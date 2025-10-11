@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo, memo } from "react";
 import styles from "./index.module.less";
 import DepartComp from "@/components/Depart";
-import { Button, Space, Table } from "antd";
+import { Button, Drawer, Space, Table } from "antd";
 import { getRoleListApi, getUserListApi } from "@/api/modules/user";
 import useDeptUsers from "@/hooks/useDeptUsers";
 import { VIEWNULL } from "@/config/config";
+import useAuthority from "@/hooks/useAuthority";
+import { modalTypeEnum } from "@/enums";
 
 function AuthorityRolePage(props: any) {
-	const { transDepts0ById, transRoleScopeById, depts0, depts } = useDeptUsers();
+	const { transDepts0ById, transRoleScopeById, setDepts0, depts0, depts } = useDeptUsers();
+  const {authority} = useAuthority()
 	const departRef = useRef(null);
 	const [tableLoading, setTableLoading] = useState(false);
 	const [dataSet, setDataSet] = useState([]);
@@ -16,6 +19,9 @@ function AuthorityRolePage(props: any) {
 	const usersRef = useRef([]);
 	const rolesAll = useRef([]);
   const [oneLevel, setOneLevel] = useState(null);
+  const [treeData, setTreeData] = useState<any>([]);
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [drawerType, setDrawerType] = useState<'add' | 'edit'>('add');
 
 	const dataColumns = [
 		{
@@ -63,17 +69,17 @@ function AuthorityRolePage(props: any) {
 			title: "操作",
 			dataIndex: "",
 			key: "edit",
-			render: (text, record, index) => <a onClick={() => handleEdit(record)}>编辑</a>
+			render: (text, record, index) => <a onClick={() => 
+        openUserModel('edit')}>编辑</a>
 		}
 	];
 	useEffect(() => {
-    console.log(depts0, 'depts0----------');
     onloadData()
 	}, []);
 	// 初始化部门数据和地域数据
-	const initDept = useCallback((dept, area) => {
+	const initDept = useCallback((depts, areas) => {
 		setDeptList(
-			dept?.map(d => {
+			depts?.map(d => {
 				return {
 					...d,
 					label: d.name,
@@ -81,8 +87,9 @@ function AuthorityRolePage(props: any) {
 				};
 			})
 		);
+    setDepts0(depts.filter(dept => dept.parentId === 0))
 		setDictArea(
-			area?.map(d => {
+			areas?.map(d => {
 				return {
 					...d,
 					label: d.areaName,
@@ -92,31 +99,13 @@ function AuthorityRolePage(props: any) {
 		);
 	}, []);
 	/**
-	 * 获取用户列表
-	 */
-	const getUserList = async (dept: number = -1) => {
-		const res = await getUserListApi(dept);
-		const { users } = res;
-		usersRef.current = users || [];
-		const usersT = users
-			?.map((d, idx) => {
-				return {
-					...d,
-					idx,
-					statusSort: Number(d.status === "NORMAL")
-				};
-			})
-			?.sort((a: any, b: any) => b.statusSort - a.statusSort);
-		setDataSet(usersT || []);
-		setTableLoading(false);
-	};
-	/**
 	 * 获取角色列表
 	 */
 	const getRolesList = async (dept: number = -1) => {
 		const res = await getRoleListApi(dept);
 		const { roles } = res;
-    roles.map(d => {
+    roles.map((d, idx) => {
+      d.idx = idx;
       d.menuList = d.menuList.split(',');
       return d;
     });
@@ -136,6 +125,12 @@ function AuthorityRolePage(props: any) {
 		await getRolesList(-1);
 		setDataSet(rolesAll.current || []);
 	};
+  
+  function openUserModel(type: 'add' | 'edit') {
+    console.log(authority, 'authority-----------')
+    setDrawerType(type);
+    setDrawerVisible(true);
+  }
 	/**
 	 * 处理部门切换，根据部门类型筛选用户数据
 	 */
@@ -150,11 +145,13 @@ function AuthorityRolePage(props: any) {
 				case 1:
           await getRolesList(-1)
 					dataSetT = rolesAll.current.filter(item => area.dept.find(dp => dp.deptId === item.deptId));
+          setDataSet(dataSetT || []);
 					break;
 				case 2:
           setOneLevel(area.deptId)
           await getRolesList(area.deptId)
 					dataSetT = rolesAll.current
+          setDataSet(dataSetT || []);
 					break;
 				case 3:
           // setOneLevel(area.deptId)
@@ -167,8 +164,8 @@ function AuthorityRolePage(props: any) {
 		} else {
       await getRolesList(-1)
 			dataSetT = rolesAll.current
+      setDataSet(dataSetT || []);
 		}
-		setDataSet(dataSetT || []);
 		setTableLoading(false);
 	}, []);
 	return (
@@ -188,7 +185,7 @@ function AuthorityRolePage(props: any) {
 						<Button
 							type="primary"
 							onClick={() => {
-								openUserModel();
+								openUserModel('add');
 							}}
 						>
 							添加用户
@@ -206,7 +203,18 @@ function AuthorityRolePage(props: any) {
 					pagination={{ align: "center", pageSize: 10, total: dataSet.length, showTotal: (total, range) => `共 ${total} 条` }}
 				/>
 			</div>
+      <Drawer
+        title={modalTypeEnum[drawerType]}
+        closable={{ 'aria-label': 'Close Button' }}
+        onClose={() => setDrawerVisible(false)}
+        open={drawerVisible}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Drawer>
 		</div>
 	);
 }
 export default AuthorityRolePage;
+

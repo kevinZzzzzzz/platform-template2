@@ -1,0 +1,2426 @@
+{
+  "code": 0,
+  "data": [
+    {
+      "id": "1",
+      "platform": "HOSPITAL",
+      "parentId": "0",
+      "department": "",
+      "name": "主导航",
+      "path": ""
+    },
+    {
+      "id": "162",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "系统看板 【输血科】",
+      "path": "/dashboard/system"
+    },
+    {
+      "id": "163",
+      "platform": "STATION",
+      "parentId": "1",
+      "department": "",
+      "name": "系统看板-血站",
+      "path": "/dashboard/system-station"
+    },
+    {
+      "id": "133",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "领血凭证 【临床护士，无需求不要授权】",
+      "path": "/dashboard/nurse-home"
+    },
+    {
+      "id": "63",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "样本登记 【临床护士，无需求不要授权】",
+      "path": "/sample-register"
+    },
+    {
+      "id": "83",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "输血前评估 【临床医师，无需求不要授权】",
+      "path": "/pretransfusion-assess"
+    },
+    {
+      "id": "52",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "异体输血申请 【临床医师】",
+      "path": "/blood-transfu-app"
+    },
+    {
+      "id": "140",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "紧急输血申请 【临床医师】",
+      "path": "/blood-transfu-urgent"
+    },
+    {
+      "id": "56",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "血袋领取 【临床护士】",
+      "path": "/blood-get"
+    },
+    {
+      "id": "58",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "输血过程监测 【临床护士】",
+      "path": "/process-records"
+    },
+    {
+      "id": "351",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "输血过程记录 【临床护士】【旧版】",
+      "path": "/process-records-legacy"
+    },
+    {
+      "id": "61",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "输血后疗效评价 【临床医师】",
+      "path": "/blood-appraise"
+    },
+    {
+      "id": "126",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "输血不良反应 【临床医师、临床护士】",
+      "path": "/blood-transfusion-reaction-app"
+    },
+    {
+      "id": "104",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "自体输血申请 【临床医师，无需求不要授权】",
+      "path": "/autologous-application-app"
+    },
+    {
+      "id": "124",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "血袋回收 【临床护士】",
+      "path": "/blood-recovery"
+    },
+    {
+      "id": "48",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "血液管理 【输血科】",
+      "path": ""
+    },
+    {
+      "id": "172",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "用血计划 【输血科，江苏应标，不要授权】",
+      "path": "/blood-plan"
+    },
+    {
+      "id": "7",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "血液预订 【输血科】",
+      "path": "/blood-reservations"
+    },
+    {
+      "id": "190",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "血液预订 【中山七院，输血科】",
+      "path": "/blood-reservations-type"
+    },
+    {
+      "id": "11",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "联网入库 【输血科】",
+      "path": "/networking-library"
+    },
+    {
+      "id": "184",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "调拨入库 【输血科】",
+      "path": "/allot-library"
+    },
+    {
+      "id": "10",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "手工入库 【输血科】",
+      "path": "/manual-inventory"
+    },
+    {
+      "id": "338",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "手工入库 【汕头】",
+      "path": "/manual-inventory-st"
+    },
+    {
+      "id": "2",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "血液检验 【输血科】",
+      "path": "/blood-group-review"
+    },
+    {
+      "id": "8",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "库存明细 【输血科】",
+      "path": "/inventory-detail"
+    },
+    {
+      "id": "148",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "库存预警 【输血科】",
+      "path": "/transfusion-guide/blood-inventory-warning"
+    },
+    {
+      "id": "33",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "退回血站 【输血科】",
+      "path": "/blood-delivery"
+    },
+    {
+      "id": "10001",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "退回血站 【输血科 允许退回过期血袋】",
+      "path": ""
+    },
+    {
+      "id": "183",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "调拨出库 【输血科】",
+      "path": "/blood-delivery-transfer"
+    },
+    {
+      "id": "94",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "血袋回收 【输血科】",
+      "path": "/blood-recovery"
+    },
+    {
+      "id": "36",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "血袋报废 【输血科】",
+      "path": "/blood-scrap"
+    },
+    {
+      "id": "170",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "血袋销毁 【输血科】",
+      "path": "/blood-destroy"
+    },
+    {
+      "id": "42",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "血液调剂 【输血科，无需求不要授权】",
+      "path": ""
+    },
+    {
+      "id": "55",
+      "platform": "HOSPITAL",
+      "parentId": "48",
+      "department": "",
+      "name": "血袋来源登记【输血科，西藏定制】",
+      "path": "/blood-source"
+    },
+    {
+      "id": "119",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "样本管理 【输血科，无需求不要授权】",
+      "path": ""
+    },
+    {
+      "id": "120",
+      "platform": "HOSPITAL",
+      "parentId": "119",
+      "department": "",
+      "name": "样本接收 【输血科】",
+      "path": "/sample-receive"
+    },
+    {
+      "id": "121",
+      "platform": "HOSPITAL",
+      "parentId": "119",
+      "department": "",
+      "name": "样本接收查询 【输血科】",
+      "path": "/statistics-list/sample-receive"
+    },
+    {
+      "id": "152",
+      "platform": "HOSPITAL",
+      "parentId": "119",
+      "department": "",
+      "name": "样本接收统计 【输血科】",
+      "path": "/statistics-list/sample-receive-statistics"
+    },
+    {
+      "id": "134",
+      "platform": "HOSPITAL",
+      "parentId": "119",
+      "department": "",
+      "name": "样本拒收 【输血科】",
+      "path": "/statistics-list/sample-reject"
+    },
+    {
+      "id": "135",
+      "platform": "HOSPITAL",
+      "parentId": "119",
+      "department": "",
+      "name": "样本拒收查询 【输血科】",
+      "path": "/statistics-list/sample-reject-list"
+    },
+    {
+      "id": "136",
+      "platform": "HOSPITAL",
+      "parentId": "119",
+      "department": "",
+      "name": "样本拒收统计 【输血科】",
+      "path": "/statistics-list/sample-reject-statistics"
+    },
+    {
+      "id": "49",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "异体输血 【输血科】",
+      "path": ""
+    },
+    {
+      "id": "3",
+      "platform": "HOSPITAL",
+      "parentId": "49",
+      "department": "",
+      "name": "申请单 【输血科】",
+      "path": "/application-confirmation"
+    },
+    {
+      "id": "4",
+      "platform": "HOSPITAL",
+      "parentId": "49",
+      "department": "",
+      "name": "血型复核 【输血科】",
+      "path": "/patient-review"
+    },
+    {
+      "id": "5",
+      "platform": "HOSPITAL",
+      "parentId": "49",
+      "department": "",
+      "name": "交叉配血 【输血科】",
+      "path": "/cross-match"
+    },
+    {
+      "id": "6",
+      "platform": "HOSPITAL",
+      "parentId": "49",
+      "department": "",
+      "name": "临床发血 【输血科】",
+      "path": "/linical-haemorrhage"
+    },
+    {
+      "id": "9",
+      "platform": "HOSPITAL",
+      "parentId": "49",
+      "department": "",
+      "name": "配血发血 【输血科】",
+      "path": "/simple-bleed"
+    },
+    {
+      "id": "31",
+      "platform": "HOSPITAL",
+      "parentId": "49",
+      "department": "",
+      "name": "快捷发血 【输血科，有his对接的医院不要授权】",
+      "path": "/quick-blood"
+    },
+    {
+      "id": "47",
+      "platform": "HOSPITAL",
+      "parentId": "49",
+      "department": "",
+      "name": "输血不良反应 【输血科】",
+      "path": "/blood-transfusion-reaction"
+    },
+    {
+      "id": "84",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "自体输血 【输血科，无自体输血业务，不要授权】",
+      "path": "/autologous"
+    },
+    {
+      "id": "85",
+      "platform": "HOSPITAL",
+      "parentId": "84",
+      "department": "",
+      "name": "自体输血申请 【输血科】",
+      "path": "/autologous/autologous-application"
+    },
+    {
+      "id": "100",
+      "platform": "HOSPITAL",
+      "parentId": "84",
+      "department": "",
+      "name": "自体血型复核 【输血科】",
+      "path": "/autologous/autologous-review"
+    },
+    {
+      "id": "86",
+      "platform": "HOSPITAL",
+      "parentId": "84",
+      "department": "",
+      "name": "自体血入库 【输血科】",
+      "path": "/autologous/autologous-entering"
+    },
+    {
+      "id": "87",
+      "platform": "HOSPITAL",
+      "parentId": "84",
+      "department": "",
+      "name": "自体血出库 【输血科】",
+      "path": "/autologous/autologous-out"
+    },
+    {
+      "id": "88",
+      "platform": "HOSPITAL",
+      "parentId": "84",
+      "department": "",
+      "name": "自体血库存 【输血科】",
+      "path": "/autologous/autologous-inventory"
+    },
+    {
+      "id": "89",
+      "platform": "HOSPITAL",
+      "parentId": "84",
+      "department": "",
+      "name": "自体血报废 【输血科】",
+      "path": "/autologous/autologous-scrap"
+    },
+    {
+      "id": "102",
+      "platform": "HOSPITAL",
+      "parentId": "84",
+      "department": "",
+      "name": "自体血回收 【输血科】",
+      "path": "/autologous/autologous-recovery"
+    },
+    {
+      "id": "112",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "血液管理查询 【输血科】",
+      "path": ""
+    },
+    {
+      "id": "17",
+      "platform": "HOSPITAL",
+      "parentId": "112",
+      "department": "",
+      "name": "血液预订查询 【输血科】",
+      "path": "/query-list/blood-reservations"
+    },
+    {
+      "id": "30",
+      "platform": "HOSPITAL",
+      "parentId": "112",
+      "department": "",
+      "name": "联网入库查询 【输血科】",
+      "path": "/query-list/networking-library"
+    },
+    {
+      "id": "185",
+      "platform": "HOSPITAL",
+      "parentId": "112",
+      "department": "",
+      "name": "调拨入库查询 【输血科】",
+      "path": "/query-list/allot-library"
+    },
+    {
+      "id": "19",
+      "platform": "HOSPITAL",
+      "parentId": "112",
+      "department": "",
+      "name": "手工入库查询 【输血科】",
+      "path": "/query-list/manual-inventory"
+    },
+    {
+      "id": "32",
+      "platform": "HOSPITAL",
+      "parentId": "112",
+      "department": "",
+      "name": "退回血站查询 【输血科】",
+      "path": "/query-list/blood-delivery"
+    },
+    {
+      "id": "182",
+      "platform": "HOSPITAL",
+      "parentId": "112",
+      "department": "",
+      "name": "调拨出库查询 【输血科】",
+      "path": "/query-list/blood-delivery-transfer"
+    },
+    {
+      "id": "180",
+      "platform": "HOSPITAL",
+      "parentId": "112",
+      "department": "",
+      "name": "血液入库查询 【输血科】",
+      "path": "/query-list/blood-input-query"
+    },
+    {
+      "id": "181",
+      "platform": "HOSPITAL",
+      "parentId": "112",
+      "department": "",
+      "name": "血液出库查询 【输血科】",
+      "path": "/query-list/blood-out-query"
+    },
+    {
+      "id": "41",
+      "platform": "HOSPITAL",
+      "parentId": "112",
+      "department": "",
+      "name": "血袋报废查询 【输血科】",
+      "path": "/query-list/blood-scrap"
+    },
+    {
+      "id": "95",
+      "platform": "HOSPITAL",
+      "parentId": "112",
+      "department": "",
+      "name": "血袋回收查询 【输血科】",
+      "path": "/query-list/blood-recovery"
+    },
+    {
+      "id": "171",
+      "platform": "HOSPITAL",
+      "parentId": "112",
+      "department": "",
+      "name": "血袋销毁查询 【输血科】",
+      "path": "/query-list/blood-destroy"
+    },
+    {
+      "id": "43",
+      "platform": "HOSPITAL",
+      "parentId": "112",
+      "department": "",
+      "name": "血液调剂查询 【输血科，无需求不要授权】",
+      "path": "/blood-regulate"
+    },
+    {
+      "id": "113",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "异体输血查询 【输血科】",
+      "path": ""
+    },
+    {
+      "id": "13",
+      "platform": "HOSPITAL",
+      "parentId": "113",
+      "department": "",
+      "name": "输血申请单查询 【输血科】",
+      "path": "/query-list/application-confirmation"
+    },
+    {
+      "id": "14",
+      "platform": "HOSPITAL",
+      "parentId": "113",
+      "department": "",
+      "name": "血型复核查询 【输血科】",
+      "path": "/query-list/blood-group-review"
+    },
+    {
+      "id": "15",
+      "platform": "HOSPITAL",
+      "parentId": "113",
+      "department": "",
+      "name": "交叉配血查询 【输血科】",
+      "path": "/query-list/cross-match"
+    },
+    {
+      "id": "16",
+      "platform": "HOSPITAL",
+      "parentId": "113",
+      "department": "",
+      "name": "临床发血查询 【输血科】",
+      "path": "/query-list/linical-haemorrhage"
+    },
+    {
+      "id": "186",
+      "platform": "HOSPITAL",
+      "parentId": "113",
+      "department": "",
+      "name": "血袋领取查询 【输血科】",
+      "path": "/query-list/blood-get"
+    },
+    {
+      "id": "46",
+      "platform": "HOSPITAL",
+      "parentId": "113",
+      "department": "",
+      "name": "输血不良反应查询 【输血科，无需求不要授权】",
+      "path": "/query-list/blood-transfusion-reaction"
+    },
+    {
+      "id": "128",
+      "platform": "HOSPITAL",
+      "parentId": "113",
+      "department": "",
+      "name": "输血过程监测查询 【输血科，无需求不要授权】",
+      "path": "/query-list/process-records"
+    },
+    {
+      "id": "352",
+      "platform": "HOSPITAL",
+      "parentId": "113",
+      "department": "",
+      "name": "输血过程记录查询 【输血科，无需求不要授权】【旧版】",
+      "path": "/query-list/process-records-legacy"
+    },
+    {
+      "id": "129",
+      "platform": "HOSPITAL",
+      "parentId": "113",
+      "department": "",
+      "name": "输血后疗效评价查询 【输血科，无需求不要授权】",
+      "path": "/query-list/blood-appraise"
+    },
+    {
+      "id": "114",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "自体输血查询 【输血科，无自体输血业务，不要授权】",
+      "path": ""
+    },
+    {
+      "id": "90",
+      "platform": "HOSPITAL",
+      "parentId": "114",
+      "department": "",
+      "name": "自体输血申请查询",
+      "path": "/query-list/autologous-application"
+    },
+    {
+      "id": "101",
+      "platform": "HOSPITAL",
+      "parentId": "114",
+      "department": "",
+      "name": "自体血型复核查询",
+      "path": "/query-list/autologous-review"
+    },
+    {
+      "id": "91",
+      "platform": "HOSPITAL",
+      "parentId": "114",
+      "department": "",
+      "name": "自体血入库查询",
+      "path": "/query-list/autologous-entering"
+    },
+    {
+      "id": "92",
+      "platform": "HOSPITAL",
+      "parentId": "114",
+      "department": "",
+      "name": "自体血出库查询",
+      "path": "/query-list/autologous-out"
+    },
+    {
+      "id": "93",
+      "platform": "HOSPITAL",
+      "parentId": "114",
+      "department": "",
+      "name": "自体血报废查询",
+      "path": "/query-list/autologous-scrap"
+    },
+    {
+      "id": "103",
+      "platform": "HOSPITAL",
+      "parentId": "114",
+      "department": "",
+      "name": "自体血回收查询",
+      "path": "/query-list/autologous-recovery"
+    },
+    {
+      "id": "115",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "信息追溯 【输血科】",
+      "path": ""
+    },
+    {
+      "id": "334",
+      "platform": "HOSPITAL",
+      "parentId": "115",
+      "department": "",
+      "name": "血袋追溯 【输血科】",
+      "path": "/statistics-list/blood-retrospect"
+    },
+    {
+      "id": "107",
+      "platform": "HOSPITAL",
+      "parentId": "115",
+      "department": "",
+      "name": "患者追溯 【输血科】",
+      "path": "/statistics-list/sick-retrospect"
+    },
+    {
+      "id": "108",
+      "platform": "HOSPITAL",
+      "parentId": "115",
+      "department": "",
+      "name": "温湿度监控 【输血科，演示，不要授权使用】",
+      "path": "/statistics-list/humiture-monitoring"
+    },
+    {
+      "id": "110",
+      "platform": "HOSPITAL",
+      "parentId": "115",
+      "department": "",
+      "name": "收费明细查询 【输血科，无需求不要授权】",
+      "path": "/statistics-list/charge-schedule"
+    },
+    {
+      "id": "130",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "质控安全 【输血科】",
+      "path": ""
+    },
+    {
+      "id": "341",
+      "platform": "HOSPITAL",
+      "parentId": "130",
+      "department": "",
+      "name": "患者信息修改 【输血科】",
+      "path": "/quality-safety/patient-info"
+    },
+    {
+      "id": "342",
+      "platform": "HOSPITAL",
+      "parentId": "130",
+      "department": "",
+      "name": "患者信息修改查询 【输血科】",
+      "path": "/quality-safety/patient-info-query"
+    },
+    {
+      "id": "131",
+      "platform": "HOSPITAL",
+      "parentId": "130",
+      "department": "",
+      "name": "血型复核修改 【输血科】",
+      "path": "/quality-safety/patient-review-revise"
+    },
+    {
+      "id": "132",
+      "platform": "HOSPITAL",
+      "parentId": "130",
+      "department": "",
+      "name": "血型复核修改查询 【输血科】",
+      "path": "/quality-safety/patient-review-query"
+    },
+    {
+      "id": "141",
+      "platform": "HOSPITAL",
+      "parentId": "130",
+      "department": "",
+      "name": "血袋配血撤销 【输血科】",
+      "path": "/quality-safety/cross-match-revise"
+    },
+    {
+      "id": "142",
+      "platform": "HOSPITAL",
+      "parentId": "130",
+      "department": "",
+      "name": "血袋配血撤销查询 【输血科】",
+      "path": "/quality-safety/cross-match-query"
+    },
+    {
+      "id": "159",
+      "platform": "HOSPITAL",
+      "parentId": "130",
+      "department": "",
+      "name": "血袋发血撤销 【输血科】",
+      "path": "/quality-safety/linical-haemorrhage-revise"
+    },
+    {
+      "id": "160",
+      "platform": "HOSPITAL",
+      "parentId": "130",
+      "department": "",
+      "name": "血袋发血撤销查询 【输血科】",
+      "path": "/quality-safety/linical-haemorrhage-query"
+    },
+    {
+      "id": "146",
+      "platform": "HOSPITAL",
+      "parentId": "130",
+      "department": "",
+      "name": "血袋锁定登记 【输血科，无需求不要授权使用】",
+      "path": "/transfusion-guide/blood-lock"
+    },
+    {
+      "id": "147",
+      "platform": "HOSPITAL",
+      "parentId": "130",
+      "department": "",
+      "name": "血袋锁定记录 【输血科，无需求不要授权使用】",
+      "path": "/transfusion-guide/blood-lock-record"
+    },
+    {
+      "id": "154",
+      "platform": "HOSPITAL",
+      "parentId": "130",
+      "department": "",
+      "name": "血袋信息修改 【输血科，无需求不要授权使用】",
+      "path": "/quality-safety/blood-modify"
+    },
+    {
+      "id": "155",
+      "platform": "HOSPITAL",
+      "parentId": "130",
+      "department": "",
+      "name": "血袋信息修改查询 【输血科】",
+      "path": "/quality-safety/blood-modify-query"
+    },
+    {
+      "id": "143",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "输血指南 【医务科室功能】",
+      "path": ""
+    },
+    {
+      "id": "144",
+      "platform": "HOSPITAL",
+      "parentId": "143",
+      "department": "",
+      "name": "指南发布 【医务部，上海特有，不要授权】",
+      "path": "/transfusion-guide/guide-publish"
+    },
+    {
+      "id": "145",
+      "platform": "HOSPITAL",
+      "parentId": "143",
+      "department": "",
+      "name": "指南记录 【医务部，上海特有，不要授权】",
+      "path": "/transfusion-guide/guide-record"
+    },
+    {
+      "id": "12",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "数据查询 【临床医师、护士】",
+      "path": "/query-list"
+    },
+    {
+      "id": "149",
+      "platform": "HOSPITAL",
+      "parentId": "12",
+      "department": "",
+      "name": "输血前评估查询 【临床医师，无需求不要授权】",
+      "path": "/query-list/pretransfusion-assess"
+    },
+    {
+      "id": "54",
+      "platform": "HOSPITAL",
+      "parentId": "12",
+      "department": "",
+      "name": "异体申请单查询 【临床医师、医务部】",
+      "path": "/query-list/blood-transfu-app"
+    },
+    {
+      "id": "370",
+      "platform": "HOSPITAL",
+      "parentId": "12",
+      "department": "",
+      "name": "转科室申请单查询 【临床医师、医务部】",
+      "path": "/query-list/transfer-department"
+    },
+    {
+      "id": "57",
+      "platform": "HOSPITAL",
+      "parentId": "12",
+      "department": "",
+      "name": "血袋领取查询 【临床护士】",
+      "path": "/query-list/blood-get"
+    },
+    {
+      "id": "59",
+      "platform": "HOSPITAL",
+      "parentId": "12",
+      "department": "",
+      "name": "输血过程监测查询 【临床护士】",
+      "path": "/query-list/process-records"
+    },
+    {
+      "id": "353",
+      "platform": "HOSPITAL",
+      "parentId": "12",
+      "department": "",
+      "name": "输血过程记录查询 【临床护士】【旧版】",
+      "path": "/query-list/process-records-legacy"
+    },
+    {
+      "id": "62",
+      "platform": "HOSPITAL",
+      "parentId": "12",
+      "department": "",
+      "name": "输血后疗效评价查询 【临床医师，无需求不要授权】",
+      "path": "/query-list/blood-appraise"
+    },
+    {
+      "id": "64",
+      "platform": "HOSPITAL",
+      "parentId": "12",
+      "department": "",
+      "name": "样本登记查询 【临床护士】",
+      "path": "/query-list/sample-register"
+    },
+    {
+      "id": "105",
+      "platform": "HOSPITAL",
+      "parentId": "12",
+      "department": "",
+      "name": "自体输血申请查询 【临床医师，无需求不要授权】",
+      "path": "/query-list/autologous-application-app"
+    },
+    {
+      "id": "125",
+      "platform": "HOSPITAL",
+      "parentId": "12",
+      "department": "",
+      "name": "血袋回收查询 【临床护士】",
+      "path": "/query-list/blood-recovery"
+    },
+    {
+      "id": "127",
+      "platform": "HOSPITAL",
+      "parentId": "12",
+      "department": "",
+      "name": "输血不良反应查询 【临床医师、护士】",
+      "path": "/query-list/blood-transfusion-reaction-app"
+    },
+    {
+      "id": "37",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "统计报表 【输血科】",
+      "path": "/statistics-list"
+    },
+    {
+      "id": "38",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "库存统计 【输血科】",
+      "path": "/statistics-list/inventory"
+    },
+    {
+      "id": "39",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "联网入库统计 【输血科】",
+      "path": "/statistics-list/networking-library"
+    },
+    {
+      "id": "40",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "手工入库统计 【输血科】",
+      "path": "/statistics-list/manual-inventory"
+    },
+    {
+      "id": "175",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "退回血站统计 【输血科】",
+      "path": "/statistics-list/return-station-statistics"
+    },
+    {
+      "id": "71",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "用血申请统计 【输血科】",
+      "path": "/statistics-list/blood-application"
+    },
+    {
+      "id": "45",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "科室用血统计 【输血科】",
+      "path": "/statistics-list/blood-department"
+    },
+    {
+      "id": "157",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "医生用血统计 【输血科】",
+      "path": "/statistics-list/doctor-blood-statistics"
+    },
+    {
+      "id": "77",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "患者用血统计 【输血科】",
+      "path": "/statistics-list/patients-using"
+    },
+    {
+      "id": "335",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "患者血型分布 【输血科】",
+      "path": "/statistics-list/bloodgroup-distribution"
+    },
+    {
+      "id": "109",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "血袋报废统计 【输血科】",
+      "path": "/statistics-list/blood-scrap-statistics"
+    },
+    {
+      "id": "73",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "血袋回收统计 【输血科】",
+      "path": "/statistics-list/blood-recycle"
+    },
+    {
+      "id": "176",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "血袋出库汇总表 【输血科】",
+      "path": "/statistics-list/bloodbag-out-summary"
+    },
+    {
+      "id": "177",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "血袋入库汇总表 【输血科】",
+      "path": "/statistics-list/bloodbag-storage-summary"
+    },
+    {
+      "id": "179",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "血液入库汇总 【输血科】",
+      "path": "/statistics-list/blood-storage-summary"
+    },
+    {
+      "id": "178",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "血液出库汇总 【输血科】",
+      "path": "/statistics-list/blood-out-summary"
+    },
+    {
+      "id": "51",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "进销存统计 【输血科，无需求不要授权】",
+      "path": "/statistics-list/report"
+    },
+    {
+      "id": "151",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "单病种用血分析 【输血科，演示，无需求不要授权】",
+      "path": "/statistics-list/blood-analysis"
+    },
+    {
+      "id": "161",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "血液预订统计 【输血科】",
+      "path": "/statistics-list/reservations-library"
+    },
+    {
+      "id": "79",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "单据打印 【临床医师，无需求不要授权】",
+      "path": "/documents-print"
+    },
+    {
+      "id": "80",
+      "platform": "HOSPITAL",
+      "parentId": "79",
+      "department": "",
+      "name": "知情同意书 【临床医师，无需求不要授权】",
+      "path": "/documents-print/written-consent"
+    },
+    {
+      "id": "361",
+      "platform": "HOSPITAL",
+      "parentId": "79",
+      "department": "",
+      "name": "大量用血审批表 【钦州】",
+      "path": "/documents-print/blood-use-approval"
+    },
+    {
+      "id": "354",
+      "platform": "HOSPITAL",
+      "parentId": "79",
+      "department": "",
+      "name": "血液报废审批表 【宁夏三院】",
+      "path": "/documents-print/blood-scrap-approval"
+    },
+    {
+      "id": "362",
+      "platform": "HOSPITAL",
+      "parentId": "79",
+      "department": "",
+      "name": "输血费补偿申请表 【钦州】",
+      "path": "/documents-print/blood-fee-apply"
+    },
+    {
+      "id": "363",
+      "platform": "HOSPITAL",
+      "parentId": "79",
+      "department": "",
+      "name": "输血费自付补偿条件 【钦州】",
+      "path": "/documents-print/blood-fee-condition"
+    },
+    {
+      "id": "139",
+      "platform": "HOSPITAL",
+      "parentId": "79",
+      "department": "",
+      "name": "Rh阴性患者意见书 【临床医师，无需求不要授权】",
+      "path": "/documents-print/rhblood-opinion"
+    },
+    {
+      "id": "153",
+      "platform": "HOSPITAL",
+      "parentId": "79",
+      "department": "",
+      "name": "用血证明 【输血科，无需求不要授权】",
+      "path": "/documents-print/use-blood"
+    },
+    {
+      "id": "191",
+      "platform": "HOSPITAL",
+      "parentId": "79",
+      "department": "",
+      "name": "用血申请单 【昆山中医院】",
+      "path": "/documents-print/application-confirmation"
+    },
+    {
+      "id": "21",
+      "platform": "HOSPITAL",
+      "parentId": "20",
+      "department": "",
+      "name": "字典管理 【输血科】",
+      "path": "/admin/dictionary"
+    },
+    {
+      "id": "710",
+      "platform": "HOSPITAL",
+      "parentId": "20",
+      "department": "",
+      "name": "标准数据上报",
+      "path": "/admin/report"
+    },
+    {
+      "id": "23",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "输血性质",
+      "path": "/admin/dictionary/application-type"
+    },
+    {
+      "id": "25",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "输血目的",
+      "path": "/admin/dictionary/blood-transfusion-purpose"
+    },
+    {
+      "id": "22",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "血型鉴定",
+      "path": "/admin/dictionary/bloob-group"
+    },
+    {
+      "id": "345",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "输血指征",
+      "path": "/admin/dictionary/pretest"
+    },
+    {
+      "id": "242",
+      "platform": "HOSPITAL",
+      "parentId": "20",
+      "department": "",
+      "name": "字典管理 【血站】",
+      "path": "/admin/dictionary-station"
+    },
+    {
+      "id": "243",
+      "platform": "HOSPITAL",
+      "parentId": "242",
+      "department": "",
+      "name": "预订回复 【血站】",
+      "path": "/admin/dictionary-station/suggestion"
+    },
+    {
+      "id": "250",
+      "platform": "HOSPITAL",
+      "parentId": "242",
+      "department": "",
+      "name": "锁定原因",
+      "path": "/admin/dictionary/blood-lock-reason"
+    },
+    {
+      "id": "2005",
+      "platform": "STATION",
+      "parentId": "242",
+      "department": "",
+      "name": "血液字典 【血站】",
+      "path": "/admin/dictionary-station/subtype"
+    },
+    {
+      "id": "340",
+      "platform": "HOSPITAL",
+      "parentId": "20",
+      "department": "",
+      "name": "系统配置（血站端）",
+      "path": "/station/setting-station"
+    },
+    {
+      "id": "137",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "抗体筛查",
+      "path": "/admin/dictionary/antibody-screening"
+    },
+    {
+      "id": "24",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "配血方法",
+      "path": "/admin/dictionary/blood-matching-method"
+    },
+    {
+      "id": "138",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "主次侧结果",
+      "path": "/admin/dictionary/blood-matching-result"
+    },
+    {
+      "id": "156",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "配血结果",
+      "path": "/admin/dictionary/matching-results"
+    },
+    {
+      "id": "26",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "配血品种",
+      "path": "/admin/dictionary/cross-match-admin"
+    },
+    {
+      "id": "18",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "库存预警",
+      "path": "/admin/dictionary/inventory-warning"
+    },
+    {
+      "id": "35",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "报废原因",
+      "path": "/admin/dictionary/scrap-reason"
+    },
+    {
+      "id": "50",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "反应类型",
+      "path": "/admin/dictionary/blood-reaction"
+    },
+    {
+      "id": "53",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "审核规则",
+      "path": "/admin/dictionary/audit-rules"
+    },
+    {
+      "id": "60",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "接口设置",
+      "path": "/admin/dictionary/port-set"
+    },
+    {
+      "id": "122",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "血袋费用",
+      "path": "/admin/dictionary/blood-fee"
+    },
+    {
+      "id": "123",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "检验费用",
+      "path": "/admin/dictionary/check-fee"
+    },
+    {
+      "id": "150",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "锁定原因",
+      "path": "/admin/dictionary/blood-lock-reason"
+    },
+    {
+      "id": "21001",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "血液品种",
+      "path": "/admin/dictionary/blood-subtype"
+    },
+    {
+      "id": "21003",
+      "platform": "STATION",
+      "parentId": "242",
+      "department": "",
+      "name": "血液品种",
+      "path": "/admin/dictionary/blood-subtype"
+    },
+    {
+      "id": "21002",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "血液产品",
+      "path": "/admin/dictionary/blood-breed"
+    },
+    {
+      "id": "21004",
+      "platform": "STATION",
+      "parentId": "242",
+      "department": "",
+      "name": "血液产品",
+      "path": "/admin/dictionary/blood-breed"
+    },
+    {
+      "id": "44",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "报废统计",
+      "path": ""
+    },
+    {
+      "id": "299",
+      "platform": "STATION",
+      "parentId": "0",
+      "name": "血站端",
+      "icon": "icon-desktop menuicon",
+      "path": ""
+    },
+    {
+      "id": "173",
+      "platform": "STATION",
+      "parentId": "299",
+      "department": "",
+      "name": "用血计划查看",
+      "path": "/station/blood-plan"
+    },
+    {
+      "id": "200",
+      "platform": "STATION",
+      "parentId": "299",
+      "name": "血液预订管理",
+      "icon": "icon-desktop menuicon",
+      "path": ""
+    },
+    {
+      "id": "201",
+      "platform": "STATION",
+      "parentId": "200",
+      "name": "血液预订记录",
+      "icon": "fa fa-caret-right",
+      "path": "/station/booking-blood-record"
+    },
+    {
+      "id": "202",
+      "platform": "STATION",
+      "parentId": "200",
+      "name": "血液预订统计",
+      "icon": "fa fa-caret-right",
+      "path": "/station/booking-blood-statistics"
+    },
+    {
+      "id": "240",
+      "platform": "STATION",
+      "parentId": "299",
+      "name": "医院退血管理",
+      "icon": "fa fa-caret-right",
+      "path": ""
+    },
+    {
+      "id": "241",
+      "platform": "STATION",
+      "parentId": "240",
+      "name": "医院退血记录",
+      "icon": "fa fa-caret-right",
+      "path": "/station/hospital-return-list"
+    },
+    {
+      "id": "203",
+      "platform": "STATION",
+      "parentId": "299",
+      "name": "医院入库查询",
+      "icon": "icon-ambulance menuicon",
+      "path": ""
+    },
+    {
+      "id": "204",
+      "platform": "STATION",
+      "parentId": "203",
+      "name": "医院入库记录",
+      "icon": "fa-caret-right",
+      "path": "/station/send-blood-record"
+    },
+    {
+      "id": "205",
+      "platform": "STATION",
+      "parentId": "203",
+      "name": "医院入库统计",
+      "icon": "fa-caret-right",
+      "path": "/station/send-blood-statistics"
+    },
+    {
+      "id": "206",
+      "platform": "STATION",
+      "parentId": "299",
+      "name": "医院库存统计",
+      "icon": "icon-cloud menuicon",
+      "path": ""
+    },
+    {
+      "id": "207",
+      "platform": "STATION",
+      "parentId": "206",
+      "name": "医院库存汇总",
+      "icon": "fa fa-caret-right",
+      "path": "/station/medical-nstitution-repo-analysis"
+    },
+    {
+      "id": "208",
+      "platform": "STATION",
+      "parentId": "206",
+      "name": "医院库存明细",
+      "icon": "fa fa-caret-right",
+      "path": "/station/hospital-blood-repo"
+    },
+    {
+      "id": "994",
+      "platform": "STATION",
+      "parentId": "299",
+      "name": "血站库存共享",
+      "icon": "icon-cloud menuicon",
+      "path": ""
+    },
+    {
+      "id": "996",
+      "platform": "STATION",
+      "parentId": "994",
+      "name": "血站库存汇总",
+      "icon": "fa fa-caret-right",
+      "path": "/station/station-stock-repo"
+    },
+    {
+      "id": "995",
+      "platform": "STATION",
+      "parentId": "994",
+      "name": "血站共享配置",
+      "icon": "fa fa-caret-right",
+      "path": "/station/station-stock-share"
+    },
+    {
+      "id": "209",
+      "platform": "STATION",
+      "parentId": "299",
+      "name": "医院用血分析",
+      "icon": "fa icon-cloud menuicon",
+      "path": ""
+    },
+    {
+      "id": "30010",
+      "platform": "STATION",
+      "parentId": "299",
+      "department": "",
+      "name": "优先用血"
+    },
+    {
+      "id": "30011",
+      "platform": "STATION",
+      "parentId": "30010",
+      "department": "",
+      "name": "申请记录"
+    },
+    {
+      "id": "30012",
+      "platform": "STATION",
+      "parentId": "30010",
+      "department": "",
+      "name": "申请统计"
+    },
+    {
+      "id": "30014",
+      "platform": "STATION",
+      "parentId": "30010",
+      "department": "",
+      "name": "优先用血申请（重庆）"
+    },
+    {
+      "id": "30015",
+      "platform": "STATION",
+      "parentId": "30010",
+      "department": "",
+      "name": "优先用血查询（重庆）"
+    },
+    {
+      "id": "30016",
+      "platform": "STATION",
+      "parentId": "30010",
+      "department": "",
+      "name": "优先用血审核（重庆）"
+    },
+    {
+      "id": "30017",
+      "platform": "STATION",
+      "parentId": "30010",
+      "department": "",
+      "name": "优先用血统计（重庆）"
+    },
+    {
+      "id": "30018",
+      "platform": "STATION",
+      "parentId": "30010",
+      "department": "",
+      "name": "优先用血汇总（重庆）"
+    },
+    {
+      "id": "211",
+      "platform": "STATION",
+      "parentId": "209",
+      "name": "医院用血统计",
+      "icon": "fa-caret-right",
+      "path": "/station/department-using-statistics"
+    },
+    {
+      "id": "245",
+      "platform": "STATION",
+      "parentId": "209",
+      "name": "医院用血对比",
+      "icon": "fa fa-caret-right",
+      "path": "/station/hospital-blood-contrast"
+    },
+    {
+      "id": "244",
+      "platform": "STATION",
+      "parentId": "209",
+      "name": "医院用血趋势",
+      "icon": "fa fa-caret-right",
+      "path": "/station/hospital-blood-trend"
+    },
+    {
+      "id": "210",
+      "platform": "STATION",
+      "parentId": "209",
+      "name": "输血不良反应统计",
+      "icon": "fa fa-caret-right",
+      "path": "/station/transfusion-reaction-statistics"
+    },
+    {
+      "id": "2018",
+      "platform": "STATION",
+      "parentId": "299",
+      "name": "合理用血管理",
+      "icon": "icon-desktop menuicon",
+      "path": ""
+    },
+    {
+      "id": "2019",
+      "platform": "STATION",
+      "parentId": "2018",
+      "name": "输血前评估查询",
+      "icon": "fa fa-caret-right",
+      "path": "/station/rational-blood/pretransfusion-assess"
+    },
+    {
+      "id": "2020",
+      "platform": "STATION",
+      "parentId": "2018",
+      "name": "输血过程监测查询",
+      "icon": "fa fa-caret-right",
+      "path": "/station/rational-blood/process-records"
+    },
+    {
+      "id": "2021",
+      "platform": "STATION",
+      "parentId": "2018",
+      "name": "输血后评价查询",
+      "icon": "fa fa-caret-right",
+      "path": "/station/rational-blood/blood-appraise"
+    },
+    {
+      "id": "2022",
+      "platform": "STATION",
+      "parentId": "299",
+      "name": "血袋回收管理",
+      "icon": "fa icon-cloud menuicon",
+      "path": ""
+    },
+    {
+      "id": "2023",
+      "platform": "STATION",
+      "parentId": "2022",
+      "name": "血袋回收查询",
+      "icon": "fa fa-caret-right",
+      "path": "/station/blood-recovery"
+    },
+    {
+      "id": "2024",
+      "platform": "STATION",
+      "parentId": "2022",
+      "name": "血袋回收统计",
+      "icon": "fa fa-caret-right",
+      "path": "/station/blood-recovery-statistics"
+    },
+    {
+      "id": "601",
+      "platform": "STATION",
+      "parentId": "299",
+      "name": "医院调拨管理",
+      "icon": "icon-cloud menuicon",
+      "path": ""
+    },
+    {
+      "id": "602",
+      "platform": "STATION",
+      "parentId": "601",
+      "name": "血液调拨查询",
+      "icon": "fa fa-caret-right",
+      "path": "/station/blood-delivery-transfer"
+    },
+    {
+      "id": "603",
+      "platform": "STATION",
+      "parentId": "601",
+      "name": "血液调拨统计",
+      "icon": "fa fa-caret-right",
+      "path": "/station/blood-delivery-transfer-statistics"
+    },
+    {
+      "id": "212",
+      "platform": "STATION",
+      "parentId": "299",
+      "name": "血袋安全管理",
+      "icon": "icon-cloud menuicon",
+      "path": ""
+    },
+    {
+      "id": "213",
+      "platform": "STATION",
+      "parentId": "212",
+      "name": "血袋追溯",
+      "icon": "fa fa-caret-right",
+      "path": "/station/blood-bag-tracing"
+    },
+    {
+      "id": "253",
+      "platform": "STATION",
+      "parentId": "212",
+      "name": "患者追溯 【血站】",
+      "icon": "fa fa-caret-right",
+      "path": "/station/sick-retrospect-station"
+    },
+    {
+      "id": "248",
+      "platform": "STATION",
+      "parentId": "212",
+      "name": "血袋锁定",
+      "icon": "fa fa-caret-right",
+      "path": "/station/blood-lock"
+    },
+    {
+      "id": "249",
+      "platform": "STATION",
+      "parentId": "212",
+      "name": "血袋锁定查询",
+      "icon": "fa fa-caret-right",
+      "path": "/station/blood-lock-record"
+    },
+    {
+      "id": "219",
+      "platform": "STATION",
+      "parentId": "299",
+      "name": "血液调剂管理",
+      "icon": "fa icon-cloud menuicon",
+      "path": ""
+    },
+    {
+      "id": "220",
+      "platform": "STATION",
+      "parentId": "219",
+      "name": "血液调剂审批",
+      "icon": "fa fa-caret-right",
+      "path": "/station/regulate-blood"
+    },
+    {
+      "id": "221",
+      "platform": "STATION",
+      "parentId": "219",
+      "name": "血液调剂记录",
+      "icon": "fa fa-caret-right",
+      "path": "/station/regulate-blood-record"
+    },
+    {
+      "id": "227",
+      "platform": "SUPERVISE",
+      "parentId": "20",
+      "name": "医院联网监控",
+      "icon": "global",
+      "path": ""
+    },
+    {
+      "id": "228",
+      "platform": "SUPERVISE",
+      "parentId": "227",
+      "name": "医院联网状态",
+      "icon": "",
+      "path": "/station/supervise-status"
+    },
+    {
+      "id": "343",
+      "platform": "SUPERVISE",
+      "parentId": "227",
+      "name": "医院数据质量【浦东】",
+      "icon": "",
+      "path": "/station/hospital-data-quality"
+    },
+    {
+      "id": "229",
+      "platform": "SUPERVISE",
+      "parentId": "227",
+      "name": "医院异常汇总",
+      "icon": "",
+      "path": "/station/supervise-exception"
+    },
+    {
+      "id": "239",
+      "platform": "SUPERVISE",
+      "parentId": "227",
+      "name": "医院上报日志",
+      "icon": "",
+      "path": "/station/report-log"
+    },
+    {
+      "id": "350",
+      "platform": "SUPERVISE",
+      "parentId": "227",
+      "name": "帐号操作日志",
+      "icon": "",
+      "path": "/station/log-account"
+    },
+    {
+      "id": "230",
+      "platform": "SUPERVISE",
+      "parentId": "209",
+      "name": "患者用血质控",
+      "icon": "",
+      "path": "/station/patients-using-statistics"
+    },
+    {
+      "id": "2006",
+      "platform": "SUPERVISE",
+      "parentId": "209",
+      "name": "患者人群分析",
+      "icon": "",
+      "path": "/station/patients-population-analysis"
+    },
+    {
+      "id": "246",
+      "platform": "SUPERVISE",
+      "parentId": "209",
+      "name": "血袋报废统计",
+      "icon": "",
+      "path": "/station/blood-scrap-statistics"
+    },
+    {
+      "id": "40010",
+      "platform": "STATION",
+      "parentId": "209",
+      "name": "报废原因统计",
+      "icon": "fa fa-caret-right"
+    },
+    {
+      "id": "247",
+      "platform": "SUPERVISE",
+      "parentId": "209",
+      "name": "输血不良反应分析",
+      "icon": "",
+      "path": "/station/transfusion-reaction-analysis"
+    },
+    {
+      "id": "237",
+      "platform": "SUPERVISE",
+      "parentId": "209",
+      "name": "单病种用血分析",
+      "icon": "",
+      "path": "/statistics-list/blood-analysis"
+    },
+    {
+      "id": "399",
+      "platform": "SUPERVISE",
+      "parentId": "0",
+      "name": "监管平台",
+      "icon": "home",
+      "path": ""
+    },
+    {
+      "id": "300",
+      "platform": "SUPERVISE",
+      "parentId": "399",
+      "name": "血站数据统计",
+      "icon": "home",
+      "path": ""
+    },
+    {
+      "id": "301",
+      "platform": "SUPERVISE",
+      "parentId": "300",
+      "name": "数据一览",
+      "icon": "",
+      "path": "/supervise/home-page"
+    },
+    {
+      "id": "302",
+      "platform": "SUPERVISE",
+      "parentId": "300",
+      "name": "性别统计",
+      "icon": "",
+      "path": "/supervise/supervise-sex"
+    },
+    {
+      "id": "303",
+      "platform": "SUPERVISE",
+      "parentId": "300",
+      "name": "年龄统计",
+      "icon": "",
+      "path": "/supervise/supervise-age"
+    },
+    {
+      "id": "304",
+      "platform": "SUPERVISE",
+      "parentId": "300",
+      "name": "职业统计",
+      "icon": "",
+      "path": "/supervise/supervise-occupation"
+    },
+    {
+      "id": "305",
+      "platform": "SUPERVISE",
+      "parentId": "300",
+      "name": "献血频率统计",
+      "icon": "",
+      "path": "/supervise/supervise-frequency"
+    },
+    {
+      "id": "306",
+      "platform": "SUPERVISE",
+      "parentId": "300",
+      "name": "组织形式统计",
+      "icon": "",
+      "path": "/supervise/supervise-modality"
+    },
+    {
+      "id": "307",
+      "platform": "SUPERVISE",
+      "parentId": "399",
+      "name": "血站库存",
+      "icon": "dashboard",
+      "path": ""
+    },
+    {
+      "id": "309",
+      "platform": "SUPERVISE",
+      "parentId": "307",
+      "name": "血站库存一览表",
+      "icon": "",
+      "path": "/supervise/supervise-station-all"
+    },
+    {
+      "id": "310",
+      "platform": "SUPERVISE",
+      "parentId": "307",
+      "name": "血站库存柱状图",
+      "icon": "",
+      "path": "/supervise/supervise-station-histogram"
+    },
+    {
+      "id": "312",
+      "platform": "SUPERVISE",
+      "parentId": "307",
+      "name": "血站库存饼状图",
+      "icon": "",
+      "path": "/supervise/supervise-station-pit-chart"
+    },
+    {
+      "id": "313",
+      "platform": "SUPERVISE",
+      "parentId": "307",
+      "name": "血站库存变化",
+      "icon": "",
+      "path": "/supervise/supervise-station-change"
+    },
+    {
+      "id": "314",
+      "platform": "SUPERVISE",
+      "parentId": "399",
+      "name": "医院库存",
+      "icon": "table",
+      "path": ""
+    },
+    {
+      "id": "315",
+      "platform": "SUPERVISE",
+      "parentId": "314",
+      "name": "医院库存汇总表",
+      "icon": "",
+      "path": "/supervise/supervise-summary"
+    },
+    {
+      "id": "316",
+      "platform": "SUPERVISE",
+      "parentId": "314",
+      "name": "医院库存柱状图",
+      "icon": "",
+      "path": "/supervise/supervise-histogram"
+    },
+    {
+      "id": "317",
+      "platform": "SUPERVISE",
+      "parentId": "314",
+      "name": "医院库存饼状图",
+      "icon": "",
+      "path": "/supervise/supervise-pit-chart"
+    },
+    {
+      "id": "318",
+      "platform": "SUPERVISE",
+      "parentId": "314",
+      "name": "医院库存变化",
+      "icon": "",
+      "path": "/supervise/supervise-change"
+    },
+    {
+      "id": "319",
+      "platform": "SUPERVISE",
+      "parentId": "399",
+      "name": "医院用血",
+      "icon": "form",
+      "path": ""
+    },
+    {
+      "id": "320",
+      "platform": "SUPERVISE",
+      "parentId": "319",
+      "name": "医院用血汇总",
+      "icon": "",
+      "path": "/supervise/supervise-hosptal-all"
+    },
+    {
+      "id": "331",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "血站库存查询【上海浦东特有】",
+      "path": ""
+    },
+    {
+      "id": "332",
+      "platform": "HOSPITAL",
+      "parentId": "331",
+      "department": "",
+      "name": "血站库存明细【上海浦东特有】",
+      "path": "/query-list/station-blood-detail"
+    },
+    {
+      "id": "333",
+      "platform": "HOSPITAL",
+      "parentId": "331",
+      "department": "",
+      "name": "血站库存汇总【上海浦东特有】",
+      "path": "/query-list/station-blood-summary"
+    },
+    {
+      "id": "321",
+      "platform": "SUPERVISE",
+      "parentId": "319",
+      "name": "医院科室用血",
+      "icon": "",
+      "path": "/supervise/supervise-hosptal-department"
+    },
+    {
+      "id": "322",
+      "platform": "SUPERVISE",
+      "parentId": "319",
+      "name": "医院用血变化",
+      "icon": "",
+      "path": "/supervise/supervise-hosptal-change"
+    },
+    {
+      "id": "20",
+      "platform": "SUPERVISE",
+      "parentId": "0",
+      "name": "管理",
+      "path": ""
+    },
+    {
+      "id": "27",
+      "platform": "SUPERVISE",
+      "parentId": "20",
+      "name": "权限管理 【管理员功能，不要授权给输血科】",
+      "path": ""
+    },
+    {
+      "id": "2003",
+      "platform": "SUPERVISE",
+      "parentId": "27",
+      "name": "角色管理",
+      "path": "/admin/authority/role-v2"
+    },
+    {
+      "id": "2004",
+      "platform": "SUPERVISE",
+      "parentId": "27",
+      "name": "用户管理",
+      "path": "/admin/authority/users-v2"
+    },
+    {
+      "id": "2002",
+      "platform": "SUPERVISE",
+      "parentId": "27",
+      "name": "机构管理",
+      "path": "/admin/authority/department-v2"
+    },
+    {
+      "id": "2001",
+      "platform": "SUPERVISE",
+      "parentId": "27",
+      "name": "地域管理",
+      "path": "/admin/authority/area-v2"
+    },
+    {
+      "id": "251",
+      "platform": "SUPERVISE",
+      "parentId": "20",
+      "name": "系统配置（医院端）",
+      "path": ""
+    },
+    {
+      "id": "999",
+      "platform": "SUPERVISE",
+      "parentId": "20",
+      "name": "错误日志",
+      "path": "/error-log"
+    },
+    {
+      "id": "997",
+      "platform": "SUPERVISE",
+      "parentId": "710",
+      "name": "数据上报",
+      "path": "/admin/standardreport/data-report"
+    },
+    {
+      "id": "711",
+      "platform": "SUPERVISE",
+      "parentId": "710",
+      "name": "用血质控信息上报 【湖州三院】",
+      "path": "/admin/standardreport/blood-quality-infor-reported"
+    },
+    {
+      "id": "712",
+      "platform": "SUPERVISE",
+      "parentId": "710",
+      "name": "用血质控信息上报查询 【湖州三院】",
+      "path": "/admin/standardreport/blood-quality-infor-list"
+    },
+    {
+      "id": "10006",
+      "platform": "SUPERVISE",
+      "parentId": "20",
+      "name": "一体化数据上报【上海特有】",
+      "path": "/station/data-report-sh"
+    },
+    {
+      "id": "998",
+      "platform": "SUPERVISE",
+      "parentId": "227",
+      "name": "系统日志",
+      "path": "/apiCall-log"
+    },
+    {
+      "id": "10002",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "入库交接核对【PDA】",
+      "path": ""
+    },
+    {
+      "id": "10003",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "签收入库【PDA】",
+      "path": ""
+    },
+    {
+      "id": "10004",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "全库盘点【PDA】",
+      "path": ""
+    },
+    {
+      "id": "10005",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "部分盘点【PDA】",
+      "path": ""
+    },
+    {
+      "id": "111",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "合理用血"
+    },
+    {
+      "id": "117",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "输血疗效统计"
+    },
+    {
+      "id": "65",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "输血前评估率统计"
+    },
+    {
+      "id": "66",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "输血前检测率统计"
+    },
+    {
+      "id": "67",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "用血性质统计"
+    },
+    {
+      "id": "68",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "输血目的统计"
+    },
+    {
+      "id": "69",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "用血级别统计"
+    },
+    {
+      "id": "70",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "知情同意书签订率"
+    },
+    {
+      "id": "72",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "输血不良反应统计"
+    },
+    {
+      "id": "74",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "临床用血评价统计"
+    },
+    {
+      "id": "75",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "临床用血分析"
+    },
+    {
+      "id": "76",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "输血后评价统计"
+    },
+    {
+      "id": "78",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "不合理用血统计"
+    },
+    {
+      "id": "96",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "合理用血评价"
+    },
+    {
+      "id": "97",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "医院用血评价"
+    },
+    {
+      "id": "98",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "科室用血评价"
+    },
+    {
+      "id": "99",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "输血指针设置"
+    },
+    {
+      "id": "106",
+      "platform": "HOSPITAL",
+      "parentId": "111",
+      "department": "",
+      "name": "医生用血评价"
+    },
+    {
+      "id": "20010",
+      "platform": "HOSPITAL",
+      "parentId": "1",
+      "department": "",
+      "name": "优先用血"
+    },
+    {
+      "id": "20011",
+      "platform": "HOSPITAL",
+      "parentId": "20010",
+      "department": "",
+      "name": "申请记录"
+    },
+    {
+      "id": "20013",
+      "platform": "HOSPITAL",
+      "parentId": "20010",
+      "department": "",
+      "name": "申请登记"
+    },
+    {
+      "id": "20014",
+      "platform": "HOSPITAL",
+      "parentId": "20010",
+      "department": "",
+      "name": "申请统计"
+    },
+    {
+      "id": "20015",
+      "platform": "HOSPITAL",
+      "parentId": "20010",
+      "department": "",
+      "name": "优先用血审核（重庆）"
+    },
+    {
+      "id": "20016",
+      "platform": "HOSPITAL",
+      "parentId": "20010",
+      "department": "",
+      "name": "优先用血申请（重庆）"
+    },
+    {
+      "id": "20017",
+      "platform": "HOSPITAL",
+      "parentId": "20010",
+      "department": "",
+      "name": "优先用血查询（重庆）"
+    },
+    {
+      "id": "20018",
+      "platform": "HOSPITAL",
+      "parentId": "20010",
+      "department": "",
+      "name": "优先用血统计（重庆）"
+    },
+    {
+      "id": "20021",
+      "platform": "HOSPITAL",
+      "parentId": "20010",
+      "department": "",
+      "name": "优先用血汇总（重庆）"
+    },
+    {
+      "id": "50010",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "收费项目管理"
+    },
+    {
+      "id": "50020",
+      "platform": "HOSPITAL",
+      "parentId": "21",
+      "department": "",
+      "name": "收费规则管理"
+    },
+    {
+      "id": "20019",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "住院病人血型分布",
+      "path": "/statistics-list/hospitalized-bloodgroup-distribution"
+    },
+    {
+      "id": "20020",
+      "platform": "HOSPITAL",
+      "parentId": "37",
+      "department": "",
+      "name": "手术病人血型分布",
+      "path": "/statistics-list/surgical-patients-bloodgroup"
+    }
+  ]
+}
