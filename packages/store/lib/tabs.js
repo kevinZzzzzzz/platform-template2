@@ -22,10 +22,14 @@ var tabsSlice = createSlice({
         setTabsActive: function (state, _a) {
             var payload = _a.payload;
             state.tabsActive = payload;
+        },
+        setResetTabs: function (state) {
+            state.tabsActive = HOME_URL;
+            state.tabsList = [{ key: HOME_URL, label: "首页", path: HOME_URL }];
         }
     }
 });
-var setTabsList = (_a = tabsSlice.actions, _a.setTabsList), setTabsActive = _a.setTabsActive;
+var setTabsList = (_a = tabsSlice.actions, _a.setTabsList), setTabsActive = _a.setTabsActive, setResetTabs = _a.setResetTabs;
 var tabs = tabsSlice.reducer;
 
-export { tabs as default, setTabsActive, setTabsList };
+export { tabs as default, setResetTabs, setTabsActive, setTabsList };

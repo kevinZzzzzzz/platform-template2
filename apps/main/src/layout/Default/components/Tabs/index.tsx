@@ -13,6 +13,7 @@ import { isFederateModule } from "@/utils/is";
 
 const LayoutTabs = (props) => {
 	const dispatch = useDispatch();
+  // @ts-ignore
 	const { tabsList } = useSelector((state: RootState) => state.tabs);
 	const { pathname } = useLocation();
 	const navigate = useNavigate();

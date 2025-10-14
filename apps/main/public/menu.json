@@ -3,35 +3,51 @@
   "data": [
     {
       "icon": "HomeOutlined",
-      "title": "标准版-首页",
+      "title": "首页",
       "path": "/home"
     },
     {
-      "icon": "UserOutlined",
-      "title": "权限管理",
-      "path": "/authority",
+      "title": "主导航",
+      "type": "group",
       "children": [
         {
-          "icon": "",
-          "title": "区域管理",
-          "path": "/authority/area"
-        },
-        {
-          "icon": "",
-          "title": "机构管理",
-          "path": "/authority/department"
-        },
-        {
-          "icon": "",
-          "title": "角色管理",
-          "path": "/authority/role"
-        },
-        {
-          "icon": "",
-          "title": "用户管理",
-          "path": "/authority/users"
+          "icon": "DotChartOutlined",
+          "title": "系统看板",
+          "path": "/home1"
         }
       ]
+    },
+    {
+      "title": "管理",
+      "type": "group",
+      "children": [
+        {
+          "icon": "UserOutlined",
+          "title": "权限管理",
+          "path": "/authority",
+          "children": [
+            {
+              "icon": "",
+              "title": "区域管理",
+              "path": "/authority/area"
+            },
+            {
+              "icon": "",
+              "title": "机构管理",
+              "path": "/authority/department"
+            },
+            {
+              "icon": "",
+              "title": "角色管理",
+              "path": "/authority/role"
+            },
+            {
+              "icon": "",
+              "title": "用户管理",
+              "path": "/authority/users"
+            }
+          ]
+        }]
     }
   ],
   "msg": "成功"

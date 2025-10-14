@@ -62,8 +62,8 @@ const LayoutMenu = () => {
 	const deepLoopFloat = (menuList: any[], newArr: MenuItem[] = []) => {
 		menuList.forEach((item: any) => {
 			// 下面判断代码解释 *** !item?.children?.length   ==>   (!item.children || item.children.length === 0)
-			if (!item?.children?.length) return newArr.push(getItem(item.title, item.path, addIcon(item.icon!)));
-			newArr.push(getItem(item.title, item.path, addIcon(item.icon!), deepLoopFloat(item.children)));
+			if (!item?.children?.length) return newArr.push(getItem(item.title, item.path, addIcon(item.icon!), undefined, item.type));
+			newArr.push(getItem(item.title, item.path, addIcon(item.icon!), deepLoopFloat(item.children), item.type));
 		});
 		return newArr;
 	};

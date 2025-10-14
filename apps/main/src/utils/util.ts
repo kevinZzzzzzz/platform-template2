@@ -483,3 +483,59 @@ export function isEmptyObject(obj) {
   // 进一步检测是否为空对象
   return Object.keys(obj).length === 0;;
 }
+
+/**
+ * 数组转换对象
+ * @param arr 数组
+ * @param key 数组元素的键名
+ * @returns 
+ */
+export const arrTransObj = function (arr: Array<any>, key: string) {
+  const temp = {};
+  arr.forEach(d => {
+    temp[d[key]] = d;
+  });
+  return temp;
+};
+/**
+ * 数组转换树结构
+ * @param rows 数组
+ * @returns 
+ */
+export const convert = function (rows: Array<any>) {
+  function exists(row, parentId) {
+    for (let i = 0; i < rows.length; i++) {
+      if (row[i].id === parentId) return true;
+    }
+    return false;
+  }
+
+  const nodes = [];
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    if (!exists(rows, row.parentId)) {
+      nodes.push({ ...row, title: row.name, key: row.id });
+    }
+  }
+
+  const toDo = [];
+  for (let i = 0; i < nodes.length; i++) {
+    toDo.push(nodes[i]);
+  }
+  while (toDo.length) {
+    const node = toDo.shift();
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+      if (row.parentId === node.id) {
+        const child = { ...row, title: row.name, key: row.id };
+        if (node.children) {
+          node.children.push(child);
+        } else {
+          node.children = [child];
+        }
+        toDo.push(child);
+      }
+    }
+  }
+  return nodes;
+};

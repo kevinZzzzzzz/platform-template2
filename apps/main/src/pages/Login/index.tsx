@@ -5,6 +5,7 @@ import styles from './index.module.less';
 import { Base64, cloneObj, compareVer, encrypt, hextoString, mergeObj } from '@/utils/util';
 import { RootState, useSelector, useDispatch } from "@/store";
 import { setToken, setLoginInfo, setAppData, setUserPwd, setPublicKey } from "@repo/store/lib/auth";
+import { setResetTabs } from "@repo/store/lib/tabs";
 import { STATIONDICTLIST } from '@/config/config';
 import { setDictList } from '@/store/modules/dict';
 import { setDeptList, setDeptListAll, setDeptScopes, setDeptUserList, setHosStaUserList, setRoleScopes } from '@/store/modules/deptUser';
@@ -37,6 +38,7 @@ function LoginPage(_props: any) {
         res.user.role.menuList = hextoString(Base64(res.user.role.menuList));
       }
       succLogin()
+      dispatch(setResetTabs())
       dispatch(setToken(res.token))
       window.localStorage.setItem('token', res.token)
       dispatch(setLoginInfo(res.user))

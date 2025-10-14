@@ -93,3 +93,20 @@ export const updateDeptApi = (params: any) => {
 		headers: { showMessage: true, showLoading: true }
 	});
 }
+
+/**
+ * @name 角色模块
+ */
+// * 添加角色
+export const addRoleApi = (params: any) => {
+	return http._post<any>(`uaa/api/role`, params, {
+		headers: { showMessage: true, showLoading: true }
+	});
+}
+
+// * 更新角色
+export const editRoleApi = (params: any) => {
+	return http._put<any>(`uaa/api/role`, params, {
+		headers: { showMessage: true, showLoading: true }
+	});
+}

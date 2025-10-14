@@ -18,9 +18,13 @@ const tabsSlice = createSlice({
 		},
 		setTabsActive(state: TabsState, { payload }: PayloadAction<string>) {
 			state.tabsActive = payload;
+		},
+		setResetTabs(state: TabsState) {
+			state.tabsActive = HOME_URL;
+			state.tabsList = [{ key: HOME_URL, label: "首页", path: HOME_URL }];
 		}
 	}
 });
 
-export const { setTabsList, setTabsActive } = tabsSlice.actions;
+export const { setTabsList, setTabsActive, setResetTabs } = tabsSlice.actions;
 export default tabsSlice.reducer;
