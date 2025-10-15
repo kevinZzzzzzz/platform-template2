@@ -1,0 +1,25 @@
+.settingStation {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  &_header {
+    height: 60px;
+    border-bottom: 1px solid #dddddd;
+    background-color: #fff;
+    z-index: 2;
+    p {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+    small {
+      font-size: 12px;
+      font-weight: normal;
+      color: #666;
+    }
+  }
+  &_content {
+    height: calc(100% - 60px);
+    overflow-y: auto;
+  }
+}

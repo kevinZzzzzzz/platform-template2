@@ -2,18 +2,13 @@
   "code": 0,
   "data": [
     {
-      "icon": "HomeOutlined",
-      "title": "首页",
-      "path": "/home"
-    },
-    {
       "title": "主导航",
       "type": "group",
       "children": [
         {
           "icon": "DotChartOutlined",
           "title": "系统看板",
-          "path": "/home1"
+          "path": "/dashboard/system-station"
         }
       ]
     },
@@ -21,6 +16,11 @@
       "title": "管理",
       "type": "group",
       "children": [
+        {
+          "icon": "SettingOutlined",
+          "title": "系统设置",
+          "path": "/setting-station"
+        },
         {
           "icon": "UserOutlined",
           "title": "权限管理",

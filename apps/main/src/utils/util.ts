@@ -539,3 +539,37 @@ export const convert = function (rows: Array<any>) {
   }
   return nodes;
 };
+
+/**
+ * 统计去重 根据 key
+ * @param arr
+ * @param key
+ * @returns {any[]}
+ */
+export const tableRepeat = function (arr, ...key) {
+  arr.forEach((d, i) => {
+    for (let j = i + 1; j < arr.length; j++) {
+      let sort = true;
+      key.forEach((e, g) => {
+        if (d[key[g]] !== arr[j][key[g]]) {
+          sort = false;
+        }
+      });
+      // if (d[key[0]] === arr[j][key[0]] && d[key[1]] === arr[j][key[1]] && d[key[2]] === arr[j][key[2]] && d[key[3]] === arr[j][key[3]]) {
+      if (sort) {
+        d.aPos = parseFloat(d.aPos) + parseFloat(arr[j].aPos);
+        d.bPos = parseFloat(d.bPos) + parseFloat(arr[j].bPos);
+        d.oPos = parseFloat(d.oPos) + parseFloat(arr[j].oPos);
+        d.abPos = parseFloat(d.abPos) + parseFloat(arr[j].abPos);
+        d.aNeg = parseFloat(d.aNeg) + parseFloat(arr[j].aNeg);
+        d.bNeg = parseFloat(d.bNeg) + parseFloat(arr[j].bNeg);
+        d.oNeg = parseFloat(d.oNeg) + parseFloat(arr[j].oNeg);
+        d.abNeg = parseFloat(d.abNeg) + parseFloat(arr[j].abNeg);
+        arr.splice(j, 1);
+        j--;
+      }
+    }
+  });
+
+  return arr;
+};

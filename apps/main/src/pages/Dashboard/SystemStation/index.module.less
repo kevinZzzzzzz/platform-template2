@@ -1,0 +1,39 @@
+.systemDashboard {
+  width: 100%;
+  &_blockLine {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 16px;
+  }
+  &_block {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    margin-top: 16px;
+  }
+  &_cardTitle {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    span {
+      font-size: 12px;
+      font-weight: normal;
+      color: #999;
+    }
+  }
+}
+
+.inventoryAnalysis, .bloodApplication, .bloodBadReaction {
+  width: 100%;
+  &_chartBox {
+    width:100%;
+    min-height: 300px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &_charts {
+      width: 100%;
+      min-height: 300px;
+    }
+  }
+}

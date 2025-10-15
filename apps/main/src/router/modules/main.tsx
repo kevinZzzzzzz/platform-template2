@@ -43,6 +43,34 @@ const mainRouter: Array<RouteObject> = [
     }
   },
   {
+    path: "/dashboard",
+    meta: {
+      requiresAuth: true,
+      title: "",
+      key: "dashboard"
+    },
+    children: [
+      {
+        path: "/dashboard/system-station",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "systemStation" */ '@/pages/Dashboard/SystemStation/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "系统看板",
+          key: "system-station"
+        }
+      }
+    ]
+  },
+  {
+    path: '/setting-station',
+    meta: {
+      requiresAuth: true,
+      title: "系统设置",
+      key: "setting-station"
+    },
+    element: lazyLoad(lazy(() => import(/* webpackChunkName: "settingStation" */ '@/pages/Setting/index'))),
+  },
+  {
     path: '/authority',
     meta: {
       requiresAuth: true,

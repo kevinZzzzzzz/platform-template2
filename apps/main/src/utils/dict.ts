@@ -40,7 +40,7 @@ export const handleSetDict = (dictTemp: any[], dictAll, appData, loginInfo) => {
   //   return
   // }
   let dict = JSON.parse(JSON.stringify(dictTemp))
-  dictArr = {}
+  dictArr = []
   dictMapper = {}
 	const extra = {
 		appraiseEffect: [

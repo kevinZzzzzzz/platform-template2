@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import { isEmptyObject, searchRoute } from "@/utils/util";
 import React, { useEffect } from 'react';
 import { HOME_URL, MENU_BLACK_LIST } from "@/config/config";
@@ -44,7 +44,7 @@ const AuthRouter = (props: { children: JSX.Element }) => {
   }, [pathname])
 
 	// * Static Router(静态路由，必须配置首页地址，否则不能进首页获取菜单、按钮权限等数据)，获取数据的时候会loading，所有配置首页地址也没问题
-	const staticRouter = [...MENU_BLACK_LIST];
+	const staticRouter = [HOME_URL, ...MENU_BLACK_LIST];
 	const routerList = authRouter.concat(staticRouter);
 	// * 如果访问的地址没有在路由表中重定向到403页面
 	if (routerList.indexOf(pathname) == -1) return <Navigate to="/404" />;

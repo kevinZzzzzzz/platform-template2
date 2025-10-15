@@ -1,6 +1,7 @@
-import { STATIONDICTLIST } from '@/config/config';
+import { STATIONDICTLIST, VIEWNULL } from '@/config/config';
 import { RootState } from '@/store';
 import { handleSetDict } from '@/utils/dict';
+import { getV } from '@/utils/util';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -15,8 +16,29 @@ function useDict() {
   const { dictList } = useSelector((state: RootState) => state.dict);
   // @ts-ignore
 	const { appData, loginInfo } = useSelector((state: RootState) => state.auth);
-  const [dictArr, setDictArr] = useState<any>({});
-  const [dictMapper, setDictMapper] = useState<any>({});
+  const [dictArr, setDictArr] = useState<any>(null);
+  const [dictMapper, setDictMapper] = useState<any>(null);
+
+  const transformByMapper = (value: string, type?: Array<string> | string): string => {
+    if (!value) {
+      return '';
+    }
+    if (Array.isArray(type)) {
+      if (dictMapper[type[0]] && dictMapper[type[0]].hasOwnProperty(value)) {
+        return getV(dictMapper, type[0], value, type[1]);
+      } else {
+        return VIEWNULL;
+      }
+    } else if (type) {
+      if (dictMapper.hasOwnProperty(type)) {
+        return getV(dictMapper, type, value, 'name');
+      } else {
+        return value + VIEWNULL;
+      }
+    } else {
+      return value.trim();
+    }
+  }
 
   useEffect(() => {
     const {dictArrT, dictMapperT} = handleSetDict(dictList, STATIONDICTLIST, appData, loginInfo)
@@ -26,7 +48,8 @@ function useDict() {
 
   return {
     dictArr,
-    dictMapper
+    dictMapper,
+    transformByMapper
   }
 }
 
