@@ -24,7 +24,6 @@ const mainRouter: Array<RouteObject> = [
 	// }
   {
     path: "/home",
-    // @ts-ignore
     element: lazyLoad(lazy(() => import(/* webpackChunkName: "home" */ '@/pages/Home/index'))),
     meta: {
       requiresAuth: true,
@@ -34,7 +33,6 @@ const mainRouter: Array<RouteObject> = [
   },
   {
     path: "/personal-center",
-    // @ts-ignore
     element: lazyLoad(lazy(() => import(/* webpackChunkName: "personalCenter" */ '@/pages/PersonalCenter/index'))),
     meta: {
       requiresAuth: true,
@@ -57,6 +55,25 @@ const mainRouter: Array<RouteObject> = [
           requiresAuth: true,
           title: "系统看板",
           key: "system-station"
+        }
+      }
+    ]
+  },
+  {
+    path: "",
+    meta: {
+      requiresAuth: true,
+      title: "",
+      key: "supervise"
+    },
+    children: [
+      {
+        path: "/supervise-status",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "networkStatus" */ '@/pages/Supervise/NetworkStatus/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "医院联网状态",
+          key: "network-status"
         }
       }
     ]

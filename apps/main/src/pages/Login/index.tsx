@@ -118,7 +118,7 @@ function LoginPage(_props: any) {
   // * 更新当前配置
   const updateConfig = (deptId: string, config: any) => {
     updateFrontConfig({
-      hospitalId: deptId,
+      stationId: deptId,
       config: JSON.stringify(config)
     })
     dispatch(setAppData(config));

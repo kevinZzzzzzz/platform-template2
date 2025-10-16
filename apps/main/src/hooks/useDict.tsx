@@ -2,7 +2,7 @@ import { STATIONDICTLIST, VIEWNULL } from '@/config/config';
 import { RootState } from '@/store';
 import { handleSetDict } from '@/utils/dict';
 import { getV } from '@/utils/util';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 /**
@@ -18,6 +18,8 @@ function useDict() {
 	const { appData, loginInfo } = useSelector((state: RootState) => state.auth);
   const [dictArr, setDictArr] = useState<any>(null);
   const [dictMapper, setDictMapper] = useState<any>(null);
+  const dictArrRef = useRef(null)
+  const dictMapperRef = useRef(null)
 
   const transformByMapper = (value: string, type?: Array<string> | string): string => {
     if (!value) {
@@ -43,12 +45,16 @@ function useDict() {
   useEffect(() => {
     const {dictArrT, dictMapperT} = handleSetDict(dictList, STATIONDICTLIST, appData, loginInfo)
     setDictArr(dictArrT)
+    dictArrRef.current = dictArrT
     setDictMapper(dictMapperT)
+    dictMapperRef.current = dictMapperT
   }, [])
 
   return {
     dictArr,
     dictMapper,
+    dictArrRef,
+    dictMapperRef,
     transformByMapper
   }
 }

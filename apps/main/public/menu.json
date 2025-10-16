@@ -17,6 +17,18 @@
       "type": "group",
       "children": [
         {
+          "icon": "DesktopOutlined",
+          "title": "医院联网监控",
+          "path": "/supervise",
+          "children": [
+            {
+              "icon": "",
+              "title": "医院联网状态",
+              "path": "/supervise-status"
+            }
+          ]
+        },
+        {
           "icon": "SettingOutlined",
           "title": "系统设置",
           "path": "/setting-station"

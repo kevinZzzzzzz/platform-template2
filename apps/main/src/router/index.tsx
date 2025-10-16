@@ -50,7 +50,6 @@ metaRouters && Object.keys(metaRouters).forEach(item => {
 //     }
 //   })
 // }
-console.log(routerArray)
 
 const Router = () => {
   const AllRouters: RouteObject[] = [

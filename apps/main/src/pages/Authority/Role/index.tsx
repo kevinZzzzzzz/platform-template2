@@ -149,7 +149,6 @@ function AuthorityRolePage(props: any) {
   function openUserModel(type: 'add' | 'edit', record?: any) {
 
     // 如果是编辑模式，则设置默认选中的 keys
-    console.log(record, deptList, 'record-----------')
     if (type === 'edit') {
       usersRef.current = record
       const type = deptList.filter(

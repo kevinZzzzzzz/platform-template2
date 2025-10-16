@@ -3,6 +3,7 @@ import { BrowserRouter, HashRouter } from "react-router-dom";
 import Router from "@/router/index";
 import api from "@/api";
 import { ConfigProvider } from "antd";
+import useDict from "./hooks/useDict";
 
 declare global {
 	interface Window {
