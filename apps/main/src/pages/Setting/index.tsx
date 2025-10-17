@@ -5,7 +5,8 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAppData } from "@repo/store/lib/auth";
 import styles from "./index.module.less";
-import { updateFrontConfig } from "@/api/modules/login";
+import { getFrontConfig, updateFrontConfig } from "@/api/modules/login";
+import useDeptUsers from "@/hooks/useDeptUsers";
 const { confirm } = Modal;
 const { TextArea } = Input;
 const layout = {
@@ -13,9 +14,12 @@ const layout = {
 	wrapperCol: { span: 10 }
 };
 function StationSettingPage(props: any) {
-	const { dictArrRef } = useDict();
 	// @ts-ignore
 	const { appData, loginInfo } = useSelector((state: RootState) => state.auth);
+  const [deptStaList, setDeptStaList] = useState([]);
+  const [currentDept, setCurrentDept] = useState(loginInfo.dept.parentId);
+	const { dictArrRef } = useDict();
+  const {depts0} = useDeptUsers()
 	const dispatch = useDispatch();
 	const customTemplates = useMemo(() => {
 		return appData.app?.custom?.templates?.map(d => {
@@ -25,6 +29,10 @@ function StationSettingPage(props: any) {
 			};
 		});
 	}, []);
+	// 是否为监督者权限
+	const platformIsSenior = useMemo(() => {
+		return loginInfo.scope === "SUPERVISE";
+	}, [loginInfo]);
 	const searchLimitDayTemplates = useMemo(() => {
 		return appData.app?.searchLimitDay?.template?.map(d => {
 			return {
@@ -33,93 +41,124 @@ function StationSettingPage(props: any) {
 			};
 		});
 	}, []);
-  const subtypeList = useMemo(() => {
-    return dictArrRef.current?.subtype?.filter(d => d.available && !d.developCompany)?.map(d => {
-      return {
-        value: d.id,
-        label: d.name
-      }
-    }) || []
-  }, [dictArrRef.current])
+	const subtypeList = useMemo(() => {
+		return (
+			dictArrRef.current?.subtype
+				?.filter(d => d.available && !d.developCompany)
+				?.map(d => {
+					return {
+						value: d.id,
+						label: d.name
+					};
+				}) || []
+		);
+	}, [dictArrRef.current]);
 	const customAppData = useMemo(() => {
 		return appData.app || {};
 	}, [appData]);
 	const printersMap = useMemo(() => {
 		return appData.printers || {};
 	}, [appData]);
-  
+
 	const [settingForm] = Form.useForm();
-	const customId = Form.useWatch(['app', "custom", "id"], settingForm);
-	const showRFIDBtnValue = Form.useWatch(['app', "showRFIDBtn", "value"], settingForm);
-  const [priorityBloodUserApplication, setPriorityBloodUserApplication] = useState([])
+	const customId = Form.useWatch(["app", "custom", "id"], settingForm);
+	const showRFIDBtnValue = Form.useWatch(["app", "showRFIDBtn", "value"], settingForm);
+	const [priorityBloodUserApplication, setPriorityBloodUserApplication] = useState([]);
 
   useEffect(() => {
+    if (depts0) {
+      setDeptStaList(depts0?.filter(d => d.deptScope === 'F' || d.deptScope === 'G')?.map(d => ({
+        value: d.deptId,
+        label: d.name
+      })))
+    }
+  }, [depts0])
+	useEffect(() => {
 		settingForm.setFieldsValue({
 			app: customAppData,
 			printers: printersMap
 		});
-    setPriorityBloodUserApplication(customAppData.priorityBloodUserApplicationFormRequire.bloodUserForm || [])
+		setPriorityBloodUserApplication(customAppData.priorityBloodUserApplicationFormRequire.bloodUserForm || []);
 	}, []);
 
-  const printView = () => {
-    const template = settingForm.getFieldValue(['printers', 'BOOKINGBLOODRECORD', 'template'])
-    console.log('template', template)
-  }
-  const handleChange = (key: string, checked: boolean) => {
-    const priorityBloodUserApplicationT = priorityBloodUserApplication.map(item => {
-      if (item.key === key) {
-        return {
-          ...item,
-          default: checked
-        }
-      }
-      return item
-    })
-    settingForm.setFieldValue(["app", "priorityBloodUserApplicationFormRequire", "bloodUserForm"], priorityBloodUserApplicationT);
-    setPriorityBloodUserApplication(priorityBloodUserApplicationT)
-  }
+	const printView = () => {
+		const template = settingForm.getFieldValue(["printers", "BOOKINGBLOODRECORD", "template"]);
+		console.log("template", template);
+	};
+	const handleChange = (key: string, checked: boolean) => {
+		const priorityBloodUserApplicationT = priorityBloodUserApplication.map(item => {
+			if (item.key === key) {
+				return {
+					...item,
+					default: checked
+				};
+			}
+			return item;
+		});
+		settingForm.setFieldValue(["app", "priorityBloodUserApplicationFormRequire", "bloodUserForm"], priorityBloodUserApplicationT);
+		setPriorityBloodUserApplication(priorityBloodUserApplicationT);
+	};
 
-  const submit = () => {
-    const configApp = settingForm.getFieldValue(['app'])
-    const configPrinters = settingForm.getFieldValue(['printers'])
-    const config = {
-      ...appData,
-      app: {
-        ...appData.app,
-        ...configApp,
-      },
-      printers: {
-        ...appData.printers,
-        ...configPrinters,
-      }
-    }
-    confirm({
-      title: '提示',
-      content: '确定调整本医院的配置?',
-      okText: '确定',
-      cancelText: '取消',
-      onOk() {
-        updateFrontConfig({
-          stationId: loginInfo.dept.parentId,
-          config: JSON.stringify(config)
-        })
-        dispatch(setAppData(config));
-      }
-    });
-  }
-  const initSetting = () => {
-    confirm({
-      title: '提示',
-      content: '确定初始化本医院的配置?',
-      okText: '确定',
-      cancelText: '取消',
-      onOk() {
+	const submit = () => {
+		const configApp = settingForm.getFieldValue(["app"]);
+		const configPrinters = settingForm.getFieldValue(["printers"]);
+		const config = {
+			...appData,
+			app: {
+				...appData.app,
+				...configApp
+			},
+			printers: {
+				...appData.printers,
+				...configPrinters
+			}
+		};
+		confirm({
+			title: "提示",
+			content: "确定调整本医院的配置?",
+			okText: "确定",
+			cancelText: "取消",
+			onOk() {
+				updateFrontConfig({
+					stationId: loginInfo.dept.parentId,
+					config: JSON.stringify(config)
+				});
+				dispatch(setAppData(config));
+			}
+		});
+	};
+	const initSetting = () => {
+		confirm({
+			title: "提示",
+			content: "确定初始化本医院的配置?",
+			okText: "确定",
+			cancelText: "取消",
+			onOk() {
+				settingForm.setFieldsValue({
+					app: customAppData,
+					printers: printersMap
+				});
+			}
+		});
+	};
+  const changeConfig = async () => {
+    const {list} = await getFrontConfig({
+      stationId: currentDept
+    })
+    const config = JSON.parse(list.config)
+		confirm({
+			title: "提示",
+			content: "是否覆盖当前配置?",
+			okText: "确定",
+			cancelText: "取消",
+			onOk() {
         settingForm.setFieldsValue({
-          app: customAppData,
-          printers: printersMap
+          app: config.app,
+          printers: config.printers
         });
-      }
-    });
+			}
+		});
+    console.log(JSON.parse(list.config), 'currentDept---------')
   }
 	return (
 		<div className={styles.settingStation}>
@@ -128,6 +167,22 @@ function StationSettingPage(props: any) {
 				<small> 调整当前血站的相关配置</small>
 			</section>
 			<section className={styles.settingStation_content}>
+				{platformIsSenior ? (
+					<Form {...layout} style={{ width: "100%", margin: "10px auto" }}>
+						<Form.Item label="血站">
+							<Row gutter={8}>
+								<Col span={12}>
+									<Form.Item style={{ marginBottom: 0 }}>
+										<Select allowClear value={currentDept} onChange={(v) => setCurrentDept(v)} options={deptStaList} style={{ width: "100%" }} />
+									</Form.Item>
+								</Col>
+								<Col span={12}>
+									<Button type="primary" onClick={() => changeConfig()}>查询</Button>
+								</Col>
+							</Row>
+						</Form.Item>
+					</Form>
+				) : null}
 				<Divider plain orientation="left" style={{ fontSize: "16px", color: "#49A9EE" }}>
 					通用设置
 				</Divider>
@@ -195,7 +250,7 @@ function StationSettingPage(props: any) {
 							<Radio value={false}>否</Radio>
 						</Radio.Group>
 					</Form.Item>
-					<Form.Item label="血液预订单 " tooltip="血液预订单" style={{marginBottom: 0}}>
+					<Form.Item label="血液预订单 " tooltip="血液预订单" style={{ marginBottom: 0 }}>
 						<Row gutter={8}>
 							<Col span={12}>
 								<Form.Item name={["printers", "BOOKINGBLOODRECORD", "id"]}>
@@ -222,45 +277,50 @@ function StationSettingPage(props: any) {
 							</Col>
 						</Row>
 					</Form.Item>
-					<Form.Item
-						name={["app", "region", "id"]}
-						label="区域配置"
-						tooltip="区域配置"
-					>
-						<Select options={customAppData["region"]?.templates.map(d => ({
-                ...d,
-                value: d.id,
-                label: d.name
-              }))} style={{ width: "50%" }} />
+					<Form.Item name={["app", "region", "id"]} label="区域配置" tooltip="区域配置">
+						<Select
+							options={customAppData["region"]?.templates.map(d => ({
+								...d,
+								value: d.id,
+								label: d.name
+							}))}
+							style={{ width: "50%" }}
+						/>
 					</Form.Item>
 				</Form>
 				<Divider plain orientation="left" style={{ fontSize: "16px", color: "#49A9EE" }}>
-        优先用血
+					优先用血
 				</Divider>
 				<Form form={settingForm} {...layout} style={{ width: "100%", margin: "0 auto" }}>
 					<Form.Item name={["app", "priorityUseBlood"]} label="优先用血血液品种" tooltip="优先用血血液品种">
 						<Select mode="multiple" defaultValue={[]} allowClear options={subtypeList} style={{ width: "50%" }} />
 					</Form.Item>
 					<Form.Item name={["app", "instructionsForInformationEntry"]} label="信息录入说明">
-						<TextArea rows={4} placeholder="信息录入说明" style={{width: "50%"}}/>
+						<TextArea rows={4} placeholder="信息录入说明" style={{ width: "50%" }} />
 					</Form.Item>
 					<Form.Item label="用血者信息必填项">
-            <Row>
-              {
-                priorityBloodUserApplication?.map(item => (
-                  <Col span={6} key={item.key}>
-                    <Checkbox onChange={(e) => handleChange(item.key, e.target.checked)} checked={item.default} disabled={item.disable}>{item.label}</Checkbox>
-                  </Col>
-                ))
-              }
-            </Row>
+						<Row>
+							{priorityBloodUserApplication?.map(item => (
+								<Col span={6} key={item.key}>
+									<Checkbox
+										onChange={e => handleChange(item.key, e.target.checked)}
+										checked={item.default}
+										disabled={item.disable}
+									>
+										{item.label}
+									</Checkbox>
+								</Col>
+							))}
+						</Row>
 					</Form.Item>
 					<Form.Item label={null}>
-            <Flex gap="small" wrap>
-              <Button type="primary" onClick={() => submit()}>保存并提交</Button>
-              <Button onClick={() => initSetting()}>初始化设置</Button>
-            </Flex>
-          </Form.Item>
+						<Flex gap="small" wrap>
+							<Button type="primary" onClick={() => submit()}>
+								保存并提交
+							</Button>
+							<Button onClick={() => initSetting()}>初始化设置</Button>
+						</Flex>
+					</Form.Item>
 				</Form>
 			</section>
 		</div>

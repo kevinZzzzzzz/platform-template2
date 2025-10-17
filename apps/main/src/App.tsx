@@ -3,7 +3,8 @@ import { BrowserRouter, HashRouter } from "react-router-dom";
 import Router from "@/router/index";
 import api from "@/api";
 import { ConfigProvider } from "antd";
-import useDict from "./hooks/useDict";
+import 'dayjs/locale/zh-cn';
+import locale from 'antd/locale/zh_CN';
 
 declare global {
 	interface Window {
@@ -16,7 +17,8 @@ window.$api = { ...api };
 function App() {
 	return (
 		<HashRouter>
-			<ConfigProvider theme={{
+			<ConfigProvider
+        locale={locale} theme={{
         token: {
           colorPrimary: '#1890ff',
         },

@@ -25,6 +25,26 @@
               "icon": "",
               "title": "医院联网状态",
               "path": "/supervise-status"
+            },
+            {
+              "icon": "",
+              "title": "系统日志",
+              "path": "/apiCall-log"
+            },
+            {
+              "icon": "",
+              "title": "帐号操作日志",
+              "path": "/log-account"
+            },
+            {
+              "icon": "",
+              "title": "医院上报日志",
+              "path": "/report-log"
+            },
+            {
+              "icon": "",
+              "title": "医院异常汇总",
+              "path": "/supervise-exception"
             }
           ]
         },

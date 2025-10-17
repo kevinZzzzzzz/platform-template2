@@ -75,6 +75,42 @@ const mainRouter: Array<RouteObject> = [
           title: "医院联网状态",
           key: "network-status"
         }
+      },
+      {
+        path: "/apiCall-log",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "apiCallLog" */ '@/pages/Supervise/ApiCallLog/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "系统日志",
+          key: "api-call-log"
+        }
+      },
+      {
+        path: "/log-account",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "logAccount" */ '@/pages/Supervise/LogAccount/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "帐号操作日志",
+          key: "log-account"
+        }
+      },
+      {
+        path: "/report-log",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "reportLog" */ '@/pages/Supervise/ReportLog/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "医院上报日志",
+          key: "report-log"
+        }
+      },
+      {
+        path: "/supervise-exception",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "superviseException" */ '@/pages/Supervise/SuperviseException/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "医院异常汇总",
+          key: "supervise-exception"
+        }
       }
     ]
   },

@@ -29,6 +29,7 @@ function NetworkStatus(props: any) {
           }
         }
       })
+      deptsT?.sort((a, b) => b.online - a.online)
       setDeptsList(deptsT)
       setErrorDept(deptsT.filter(d => !d.online).length)
     })
