@@ -45,6 +45,23 @@
               "icon": "",
               "title": "医院异常汇总",
               "path": "/supervise-exception"
+            },
+            {
+              "icon": "",
+              "title": "医院数据质量",
+              "path": "/hospital-data-quality"
+            }
+          ]
+        },
+        {
+          "icon": "ExceptionOutlined",
+          "title": "字典配置",
+          "path": "/dictionary",
+          "children": [
+            {
+              "icon": "",
+              "title": "预定回复",
+              "path": "/dictionary/suggestion"
             }
           ]
         },
@@ -52,6 +69,11 @@
           "icon": "SettingOutlined",
           "title": "系统设置",
           "path": "/setting-station"
+        },
+        {
+          "icon": "BugOutlined",
+          "title": "错误日志",
+          "path": "/error-log"
         },
         {
           "icon": "UserOutlined",

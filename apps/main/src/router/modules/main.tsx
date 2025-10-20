@@ -111,6 +111,15 @@ const mainRouter: Array<RouteObject> = [
           title: "医院异常汇总",
           key: "supervise-exception"
         }
+      },
+      {
+        path: "/hospital-data-quality",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "hospitalDataQuality" */ '@/pages/Supervise/HospitalDataQuality/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "医院数据质量",
+          key: "hospital-data-quality"
+        }
       }
     ]
   },
@@ -122,6 +131,55 @@ const mainRouter: Array<RouteObject> = [
       key: "setting-station"
     },
     element: lazyLoad(lazy(() => import(/* webpackChunkName: "settingStation" */ '@/pages/Setting/index'))),
+  },
+  {
+    path: '/error-log',
+    meta: {
+      requiresAuth: true,
+      title: "错误日志",
+      key: "error-log"
+    },
+    element: lazyLoad(lazy(() => import(/* webpackChunkName: "errorLog" */ '@/pages/ErrorLog/index'))),
+  },
+  {
+    path: '/dictionary',
+    meta: {
+      requiresAuth: true,
+      title: "字典配置",
+      key: "dictionary"
+    },
+    children: [
+      {
+        path: '/dictionary/suggestion',
+        meta: {
+          requiresAuth: true,
+          title: "预定回复",
+          key: "suggestion"
+        },
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "suggestion" */ '@/pages/Dictionary/Suggestion/index'))),
+    
+      }
+    ]
+  },
+  {
+    path: '/standardReport',
+    meta: {
+      requiresAuth: true,
+      title: "标准数据上报",
+      key: "standard-report"
+    },
+    children: [
+      {
+        path: '/standardReport/data-report',
+        meta: {
+          requiresAuth: true,
+          title: "数据上报",
+          key: "data-report"
+        },
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "dataReport" */ '@/pages/StandardReport/DataReport/index'))),
+    
+      }
+    ]
   },
   {
     path: '/authority',

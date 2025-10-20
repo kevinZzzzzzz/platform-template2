@@ -61,3 +61,27 @@ export const getExceptionLog = (params: any) => {
 		headers: { showMessage: true }
 	});
 };
+/**
+ * 医院数据质量
+ */
+export const getHosDataQuality = (params: any) => {
+	return http._get<any>(`supv/superv/api/dataQuality`, params, {
+		headers: { showMessage: true }
+	});
+};
+/**
+ * 数据定时上报
+ */
+export const reportInTime = (uri: string, params: any) => {
+	return http._get<any>(uri, params, {
+		headers: { showMessage: true }
+	});
+};
+/**
+ * 错误日志
+ */
+export const getErrorLog = (params: any) => {
+	return http._get<any>(`supv/superv/api/errorLog`, params, {
+		headers: { showMessage: true }
+	});
+};

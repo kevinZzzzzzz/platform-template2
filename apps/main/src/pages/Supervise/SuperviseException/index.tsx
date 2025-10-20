@@ -26,7 +26,7 @@ function SuperviseException(props: any) {
 		getExceptionLog(params).then(res => {
 			let { result = [] } = res || {};
 			setTotal(result.length);
-			setLogList(result || []);
+			setLogList(result?.map((d, idx) => ({ ...d, idx })) || []);
 			setLoading(false);
 		});
 	};
@@ -70,7 +70,7 @@ function SuperviseException(props: any) {
 			<Card title={<FormSearch searchPage={searchPage} />} style={{ width: "100%", height: "100%" }}>
 				<Table
 					columns={columns}
-					rowKey={record => record.id}
+					rowKey={record => record.idx}
 					dataSource={logList}
 					scroll={{ y: 60 * 8 }}
 					loading={loading}
