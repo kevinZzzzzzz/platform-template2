@@ -9,4 +9,5 @@ export enum UserScopeEnum {
 export enum modalTypeEnum {
   add = '新增',
   edit = '编辑',
+  view = '查看'
 }

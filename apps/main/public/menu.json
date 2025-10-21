@@ -3,105 +3,184 @@
   "data": [
     {
       "title": "主导航",
+      "id": "1",
       "type": "group",
       "children": [
         {
           "icon": "DotChartOutlined",
+          "id": "163",
           "title": "系统看板",
           "path": "/dashboard/system-station"
         }
       ]
     },
     {
+      "title": "监管平台",
+      "id": "399",
+      "type": "group",
+      "children": [
+        {
+          "icon": "AlertOutlined",
+          "title": "医院库存",
+          "id": "314",
+          "path": "/supervise",
+          "children": [
+            {
+              "icon": "",
+              "title": "医院库存汇总表",
+              "id": "315",
+              "path": "/supervise/supervise-summary"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "管理",
+      "id": "20",
       "type": "group",
       "children": [
         {
           "icon": "DesktopOutlined",
           "title": "医院联网监控",
-          "path": "/supervise",
+          "id": "227",
+          "path": "/supervise1",
           "children": [
             {
               "icon": "",
               "title": "医院联网状态",
-              "path": "/supervise-status"
+              "id": "228",
+              "path": "/supervise/supervise-status"
             },
             {
               "icon": "",
               "title": "系统日志",
-              "path": "/apiCall-log"
+              "id": "998",
+              "path": "/supervise/apiCall-log"
             },
             {
               "icon": "",
               "title": "帐号操作日志",
-              "path": "/log-account"
+              "id": "350",
+              "path": "/supervise/log-account"
             },
             {
               "icon": "",
+              "id": "239",
               "title": "医院上报日志",
-              "path": "/report-log"
+              "path": "/supervise/report-log"
             },
             {
               "icon": "",
+              "id": "229",
               "title": "医院异常汇总",
-              "path": "/supervise-exception"
+              "path": "/supervise/supervise-exception"
             },
             {
               "icon": "",
+              "id": "343",
               "title": "医院数据质量",
-              "path": "/hospital-data-quality"
+              "path": "/supervise/hospital-data-quality"
+            }
+          ]
+        },
+        {
+          "icon": "UserOutlined",
+          "title": "标准数据上报",
+          "id": "710",
+          "path": "/standardReport",
+          "children": [
+            {
+              "icon": "",
+              "title": "数据上报",
+              "id": "997",
+              "path": "/standardReport/data-report"
             }
           ]
         },
         {
           "icon": "ExceptionOutlined",
           "title": "字典配置",
+          "id": "242",
           "path": "/dictionary",
           "children": [
             {
               "icon": "",
               "title": "预定回复",
+              "id": "243",
               "path": "/dictionary/suggestion"
+            },
+            {
+              "icon": "",
+              "title": "锁定原因",
+              "id": "250",
+              "path": "/dictionary/blood-lock-reason"
+            },
+            {
+              "icon": "",
+              "title": "血液字典",
+              "id": "2005",
+              "path": "/dictionary/blood-subtype-dictionary"
+            },
+            {
+              "icon": "",
+              "title": "血液品种",
+              "id": "21003",
+              "path": "/dictionary/blood-subtype"
+            },
+            {
+              "icon": "",
+              "id": "21004",
+              "title": "血液产品",
+              "path": "/dictionary/blood-breed"
             }
           ]
         },
         {
           "icon": "SettingOutlined",
           "title": "系统设置",
+          "id": "340",
           "path": "/setting-station"
         },
         {
           "icon": "BugOutlined",
           "title": "错误日志",
+          "id": "999",
           "path": "/error-log"
         },
         {
           "icon": "UserOutlined",
           "title": "权限管理",
+          "id": "27",
           "path": "/authority",
           "children": [
             {
               "icon": "",
-              "title": "区域管理",
+              "title": "地域管理",
+              "id": "2001",
               "path": "/authority/area"
             },
             {
               "icon": "",
               "title": "机构管理",
+              "id": "2002",
               "path": "/authority/department"
             },
             {
               "icon": "",
               "title": "角色管理",
+              "id": "2003",
               "path": "/authority/role"
             },
             {
               "icon": "",
               "title": "用户管理",
+              "id": "2004",
               "path": "/authority/users"
             }
           ]
-        }]
+        }
+      ]
     }
   ],
   "msg": "成功"

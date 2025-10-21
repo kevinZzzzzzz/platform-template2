@@ -1,5 +1,6 @@
-import { addSuggestion, editSuggestion, getSuggestion } from "@/api/modules/dictionary";
+import { addLockReasonStation, editLockReasonStation, getBloodLockReason } from "@/api/modules/dictionary";
 import { modalTypeEnum } from "@/enums";
+import useUserInfo from "@/hooks/useUserInfo";
 import { sleep } from "@/utils/util";
 import { CheckOutlined, CloseOutlined, PlusSquareOutlined, UndoOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Drawer, Flex, Form, Input, InputNumber, Row, Switch, Table, Tag } from "antd";
@@ -23,23 +24,24 @@ const availableTagMap = {
     text: '启用'
   }
 }
-function SuggestionPage(props: any) {
+function BloodLockReason(props: any) {
+  const { userInfo } = useUserInfo();
 	const [total, setTotal] = useState(0);
 	const [pageNum, setPageNum] = useState(1);
-	const [suggestionList, setSuggestionList] = useState([]);
+	const [bloodLockReasonList, setBloodLockReasonList] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [drawerVisible, setDrawerVisible] = useState(false);
 	const [drawerType, setDrawerType] = useState<"add" | "edit">("add");
 	const [drawForm] = Form.useForm();
   const editItem = useRef({})
 
-	const getSuggestionList = () => {
+	const getBloodLockReasonList = () => {
     setLoading(true);
-		getSuggestion(null)
+		getBloodLockReason(null)
 			.then(res => {
 				const { list = [] } = res || {};
 				list.sort((a, b) => a.uiOrder - b.uiOrder);
-				setSuggestionList(list?.map((item, index) => ({ ...item, idx: index + 1 })) || []);
+				setBloodLockReasonList(list?.map((item, index) => ({ ...item, idx: index + 1 })) || []);
 				setTotal(res.total || 0);
 			})
 			.finally(() => {
@@ -47,7 +49,7 @@ function SuggestionPage(props: any) {
 			});
 	};
 	useEffect(() => {
-		getSuggestionList();
+		getBloodLockReasonList();
 	}, []);
 
 	const columns = [
@@ -57,7 +59,7 @@ function SuggestionPage(props: any) {
 			key: "idx"
 		},
 		{
-			title: "回复内容",
+			title: "锁定原因",
 			dataIndex: "name",
 			key: "name"
 		},
@@ -105,24 +107,28 @@ function SuggestionPage(props: any) {
     const value = await drawForm.validateFields()
     value.available = Number(value.available)
     const apiMap = {
-      add: addSuggestion,
-      edit: editSuggestion
+      add: addLockReasonStation,
+      edit: editLockReasonStation
     }
-    const params = drawerType === 'add' ? value : {...editItem.current, ...value}
+    const params = drawerType === 'add' ? {
+      pronunciation: '',
+      hospitalId: userInfo?.['dept']?.['parentId'],
+      ...value
+    } : {...editItem.current, ...value}
     apiMap[drawerType](params).then(() => {
-      getSuggestionList();
+      getBloodLockReasonList();
       closeDrawer();
     })
   }
 	return (
-		<div className={styles.suggestionPage}>
+		<div className={styles.bloodLockReason}>
 			<Card
 				style={{ width: "100%", height: "100%" }}
 				title={
 					<Row gutter={16}>
 						<Col span={6}>
-							<h1>血液预订快捷回复</h1>
-							<p>配置当前血站的血液预订快捷回复语句。</p>
+							<h1>血液锁定</h1>
+							<p>血液锁定原因。</p>
 						</Col>
 						<Col span={14}></Col>
 						<Col span={4}>
@@ -139,8 +145,8 @@ function SuggestionPage(props: any) {
 								</Button>
 								<Button icon={<UndoOutlined />} onClick={() => {
                   setPageNum(1)
-                  getSuggestionList()}
-                }>
+                  getBloodLockReasonList()
+                }}>
 									刷新
 								</Button>
 							</Flex>
@@ -151,7 +157,7 @@ function SuggestionPage(props: any) {
 				<Table
 					columns={columns}
 					rowKey={record => record.idx}
-					dataSource={suggestionList}
+					dataSource={bloodLockReasonList}
 					scroll={{ y: 60 * 8 }}
 					loading={loading}
 					pagination={{
@@ -169,7 +175,7 @@ function SuggestionPage(props: any) {
             确定
           </Button>
         </Flex>
-      } width={400} title={modalTypeEnum[drawerType]} onClose={() => {
+      } width={480} title={modalTypeEnum[drawerType]} onClose={() => {
         closeDrawer();
       }} open={drawerVisible}>
 				<Form
@@ -183,8 +189,8 @@ function SuggestionPage(props: any) {
 					}}
 					style={{ margin: "10px 0" }}
 				>
-					<Form.Item label="回复内容" name="name" required rules={[{ required: true, message: "请输入回复内容" }]}>
-						<TextArea showCount style={{ width: "100%" }} placeholder="请输入回复内容" maxLength={50} />
+					<Form.Item label="血液锁定原因" name="name" required rules={[{ required: true, message: "请输入血液锁定原因" }]}>
+						<TextArea showCount style={{ width: "100%" }} placeholder="请输入血液锁定原因" maxLength={50} />
 					</Form.Item>
           
 					<Form.Item label="排序" name="uiOrder" required rules={[{ required: true, message: "请输入排序" }]}>
@@ -198,4 +204,4 @@ function SuggestionPage(props: any) {
 		</div>
 	);
 }
-export default SuggestionPage;
+export default BloodLockReason;

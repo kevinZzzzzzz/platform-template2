@@ -60,7 +60,7 @@ const mainRouter: Array<RouteObject> = [
     ]
   },
   {
-    path: "",
+    path: "/supervise",
     meta: {
       requiresAuth: true,
       title: "",
@@ -68,7 +68,7 @@ const mainRouter: Array<RouteObject> = [
     },
     children: [
       {
-        path: "/supervise-status",
+        path: "/supervise/supervise-status",
         element: lazyLoad(lazy(() => import(/* webpackChunkName: "networkStatus" */ '@/pages/Supervise/NetworkStatus/index'))),
         meta: {
           requiresAuth: true,
@@ -77,7 +77,7 @@ const mainRouter: Array<RouteObject> = [
         }
       },
       {
-        path: "/apiCall-log",
+        path: "/supervise/apiCall-log",
         element: lazyLoad(lazy(() => import(/* webpackChunkName: "apiCallLog" */ '@/pages/Supervise/ApiCallLog/index'))),
         meta: {
           requiresAuth: true,
@@ -86,7 +86,7 @@ const mainRouter: Array<RouteObject> = [
         }
       },
       {
-        path: "/log-account",
+        path: "/supervise/log-account",
         element: lazyLoad(lazy(() => import(/* webpackChunkName: "logAccount" */ '@/pages/Supervise/LogAccount/index'))),
         meta: {
           requiresAuth: true,
@@ -95,7 +95,7 @@ const mainRouter: Array<RouteObject> = [
         }
       },
       {
-        path: "/report-log",
+        path: "/supervise/report-log",
         element: lazyLoad(lazy(() => import(/* webpackChunkName: "reportLog" */ '@/pages/Supervise/ReportLog/index'))),
         meta: {
           requiresAuth: true,
@@ -104,7 +104,7 @@ const mainRouter: Array<RouteObject> = [
         }
       },
       {
-        path: "/supervise-exception",
+        path: "/supervise/supervise-exception",
         element: lazyLoad(lazy(() => import(/* webpackChunkName: "superviseException" */ '@/pages/Supervise/SuperviseException/index'))),
         meta: {
           requiresAuth: true,
@@ -113,14 +113,23 @@ const mainRouter: Array<RouteObject> = [
         }
       },
       {
-        path: "/hospital-data-quality",
+        path: "/supervise/hospital-data-quality",
         element: lazyLoad(lazy(() => import(/* webpackChunkName: "hospitalDataQuality" */ '@/pages/Supervise/HospitalDataQuality/index'))),
         meta: {
           requiresAuth: true,
           title: "医院数据质量",
           key: "hospital-data-quality"
         }
-      }
+      },
+      {
+        path: "/supervise/supervise-summary",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "superviseSummary" */ '@/pages/Supervise/SuperviseSummary/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "医院库存汇总表",
+          key: "supervise-summary"
+        }
+      },
     ]
   },
   {
@@ -158,7 +167,43 @@ const mainRouter: Array<RouteObject> = [
         },
         element: lazyLoad(lazy(() => import(/* webpackChunkName: "suggestion" */ '@/pages/Dictionary/Suggestion/index'))),
     
-      }
+      },
+      {
+        path: '/dictionary/blood-lock-reason',
+        meta: {
+          requiresAuth: true,
+          title: "锁定原因",
+          key: "blood-lock-reason"
+        },
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "bloodLockReason" */ '@/pages/Dictionary/BloodLockReason/index'))),
+      },
+      {
+        path: '/dictionary/blood-subtype-dictionary',
+        meta: {
+          requiresAuth: true,
+          title: "血液字典",
+          key: "blood-subtype-dictionary"
+        },
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "bloodSubtypeDictionary" */ '@/pages/Dictionary/BloodSubtypeDictionary/index'))),
+      },
+      {
+        path: '/dictionary/blood-subtype',
+        meta: {
+          requiresAuth: true,
+          title: "血液品种",
+          key: "blood-subtype"
+        },
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "bloodSubtype" */ '@/pages/Dictionary/BloodSubtype/index'))),
+      },
+      {
+        path: '/dictionary/blood-breed',
+        meta: {
+          requiresAuth: true,
+          title: "血液产品",
+          key: "blood-breed"
+        },
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "bloodBreed" */ '@/pages/Dictionary/BloodBreed/index'))),
+      },
     ]
   },
   {

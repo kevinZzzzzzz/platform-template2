@@ -1,5 +1,6 @@
-import { addSuggestion, editSuggestion, getSuggestion } from "@/api/modules/dictionary";
+import { addSubtypeStation, editSubtypeStation, refreshSubtypeStation, getSubtypeStation } from "@/api/modules/dictionary";
 import { modalTypeEnum } from "@/enums";
+import useUserInfo from "@/hooks/useUserInfo";
 import { sleep } from "@/utils/util";
 import { CheckOutlined, CloseOutlined, PlusSquareOutlined, UndoOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Drawer, Flex, Form, Input, InputNumber, Row, Switch, Table, Tag } from "antd";
@@ -23,23 +24,24 @@ const availableTagMap = {
     text: '启用'
   }
 }
-function SuggestionPage(props: any) {
+function BloodSubtypeDictionary(props: any) {
+  const { userInfo } = useUserInfo();
 	const [total, setTotal] = useState(0);
 	const [pageNum, setPageNum] = useState(1);
-	const [suggestionList, setSuggestionList] = useState([]);
+	const [subtypeList, setSubtypeList] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [drawerVisible, setDrawerVisible] = useState(false);
 	const [drawerType, setDrawerType] = useState<"add" | "edit">("add");
 	const [drawForm] = Form.useForm();
   const editItem = useRef({})
 
-	const getSuggestionList = () => {
+	const getSubtypeStationList = () => {
     setLoading(true);
-		getSuggestion(null)
+		getSubtypeStation(null)
 			.then(res => {
 				const { list = [] } = res || {};
 				list.sort((a, b) => a.uiOrder - b.uiOrder);
-				setSuggestionList(list?.map((item, index) => ({ ...item, idx: index + 1 })) || []);
+				setSubtypeList(list?.map((item, index) => ({ ...item, idx: index + 1 })) || []);
 				setTotal(res.total || 0);
 			})
 			.finally(() => {
@@ -47,7 +49,7 @@ function SuggestionPage(props: any) {
 			});
 	};
 	useEffect(() => {
-		getSuggestionList();
+		getSubtypeStationList();
 	}, []);
 
 	const columns = [
@@ -57,14 +59,9 @@ function SuggestionPage(props: any) {
 			key: "idx"
 		},
 		{
-			title: "回复内容",
+			title: "血液品种",
 			dataIndex: "name",
 			key: "name"
-		},
-		{
-			title: "排序",
-			dataIndex: "uiOrder",
-			key: "uiOrder"
 		},
 		{
 			title: "状态",
@@ -105,42 +102,49 @@ function SuggestionPage(props: any) {
     const value = await drawForm.validateFields()
     value.available = Number(value.available)
     const apiMap = {
-      add: addSuggestion,
-      edit: editSuggestion
+      add: addSubtypeStation,
+      edit: editSubtypeStation
     }
-    const params = drawerType === 'add' ? value : {...editItem.current, ...value}
+    const params = drawerType === 'add' ? {
+      hospitalId: userInfo?.['dept']?.['parentId'],
+      pronunciation: '',
+      ...value,
+    } : {...editItem.current, ...value}
     apiMap[drawerType](params).then(() => {
-      getSuggestionList();
+      getSubtypeStationList();
       closeDrawer();
     })
   }
+  const refresh = () => {
+    setLoading(true);
+    setPageNum(1)
+    refreshSubtypeStation({}).then(() => {
+      getSubtypeStationList();
+    })
+  }
 	return (
-		<div className={styles.suggestionPage}>
+		<div className={styles.bloodSubtypeDictionary}>
 			<Card
 				style={{ width: "100%", height: "100%" }}
 				title={
 					<Row gutter={16}>
 						<Col span={6}>
-							<h1>血液预订快捷回复</h1>
-							<p>配置当前血站的血液预订快捷回复语句。</p>
+							<h1>血液字典</h1>
 						</Col>
 						<Col span={14}></Col>
 						<Col span={4}>
 							<Flex
 								gap="small"
 								style={{
-									height: 58
+									height: 38
 								}}
 								justify="center"
 								align="center"
 							>
-								<Button type="primary" icon={<PlusSquareOutlined />} onClick={() => openDraw("add")}>
+								{/* <Button type="primary" icon={<PlusSquareOutlined />} onClick={() => openDraw("add")}>
 									添加
-								</Button>
-								<Button icon={<UndoOutlined />} onClick={() => {
-                  setPageNum(1)
-                  getSuggestionList()}
-                }>
+								</Button> */}
+								<Button icon={<UndoOutlined />} onClick={() => refresh()}>
 									刷新
 								</Button>
 							</Flex>
@@ -151,8 +155,8 @@ function SuggestionPage(props: any) {
 				<Table
 					columns={columns}
 					rowKey={record => record.idx}
-					dataSource={suggestionList}
-					scroll={{ y: 60 * 8 }}
+					dataSource={subtypeList}
+					scroll={{ y: 64 * 8 }}
 					loading={loading}
 					pagination={{
 						total,
@@ -188,7 +192,7 @@ function SuggestionPage(props: any) {
 					</Form.Item>
           
 					<Form.Item label="排序" name="uiOrder" required rules={[{ required: true, message: "请输入排序" }]}>
-						<InputNumber min={1} defaultValue={1}/>
+						<InputNumber min={1}/>
 					</Form.Item>
 					<Form.Item label="是否启用" name="available">
 						<Switch />
@@ -198,4 +202,4 @@ function SuggestionPage(props: any) {
 		</div>
 	);
 }
-export default SuggestionPage;
+export default BloodSubtypeDictionary;

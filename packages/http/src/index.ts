@@ -42,7 +42,6 @@ class RequestHttp {
 		 */
     this.service.interceptors.request.use(
       (config: any) => {
-
 				// * 将当前请求添加到 pending 中
 				// axiosCanceler.addPending(config);
 				// * 如果当前请求需要显示 loading,在api服务中通过指定的第三个参数: { headers: { showLoading: true } }来控制显示loading
@@ -71,12 +70,12 @@ class RequestHttp {
 				// * 如果当前请求需要显示 message,在api服务中通过指定的第三个参数: { headers: { showMessage: true } }来控制显示message
             switch (+data.code) {
               case 0: // 正常返回
-                config.headers?.showMessage && (data.msg && message.success(data.msg));
+                !!config.headers?.showMessage && ((data.msg && message.success(data.msg)) || config.headers.msg && message.success(decodeURIComponent(config.headers.msg)));
                 resolve(data)
                 break
               // * 处理异常返回
               default: // 其余异常
-                config.headers?.showMessage && (data.msg && message.error(data.msg));
+                !!config.headers?.showMessage && (data.msg && message.error(data.msg));
                 reject(data)
                 break
             }
@@ -96,7 +95,7 @@ class RequestHttp {
           }, 1000);
         }
 
-        config.headers?.showMessage && (error.message && message.error(error.message));
+        !!config.headers?.showMessage && (error.message && message.error(error.message));
         tryHideFullScreenLoading();
         return Promise.reject(error)
       }

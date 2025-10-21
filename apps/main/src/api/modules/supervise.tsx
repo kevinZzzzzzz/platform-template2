@@ -85,3 +85,11 @@ export const getErrorLog = (params: any) => {
 		headers: { showMessage: true }
 	});
 };
+/**
+ * 医院库存汇总表
+ */
+export const getUseStock = (params: any) => {
+	return http._get<any>(`supv/superv/hosStore`, params, {
+		headers: { showMessage: true }
+	})
+}

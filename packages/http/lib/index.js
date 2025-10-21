@@ -48921,12 +48921,12 @@ var RequestHttp = /** @class */ (function () {
                     // * 如果当前请求需要显示 message,在api服务中通过指定的第三个参数: { headers: { showMessage: true } }来控制显示message
                     switch (+data.code) {
                         case 0: // 正常返回
-                            ((_a = config.headers) === null || _a === void 0 ? void 0 : _a.showMessage) && (data.msg && message$1.success(data.msg));
+                            !!((_a = config.headers) === null || _a === void 0 ? void 0 : _a.showMessage) && ((data.msg && message$1.success(data.msg)) || config.headers.msg && message$1.success(decodeURIComponent(config.headers.msg)));
                             resolve(data);
                             break;
                         // * 处理异常返回
                         default: // 其余异常
-                            ((_b = config.headers) === null || _b === void 0 ? void 0 : _b.showMessage) && (data.msg && message$1.error(data.msg));
+                            !!((_b = config.headers) === null || _b === void 0 ? void 0 : _b.showMessage) && (data.msg && message$1.error(data.msg));
                             reject(data);
                             break;
                     }
@@ -48946,7 +48946,7 @@ var RequestHttp = /** @class */ (function () {
                         window.location.hash = '/login';
                     }, 1000);
                 }
-                ((_a = config.headers) === null || _a === void 0 ? void 0 : _a.showMessage) && (error.message && message$1.error(error.message));
+                !!((_a = config.headers) === null || _a === void 0 ? void 0 : _a.showMessage) && (error.message && message$1.error(error.message));
                 tryHideFullScreenLoading();
                 return [2 /*return*/, Promise.reject(error)];
             });

@@ -573,3 +573,20 @@ export const tableRepeat = function (arr, ...key) {
 
   return arr;
 };
+
+
+/*
+ * @method 延时执行
+ * @param {*} time 时间
+ * @return promise回调
+ */
+export const sleep = async (time: any) => {
+  let timer = null
+  await new Promise(
+    (cb) =>
+      (timer = setTimeout(() => {
+        cb(1)
+        clearTimeout(timer)
+      }, time))
+  )
+}
