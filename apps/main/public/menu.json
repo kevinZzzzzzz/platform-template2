@@ -10,7 +10,8 @@
           "icon": "DotChartOutlined",
           "id": "163",
           "title": "系统看板",
-          "path": "/dashboard/system-station"
+          "path": "/dashboard/system-station",
+          "key": "dashboard/system-station"
         }
       ]
     },
@@ -24,12 +25,65 @@
           "title": "医院库存",
           "id": "314",
           "path": "/supervise",
+          "key": "supervise",
           "children": [
             {
               "icon": "",
               "title": "医院库存汇总表",
               "id": "315",
-              "path": "/supervise/supervise-summary"
+              "path": "/supervise/supervise-summary",
+              "key": "supervise/supervise-summary"
+            },
+            {
+              "icon": "",
+              "title": "医院库存柱状图",
+              "id": "316",
+              "path": "/supervise/supervise-histogram",
+              "key": "supervise/supervise-histogram"
+            },
+            {
+              "icon": "",
+              "title": "医院库存饼状图",
+              "id": "317",
+              "path": "/supervise/supervise-pit-chart",
+              "key": "supervise/supervise-pit-chart"
+            },
+            {
+              "icon": "",
+              "title": "医院库存变化",
+              "id": "318",
+              "path": "/supervise/supervise-line-chart",
+              "key": "supervise/supervise-line-chart"
+            }
+          ]
+        },
+        {
+          "icon": "LineChartOutlined",
+          "title": "医院用血",
+          "id": "319",
+          "path": "/supervise2",
+          "key": "supervise2",
+          "children": [
+            {
+              "icon": "",
+              "title": "医院用血汇总",
+              "id": "320",
+              "path": "/supervise/supervise-hospital-all",
+              "key": "supervise2/supervise-hospital-all"
+            },
+            {
+              "icon": "",
+              "title": "医院科室用血",
+              "id": "321",
+              "path": "/supervise/supervise-hospital-department",
+              "key": "supervise2/supervise-hospital-department"
+            },
+            {
+              "icon": "",
+              "title": "医院用血变化",
+              "id": "322",
+              "path": "/supervise/supervise-hospital-change",
+              "key": "supervise2/supervise-hospital-change"
             }
           ]
         }
@@ -45,42 +99,49 @@
           "title": "医院联网监控",
           "id": "227",
           "path": "/supervise1",
+          "key": "supervise1",
           "children": [
             {
               "icon": "",
               "title": "医院联网状态",
               "id": "228",
-              "path": "/supervise/supervise-status"
+              "path": "/supervise/supervise-status",
+              "key": "supervise1/supervise-status"
             },
             {
               "icon": "",
               "title": "系统日志",
               "id": "998",
-              "path": "/supervise/apiCall-log"
+              "path": "/supervise/apiCall-log",
+              "key": "supervise1/apiCall-log"
             },
             {
               "icon": "",
               "title": "帐号操作日志",
               "id": "350",
-              "path": "/supervise/log-account"
+              "path": "/supervise/log-account",
+              "key": "supervise1/log-account"
             },
             {
               "icon": "",
               "id": "239",
               "title": "医院上报日志",
-              "path": "/supervise/report-log"
+              "path": "/supervise/report-log",  
+              "key": "supervise1/report-log"
             },
             {
               "icon": "",
               "id": "229",
               "title": "医院异常汇总",
-              "path": "/supervise/supervise-exception"
+              "path": "/supervise/supervise-exception",
+              "key": "supervise1/supervise-exception"
             },
             {
               "icon": "",
               "id": "343",
               "title": "医院数据质量",
-              "path": "/supervise/hospital-data-quality"
+              "path": "/supervise/hospital-data-quality",
+              "key": "supervise1/hospital-data-quality"
             }
           ]
         },
@@ -89,12 +150,14 @@
           "title": "标准数据上报",
           "id": "710",
           "path": "/standardReport",
+          "key": "standardReport",
           "children": [
             {
               "icon": "",
               "title": "数据上报",
               "id": "997",
-              "path": "/standardReport/data-report"
+              "path": "/standardReport/data-report",
+              "key": "standardReport/data-report"
             }
           ]
         },
@@ -103,36 +166,42 @@
           "title": "字典配置",
           "id": "242",
           "path": "/dictionary",
+          "key": "dictionary",
           "children": [
             {
               "icon": "",
               "title": "预定回复",
               "id": "243",
-              "path": "/dictionary/suggestion"
+              "path": "/dictionary/suggestion",
+              "key": "dictionary/suggestion"
             },
             {
               "icon": "",
               "title": "锁定原因",
               "id": "250",
-              "path": "/dictionary/blood-lock-reason"
+              "path": "/dictionary/blood-lock-reason",
+              "key": "dictionary/blood-lock-reason"
             },
             {
               "icon": "",
               "title": "血液字典",
               "id": "2005",
-              "path": "/dictionary/blood-subtype-dictionary"
+              "path": "/dictionary/blood-subtype-dictionary",
+              "key": "dictionary/blood-subtype-dictionary"
             },
             {
               "icon": "",
               "title": "血液品种",
               "id": "21003",
-              "path": "/dictionary/blood-subtype"
+              "path": "/dictionary/blood-subtype",
+              "key": "dictionary/blood-subtype"
             },
             {
               "icon": "",
               "id": "21004",
               "title": "血液产品",
-              "path": "/dictionary/blood-breed"
+              "path": "/dictionary/blood-breed",
+              "key": "dictionary/blood-breed"
             }
           ]
         },
@@ -140,43 +209,50 @@
           "icon": "SettingOutlined",
           "title": "系统设置",
           "id": "340",
-          "path": "/setting-station"
+          "path": "/setting-station",
+          "key": "setting-station"
         },
         {
           "icon": "BugOutlined",
           "title": "错误日志",
           "id": "999",
-          "path": "/error-log"
+          "path": "/error-log",
+          "key": "error-log"
         },
         {
           "icon": "UserOutlined",
           "title": "权限管理",
           "id": "27",
           "path": "/authority",
+          "key": "authority",
           "children": [
             {
               "icon": "",
               "title": "地域管理",
               "id": "2001",
-              "path": "/authority/area"
+              "path": "/authority/area",
+              "key": "authority/area"
             },
             {
               "icon": "",
               "title": "机构管理",
               "id": "2002",
-              "path": "/authority/department"
+              "path": "/authority/department",
+              "key": "authority/department"
             },
             {
               "icon": "",
               "title": "角色管理",
               "id": "2003",
-              "path": "/authority/role"
+              "path": "/authority/role",
+              "key": "authority/role"
             },
             {
               "icon": "",
               "title": "用户管理",
               "id": "2004",
-              "path": "/authority/users"
+              "path": "/authority/users",
+              "key": "authority/users"
             }
           ]
         }

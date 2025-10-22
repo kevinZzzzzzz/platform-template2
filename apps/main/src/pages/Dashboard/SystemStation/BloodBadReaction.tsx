@@ -10,8 +10,6 @@ function BloodBadReaction(props: any) {
   const chartDom = useRef<HTMLDivElement>(null);
 
   const renderChart = (data) => {
-    console.log(data)
-    if (data.length === 0) return
     chart = echarts.init(chartDom.current);
     const option = {
       yAxis: {
@@ -40,7 +38,7 @@ function BloodBadReaction(props: any) {
         symbolSize: 20,
         itemStyle: {
           normal: {
-            color: 'rgba(252,230,48,1)',
+            color: '#007AFF',
             barBorderRadius: 0,
             label: {
               show: true,

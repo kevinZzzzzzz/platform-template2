@@ -121,9 +121,9 @@ export const handleSetDict = (dictTemp: any[], dictAll, appData, loginInfo) => {
 			}
 		}
 	}
-	console.log("this.dictArr-->", dictArr);
-	console.log("this.dictMapper-->", dictMapper);
-	console.log("this.DefaultValue-->", DefaultValue);
+	// console.log("this.dictArr-->", dictArr);
+	// console.log("this.dictMapper-->", dictMapper);
+	// console.log("this.DefaultValue-->", DefaultValue);
   dict = null
 	return {
 		dictArrT: dictArr,

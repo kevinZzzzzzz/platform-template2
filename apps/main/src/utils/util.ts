@@ -65,33 +65,36 @@ export const getBrowserLang = () => {
 };
 
 /**
- * @description 获取需要展开的 subMenu
- * @param {String} path 当前访问地址
+ * @description 获取需要展开的 activeKey
+ * @param {String} key 当前访问地址的key
  * @returns array
  */
-export const getOpenKeys = (path: string) => {
-	let newStr: string = "";
+export const getOpenKeys = (key: string) => {
+  if (!key) return []
 	let newArr: any[] = [];
-	let arr = path.split("/").map(i => "/" + i);
-	for (let i = 1; i < arr.length - 1; i++) {
-		newStr += arr[i];
-		newArr.push(newStr);
-	}
+	let arr = key?.split("/")
+  if (arr.length) {
+    newArr.push(arr[0]);
+    for (let i = 1; i < arr.length; i++) {
+      newArr.push(`${arr[i-1]}/${arr[i]}`);
+    }
+  }
 	return newArr;
 };
 
 /**
- * @description 递归查询对应的路由
- * @param {String} path 当前访问地址
+ * @description 根据key值递归查询对应的路由
+ * @param {String} key 属性名
+ * @param {String} value 属性值
  * @param {Array} routes 路由列表
  * @returns array
  */
-export const searchRoute = (path: string, routes: RouteObject[] = []): RouteObject => {
+export const searchRouteByAttr = (key: string, value: string, routes: RouteObject[] = []): RouteObject => {
 	let result: RouteObject = {};
 	for (let item of routes) {
-		if (item.path === path) return item;
+		if (item[key] === value) return item;
 		if (item.children) {
-			const res = searchRoute(path, item.children);
+			const res = searchRouteByAttr(key, value, item.children);
 			if (Object.keys(res).length) result = res;
 		}
 	}
@@ -570,11 +573,120 @@ export const tableRepeat = function (arr, ...key) {
       }
     }
   });
-
   return arr;
 };
+/**
+ * 合并表格跨行
+ * @param arr 数组
+ * @param keys 数组元素的键名
+ * @returns 
+ */
+export const tableMapperRow = function (arr, ...keys) {
+  keys.forEach((d, n) => {
+    for (let i = 0; i < arr.length - 1; i++) {
+      for (let j = 0; j < arr.length - 1 - i; j++) {
+        const t = n;
+        let sort = true;
+        if (t > 0) {
+          for (let k = 0; k < t; k++) {
+            if (
+              !(
+                arr[j][keys[k]] === arr[j + 1][keys[k]] &&
+                arr[j][keys[t]] > arr[j + 1][keys[t]]
+              )
+            ) {
+              sort = false;
+            }
+          }
+        } else {
+          sort = arr[j][keys[0]] > arr[j + 1][keys[0]];
+        }
+        if (sort) {
+          const temp = arr[j];
+          arr[j] = arr[j + 1];
+          arr[j + 1] = temp;
+        }
+      }
+    }
+  });
+  arrToMapper(arr, ...keys);
+  return arr;
+};
+/**
+ * 数组转换对象
+ * @param arr 数组
+ * @param keys 数组元素的键名
+ * @returns 
+ */
+export const arrToMapper = (arr, ...keys) => {
+  const temp = {};
+  const num = [];
+  keys.forEach(d => {
+    num.push(0);
+  });
+  arr.forEach(d => {
+    const keysList = [d[keys[0]], d[keys[1]], d[keys[2]], d[keys[3]]];
+    for (const k in d) {
+      if (keys.indexOf(k) !== -1) {
+        keys.forEach((e, i) => {
+          const z = mainKeys(keysList, i);
+          if (temp.hasOwnProperty(z)) {
+            temp[z] = temp[z] + 1;
+          } else {
+            temp[z] = 1;
+          }
+        });
+      }
+    }
+  });
+  for (const k in temp) {
+    temp[k] = temp[k] / keys.length;
+  }
+  arr.forEach((d, j) => {
+    keys.forEach((p, l) => {
+      d[l] = 1;
+    });
+    for (const k in temp) {
+      keys.forEach((e, i) => {
+        let o = '';
+        for (let g = 0; g <= i; g++) {
+          if (g === 0) {
+            o = `${d[keys[g]]}`;
+          } else {
+            o += `-${d[keys[g]]}`;
+          }
+        }
+        if (k === o) {
+          if (j === num[i]) {
+            num[i] += temp[k];
+            d[i] = temp[k];
+          } else {
+            d[i] = 0;
+          }
+        }
+      });
+    }
+  });
+};
 
-
+/**
+ * 合并表格跨行
+ * @param arr
+ * @param keys:Array<String>
+ * @returns {any}
+ */
+export const mainKeys = (keys, n) => {
+  let str = '';
+  if (n === 0) {
+    str = keys[0];
+  } else {
+    str = keys[0];
+    for (let i = 1; i <= n; i++) {
+      str += `-${keys[i]}`;
+    }
+  }
+  return str;
+};
 /*
  * @method 延时执行
  * @param {*} time 时间

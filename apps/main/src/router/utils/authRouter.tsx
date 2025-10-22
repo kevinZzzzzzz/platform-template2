@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
-import { isEmptyObject, searchRoute } from "@/utils/util";
+import { isEmptyObject } from "@/utils/util";
 import React, { useEffect } from 'react';
 import { HOME_URL, MENU_BLACK_LIST } from "@/config/config";
 import { RootState, useSelector, useDispatch } from "@/store";

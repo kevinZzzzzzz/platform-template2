@@ -7,13 +7,26 @@ import dayjs from "dayjs";
 import { dateFormatSearch } from "hoslink-xxx";
 import React, { useState, useEffect, memo, useRef, useCallback } from "react";
 import styles from "./index.module.less";
+import * as echarts from "echarts"
+enum alisaMap {
+  "aPos" = "A+",
+  "aNeg" = "A-",
+  "bPos" = "B+",
+  "bNeg" = "B-",
+  "oPos" = "O+",
+  "oNeg" = "O-",
+  "abPos" = "AB+",
+  "abNeg" = "AB-",
+}
 
-function SuperviseSummary(props: any) {
-	const { transformByMapper } = useDict();
-	const { transDepts0ById } = useDeptUsers();
+function SuperviseHistogram(props: any) {
+  let chart: any = null
+  const chartDom = useRef<HTMLDivElement>(null);
+	// const { transformByMapper } = useDict();
+	// const { transDepts0ById } = useDeptUsers();
 	// const [total, setTotal] = useState(0);
 	// const [pageNum, setPageNum] = useState(1);
-	const [logList, setLogList] = useState([]);
+	const [dataList, setDataList] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const searchObj = useRef({
 		storeDate: dayjs(new Date()).format(dateFormatSearch),
@@ -21,28 +34,75 @@ function SuperviseSummary(props: any) {
 		hospital: "",
 	});
 	useEffect(() => {
-		getLogList({
-			...searchObj.current,
-		});
+		// getLogList({
+		// 	...searchObj.current,
+		// });
 	}, []);
 	const getLogList = params => {
 		setLoading(true);
 		getUseStock(params).then(res => {
 			let { subTypeList = [] } = res?.list || {};
-      let dataT = tableRepeat(subTypeList, 'typeId', 'hospital')
-      dataT = tableMapperRow(dataT, 'typeId');
-      dataT = dataT.map((d, idx) => {
-        return {
-          ...d,
-          idx: idx + 1,
-          total: d.aPos + d.aNeg + d.bPos + d.bNeg + d.abPos + d.abNeg + d.oPos + d.oNeg,
-        }
+      const dataObj = [{
+        name: 'A+',
+        value: 0,
+      },{
+        name: 'A-',
+        value: 0,
+      },{
+        name: 'B+',
+        value: 0,
+      },{
+        name: 'B-',
+        value: 0,
+      },{
+        name: 'O+',
+        value: 0,
+      },{
+        name: 'O-',
+        value: 0,
+      },{
+        name: 'AB+',
+        value: 0,
+      },{
+        name: 'AB-',
+        value: 0,
+      }]
+      subTypeList.forEach(item => {
+        Object.keys(alisaMap).forEach((key, idx) => {
+          dataObj[idx].value += (+item[key] || 0)
+        })
       })
-			setLogList(dataT || []);
+      renderChart(dataObj)
 		}).finally(() => {
 			setLoading(false);
 		})
 	};
+  const renderChart = (data) => {
+    chart = echarts.init(chartDom.current)
+    const option = {
+      color: ['#007AFF'],
+      yAxis: {
+        type: 'value',
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: data?.map(d => d.name),
+      },
+      series: [{
+        data: data?.map(d => {
+          return d.value
+        }),
+        type: 'bar',
+      }]
+    }
+    chart?.setOption(option, {
+      notMerge: true, // 不合并旧配置
+      lazyUpdate: false // 立即更新
+    })
+  }
 	const searchPage = useCallback((values: any) => {
 		searchObj.current = {
 			...searchObj.current,
@@ -53,90 +113,19 @@ function SuperviseSummary(props: any) {
 			...values,
 		});
 	}, []);
-	const columns = [
-		{
-			title: "类型",
-			dataIndex: "typeId",
-			key: "typeId",
-      onCell: (record) => {
-        return {
-          rowSpan: record[0]
-        }
-      },
-      render: (text, record) => {
-        return transformByMapper(text, ['type', 'name'])
-      }
-		},
-		{
-			title: "医院",
-			dataIndex: "hospital",
-			key: "hospital",
-			render: (text, record, index) => {
-				return text && transDepts0ById(text);
-			}
-		},
-		{
-			title: "总数",
-			dataIndex: "total",
-			key: "total"
-		},
-		{
-			title: "A+",
-			dataIndex: "aPos",
-			key: "aPos"
-		},
-		{
-			title: "B+",
-			dataIndex: "bPos",
-			key: "bPos"
-		},
-		{
-			title: "O+",
-			dataIndex: "oPos",
-			key: "oPos"
-		},
-		{
-			title: "AB+",
-			dataIndex: "abPos",
-			key: "abPos"
-		},
-		{
-			title: "A-",
-			dataIndex: "aNeg",
-			key: "aNeg"
-		},
-		{
-			title: "B-",
-			dataIndex: "bNeg",
-			key: "bNeg"
-		},
-		{
-			title: "O-",
-			dataIndex: "oNeg",
-			key: "oNeg"
-		},
-		{
-			title: "AB-",
-			dataIndex: "abNeg",
-			key: "abNeg"
-		}
-	];
+
 	return (
-		<div className={styles.superviseSummary}>
+		<div className={styles.superviseHistogram}>
 			<Card title={<FormSearch searchPage={searchPage} />} style={{ width: "100%", height: "100%" }}>
-				<Table
-					columns={columns}
-					rowKey={record => record.idx}
-					dataSource={logList}
-					scroll={{ y: 54 * 8 }}
-					loading={loading}
-					pagination={false}
-				/>
+				<div className={styles.superviseHistogram_main}>
+          <h1>医院库存柱状图</h1>
+          <div className={styles.superviseHistogram_main_charts} ref={chartDom}></div>
+        </div>
 			</Card>
 		</div>
 	);
 }
-export default SuperviseSummary;
+export default SuperviseHistogram;
 
 const FormSearch = memo((props: any) => {
 	const { searchPage } = props;
@@ -157,12 +146,15 @@ const FormSearch = memo((props: any) => {
     })) || [])
   }, [])
 	useEffect(() => {
-		setHospitalsList(
-			depts0ALL?.filter(d => d.deptId == '' || (d.deptScope !=='F' && d.deptScope !=='G'))?.map(item => ({
-				label: item.name,
-				value: item.deptId
-			})) || []
-		);
+    if (depts0ALL && depts0ALL.length > 0) {
+      const depts0ALLT = depts0ALL?.filter(d => d.deptId !== '' && d.deptScope !=='F' && d.deptScope !=='G') || []
+      setHospitalsList(depts0ALLT?.map(item => ({
+        label: item.name,
+        value: item.deptId
+      })))
+      searchForm.setFieldValue('hospital', depts0ALLT[0]?.deptId || '')
+      searchLog()
+    }
 	}, [depts0ALL]);
 
 	const searchLog = () => {

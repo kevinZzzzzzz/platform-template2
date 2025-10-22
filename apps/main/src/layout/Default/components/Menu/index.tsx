@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, Spin } from "antd";
-import { findAllBreadcrumb, getOpenKeys, handleRouter, searchRoute } from "@/utils/util";
+import { findAllBreadcrumb, getOpenKeys, handleRouter, searchRouteByAttr } from "@/utils/util";
 import { setMenuList as reduxSetMenuList } from "@repo/store/lib/menu";
 import { setBreadcrumbList } from "@repo/store/lib/breadcrumb";
 import { setAuthRouter } from "@repo/store/lib/auth";
@@ -14,21 +14,22 @@ import "./index.less";
 
 const LayoutMenu = () => {
 	const dispatch = useDispatch();
-  // @ts-ignore
+	// @ts-ignore
 	const { isCollapse, menuList: reduxMenuList } = useSelector((state: RootState) => state.menu);
-  // @ts-ignore
-	const {loginInfo } = useSelector((state: RootState) => state.auth);
+	// @ts-ignore
+	const { loginInfo } = useSelector((state: RootState) => state.auth);
 	const { pathname } = useLocation();
 	const [selectedKeys, setSelectedKeys] = useState<string[]>([pathname]);
 	const [openKeys, setOpenKeys] = useState<string[]>([]);
-  const menuRoleList = useMemo(() => {
-    return loginInfo.role.menuList?.split(',') || []
-  }, [])
+	const menuRoleList = useMemo(() => {
+		return loginInfo.role.menuList?.split(",") || [];
+	}, []);
 
 	// 刷新页面菜单保持高亮
 	useEffect(() => {
-		setSelectedKeys([pathname]);
-		isCollapse ? null : setOpenKeys(getOpenKeys(pathname));
+    const route = searchRouteByAttr('path', pathname, reduxMenuList);
+		setSelectedKeys([route.key]);
+		isCollapse ? null : setOpenKeys(getOpenKeys(route.key));
 	}, [pathname, isCollapse]);
 
 	// 设置当前展开的 subMenu
@@ -42,20 +43,22 @@ const LayoutMenu = () => {
 	// 定义 menu 类型
 	type MenuItem = Required<MenuProps>["items"][number];
 	const getItem = (
-    id: string | number,
+		id: string | number,
 		label: React.ReactNode,
+    path: string,
 		key?: React.Key | null,
 		icon?: React.ReactNode,
 		children?: MenuItem[],
-		type?: "group"
+		type?: "group",
 	): MenuItem => {
 		return {
-      id,
+			id,
+      path,
 			key,
 			icon,
 			children,
 			label,
-			type
+			type,
 		} as MenuItem;
 	};
 
@@ -69,9 +72,10 @@ const LayoutMenu = () => {
 	const deepLoopFloat = (menuList: any[], newArr: MenuItem[] = []) => {
 		menuList.forEach((item: any) => {
 			// 下面判断代码解释 *** !item?.children?.length   ==>   (!item.children || item.children.length === 0)
-      if (!menuRoleList.includes(item.id)) return
-			if (!item?.children?.length) return newArr.push(getItem(item.id, item.title, item.path, addIcon(item.icon!), undefined, item.type));
-			newArr.push(getItem(item.id, item.title, item.path, addIcon(item.icon!), deepLoopFloat(item.children), item.type));
+			if (!menuRoleList.includes(item.id)) return;
+			if (!item?.children?.length)
+				return newArr.push(getItem(item.id, item.title, item.path, item.key, addIcon(item.icon!), undefined, item.type));
+			newArr.push(getItem(item.id, item.title, item.path, item.key, addIcon(item.icon!), deepLoopFloat(item.children), item.type));
 		});
 		return newArr;
 	};
@@ -102,9 +106,9 @@ const LayoutMenu = () => {
 	// 点击当前菜单跳转页面
 	const navigate = useNavigate();
 	const clickMenu: MenuProps["onClick"] = ({ key }: { key: string }) => {
-		const route = searchRoute(key, reduxMenuList);
+		const route = searchRouteByAttr("key", key, reduxMenuList);
 		if (route.isLink) window.open(route.isLink, "_blank");
-		navigate(key);
+		navigate(route.path);
 	};
 
 	return (

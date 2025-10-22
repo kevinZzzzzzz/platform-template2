@@ -130,6 +130,60 @@ const mainRouter: Array<RouteObject> = [
           key: "supervise-summary"
         }
       },
+      {
+        path: "/supervise/supervise-histogram",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "superviseHistogram" */ '@/pages/Supervise/SuperviseHistogram/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "医院库存柱状图",
+          key: "supervise-histogram"
+        }
+      },
+      {
+        path: "/supervise/supervise-pit-chart",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "supervisePitChart" */ '@/pages/Supervise/SupervisePitChart/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "医院库存饼状图",
+          key: "supervise-pit-chart"
+        }
+      },
+      {
+        path: "/supervise/supervise-line-chart",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "superviseLineChart" */ '@/pages/Supervise/SuperviseLineChart/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "医院库存变化",
+          key: "supervise-line-chart"
+        }
+      },
+      {
+        path: "/supervise/supervise-hospital-all",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "superviseHospitalAll" */ '@/pages/Supervise/SuperviseHospitalAll/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "医院用血汇总",
+          key: "supervise-hospital-all"
+        }
+      },
+      {
+        path: "/supervise/supervise-hospital-department",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "superviseHospitalDepartment" */ '@/pages/Supervise/SuperviseHospitalDepartment/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "医院科室用血",
+          key: "supervise-hospital-department"
+        }
+      },
+      {
+        path: "/supervise/supervise-hospital-change",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "superviseHospitalChange" */ '@/pages/Supervise/SuperviseHospitalChange/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "医院用血变化",
+          key: "supervise-hospital-change"
+        }
+      }
     ]
   },
   {

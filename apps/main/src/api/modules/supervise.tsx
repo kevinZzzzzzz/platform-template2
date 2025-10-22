@@ -93,3 +93,35 @@ export const getUseStock = (params: any) => {
 		headers: { showMessage: true }
 	})
 }
+/**
+ * 医院库存变化
+ */
+export const getDetailDaily = (params: any) => {
+	return http._get<any>(`supv/superv/storeDetailDaily`, params, {
+		headers: { showMessage: true }
+	})
+}
+/**
+ * 医院用血汇总表
+ */
+export const getUseBloodStock = (params: any) => {
+	return http._get<any>(`supv/superv/usestock`, params, {
+		headers: { showMessage: true }
+	})
+}
+/**
+ * 医院科室用血汇总表
+ */
+export const getUseBloodStockByDept = (params: any) => {
+	return http._get<any>(`supv/superv/destinationTotal`, params, {
+		headers: { showMessage: true }
+	})
+}
+/**
+ * 医院用血变化
+ */
+export const getUseStockChange = (params: any) => {
+	return http._get<any>(`supv/superv/usestockVarity`, params, {
+		headers: { showMessage: true }
+	})
+}

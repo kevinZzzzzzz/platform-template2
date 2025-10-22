@@ -24,7 +24,10 @@ export const getUserInfoApi = () => {
 export const getDeptListAllApi = (parentId) => {
 	return http._get<any>(`uaa/api/admin/depts/${parentId}`);
 }
-
+// * 获取医院科室列表
+export const getDeptListByHospitalApi = (hospitalId) => {
+	return http._get<any>(`uaa/api/depts/${hospitalId}`, null);
+}
 // * 获取用户列表
 export const getUserListApi = (deptId?: number, hospitalId?: number, isAll?: boolean) => {
   if (hospitalId) {

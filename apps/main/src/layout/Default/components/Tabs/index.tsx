@@ -6,7 +6,7 @@ import { HOME_URL } from "@/config/config";
 import { setTabsList, setTabsActive } from "@repo/store/lib/tabs";
 import { RootState, useDispatch, useSelector } from "@/store";
 // import { routerArray } from "@/router";
-import { searchRoute } from "@/utils/util";
+import { searchRouteByAttr } from "@/utils/util";
 // import MoreButton from "./components/MoreButton";
 import "./index.less";
 import { isFederateModule } from "@/utils/is";
@@ -31,7 +31,7 @@ const LayoutTabs = (props) => {
 
 	// add tabs
 	const addTabs = () => {
-		const route = searchRoute(pathname, props.routerArray);
+		const route = searchRouteByAttr("path", pathname, props.routerArray);
 		let newTabsList = [];
     if (isFederateModule) {
       newTabsList = props.routerArray.map(d => {

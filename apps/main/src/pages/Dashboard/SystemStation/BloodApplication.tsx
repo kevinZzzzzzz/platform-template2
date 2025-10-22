@@ -12,9 +12,9 @@ function BloodApplication(props: any) {
   const chartDom = useRef<HTMLDivElement>(null);
   
   const renderChart = (data) => {
-    if (data.length === 0) return
     chart = echarts.init(chartDom.current);
     const option = {
+      color: ['#007AFF'],
       legend: {
         data: data?.map(d => d.hospitalName)
       },
