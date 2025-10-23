@@ -171,7 +171,8 @@ const FormSearch = memo((props: any) => {
 
 	}, [depts0ALL]);
 
-	const searchLog = () => {
+	const searchLog = async () => {
+		await searchForm.validateFields();
 		const values = searchForm.getFieldsValue();
 		const params = {
 			...values,
@@ -184,7 +185,7 @@ const FormSearch = memo((props: any) => {
 		<Form form={searchForm} initialValues={initValues} style={{ margin: "10px 0" }}>
 			<Row gutter={16}>
 				<Col span={8}>
-					<Form.Item label="时间" style={{ marginBottom: 0 }}>
+					<Form.Item label="时间" style={{ marginBottom: 0 }} required rules={[{ required: true, message: '请选择时间' }]}>
 						<Row gutter={10}>
 							<Col span={12}>
 								<Form.Item name="beforeDate">
@@ -200,13 +201,13 @@ const FormSearch = memo((props: any) => {
 					</Form.Item>
 				</Col>
 				<Col span={6}>
-					<Form.Item label="医院" name="hospital">
+					<Form.Item label="医院" name="hospital" required rules={[{ required: true, message: '请选择医院' }]}>
 						<Select allowClear showSearch options={hospitalsList} style={{ width: "100%" }} />
 					</Form.Item>
 				</Col>
 				<Col span={10}></Col>
-				<Col span={12}>
-					<Form.Item label="血液类型" name="typeId">
+				<Col span={13}>
+					<Form.Item label="血液类型" name="typeId" required rules={[{ required: true, message: '请选择血液类型' }]}>
             <Checkbox.Group
               options={typeOptions}
             />

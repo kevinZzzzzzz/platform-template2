@@ -1,14 +1,14 @@
-import { getUseStock } from "@/api/modules/supervise";
+import { getStatisticsStoreDetail } from "@/api/modules/supervise";
 import useDeptUsers from "@/hooks/useDeptUsers";
 import useDict from "@/hooks/useDict";
 import { tableRepeat, tableMapperRow} from "@/utils/util";
-import { Button, Card, Col, DatePicker, Form, Radio, Row, Select, Table } from "antd";
+import { Button, Card, Checkbox, Col, DatePicker, Form, Radio, Row, Select, Table } from "antd";
 import dayjs from "dayjs";
 import { dateFormatSearch } from "hoslink-xxx";
 import React, { useState, useEffect, memo, useRef, useCallback } from "react";
 import styles from "./index.module.less";
 
-function SuperviseSummary(props: any) {
+function SuperviseStationAll(props: any) {
 	const { transformByMapper } = useDict();
 	const { transDepts0ById } = useDeptUsers();
 	// const [total, setTotal] = useState(0);
@@ -16,20 +16,28 @@ function SuperviseSummary(props: any) {
 	const [logList, setLogList] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const searchObj = useRef({
-		storeDate: dayjs(new Date()).format(dateFormatSearch),
-		typeId: 1,
+		startDate: dayjs(new Date()).format(dateFormatSearch),
+		typeId: [],
 		hospital: "",
 	});
 	useEffect(() => {
-		getLogList({
-			...searchObj.current,
-		});
+		// getLogList({
+		// 	...searchObj.current,
+		// });
 	}, []);
 	const getLogList = params => {
 		setLoading(true);
-		getUseStock(params).then(res => {
-			let { subTypeList = [] } = res?.list || {};
-      let dataT = tableRepeat(subTypeList, 'typeId', 'hospital')
+		getStatisticsStoreDetail(params).then(res => {
+			let { store = [] } = res || {};
+      const list = [];
+      store.map(function (d1) {
+        d1.subTypeResult.map(function (d2) {
+          d2.typeName = d1.typeName;
+          d2.typeId = d1.typeId;
+          list.push(d2);
+        })
+      })
+      let dataT = tableRepeat(list, 'typeId', 'subTypeId')
       dataT = tableMapperRow(dataT, 'typeId');
       dataT = dataT.map((d, idx) => {
         return {
@@ -55,25 +63,19 @@ function SuperviseSummary(props: any) {
 	}, []);
 	const columns = [
 		{
-			title: "类型",
-			dataIndex: "typeId",
-			key: "typeId",
+			title: "大类",
+			dataIndex: "typeName",
+			key: "typeName",
       onCell: (record) => {
         return {
           rowSpan: record[0]
         }
       },
-      render: (text, record) => {
-        return transformByMapper(text, ['type', 'name'])
-      }
 		},
 		{
-			title: "医院",
-			dataIndex: "hospital",
-			key: "hospital",
-			render: (text, record, index) => {
-				return text && transDepts0ById(text);
-			}
+			title: "中类",
+			dataIndex: "subTypeName",
+			key: "subTypeName",
 		},
 		{
 			title: "总数",
@@ -101,6 +103,11 @@ function SuperviseSummary(props: any) {
 			key: "abPos"
 		},
 		{
+			title: "RH+总",
+			dataIndex: "posTotal",
+			key: "posTotal"
+		},
+		{
 			title: "A-",
 			dataIndex: "aNeg",
 			key: "aNeg"
@@ -119,10 +126,15 @@ function SuperviseSummary(props: any) {
 			title: "AB-",
 			dataIndex: "abNeg",
 			key: "abNeg"
-		}
+		},
+		{
+			title: "RH-总",
+			dataIndex: "negTotal",
+			key: "negTotal"
+		},
 	];
 	return (
-		<div className={styles.superviseSummary}>
+		<div className={styles.superviseStationAll}>
 			<Card title={<FormSearch searchPage={searchPage} />} style={{ width: "100%", height: "100%" }}>
 				<Table
 					columns={columns}
@@ -136,7 +148,7 @@ function SuperviseSummary(props: any) {
 		</div>
 	);
 }
-export default SuperviseSummary;
+export default SuperviseStationAll;
 
 const FormSearch = memo((props: any) => {
 	const { searchPage } = props;
@@ -146,8 +158,8 @@ const FormSearch = memo((props: any) => {
 	const [hospitalsList, setHospitalsList] = useState([]);
   const [typeOptions, setTypeOptions] = useState([]);
 	const initValues = {
-		storeDate: dayjs(new Date()),
-		typeId: 1,
+		startDate: dayjs(new Date()),
+		typeId: [],
 		hospital: "",
 	};
   useEffect(() => {
@@ -170,7 +182,7 @@ const FormSearch = memo((props: any) => {
 		const values = searchForm.getFieldsValue();
 		const params = {
 			...values,
-			storeDate: dayjs(values.storeDate).format(dateFormatSearch),
+			startDate: dayjs(values.startDate).format(dateFormatSearch),
 		};
 		searchPage(params);
 	};
@@ -178,30 +190,25 @@ const FormSearch = memo((props: any) => {
 		<Form form={searchForm} initialValues={initValues} style={{ margin: "10px 0" }}>
 			<Row gutter={16}>
 				<Col span={6}>
-					<Form.Item label="时间" name="storeDate" style={{ marginBottom: 0 }} required rules={[{ required: true, message: '请选择时间' }]}>
+					<Form.Item label="时间" name="startDate" style={{ marginBottom: 0 }} required rules={[{ required: true, message: '请选择时间' }]}>
             <DatePicker allowClear style={{ width: "100%" }} />
 					</Form.Item>
 				</Col>
 				<Col span={6}>
-					<Form.Item label="医院" name="hospital" required rules={[{ required: true, message: '请选择医院' }]}>
-						<Select allowClear showSearch options={hospitalsList} style={{ width: "100%" }} />
-					</Form.Item>
-				</Col>
-				<Col span={12}></Col>
-				<Col span={13}>
-					<Form.Item label="血液类型" name="typeId" required rules={[{ required: true, message: '请选择血液类型' }]}>
-            <Radio.Group
-              options={typeOptions}
-            />
-					</Form.Item>
-        </Col>
-				<Col span={4}>
-					<Form.Item label={null} style={{ margin: "0 auto" }}>
+					<Form.Item label={null}>
             <Button type="primary" onClick={() => searchLog()}>
               查询
             </Button>
 					</Form.Item>
-				</Col>
+        </Col>
+        <col span={6}></col>
+				<Col span={13}>
+					<Form.Item label="血液类型" name="typeId" required rules={[{ required: true, message: '请选择血液类型' }]}>
+            <Checkbox.Group
+              options={typeOptions}
+            />
+					</Form.Item>
+        </Col>
 			</Row>
 		</Form>
 	);

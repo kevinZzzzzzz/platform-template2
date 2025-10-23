@@ -1,4 +1,4 @@
-import { getUseStock } from "@/api/modules/supervise";
+import { getStatisticsStoreDetail } from "@/api/modules/supervise";
 import useDeptUsers from "@/hooks/useDeptUsers";
 import useDict from "@/hooks/useDict";
 import { tableRepeat, tableMapperRow} from "@/utils/util";
@@ -19,19 +19,18 @@ enum alisaMap {
   "abNeg" = "AB-",
 }
 
-function SuperviseHistogram(props: any) {
+function SuperviseStationHistogram(props: any) {
   let chart: any = null
   const chartDom = useRef<HTMLDivElement>(null);
 	// const { transformByMapper } = useDict();
 	// const { transDepts0ById } = useDeptUsers();
 	// const [total, setTotal] = useState(0);
 	// const [pageNum, setPageNum] = useState(1);
-	const [dataList, setDataList] = useState([]);
+	// const [dataList, setDataList] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const searchObj = useRef({
 		storeDate: dayjs(new Date()).format(dateFormatSearch),
 		typeId: 1,
-		hospital: "",
 	});
 	useEffect(() => {
 		// getLogList({
@@ -40,36 +39,15 @@ function SuperviseHistogram(props: any) {
 	}, []);
 	const getLogList = params => {
 		setLoading(true);
-		getUseStock(params).then(res => {
-			let { subTypeList = [] } = res?.list || {};
-      const dataObj = [{
-        name: 'A+',
-        value: 0,
-      },{
-        name: 'A-',
-        value: 0,
-      },{
-        name: 'B+',
-        value: 0,
-      },{
-        name: 'B-',
-        value: 0,
-      },{
-        name: 'O+',
-        value: 0,
-      },{
-        name: 'O-',
-        value: 0,
-      },{
-        name: 'AB+',
-        value: 0,
-      },{
-        name: 'AB-',
-        value: 0,
-      }]
-      subTypeList.forEach(item => {
-        Object.keys(alisaMap).forEach((key, idx) => {
-          dataObj[idx].value += (+item[key] || 0)
+		getStatisticsStoreDetail(params).then(res => {
+			let { store = [] } = res || {};
+      const dataObj = []
+      store?.map(function (d1) {
+        d1?.subTypeResult?.map(function (d2) {
+          const salesData = {'item':null, 'count': null};
+          salesData.item = d2.subTypeName;
+          salesData.count = d2.total;
+          dataObj.push(salesData);
         })
       })
       renderChart(dataObj)
@@ -89,11 +67,11 @@ function SuperviseHistogram(props: any) {
       },
       xAxis: {
         type: 'category',
-        data: data?.map(d => d.name),
+        data: data?.map(d => d.item),
       },
       series: [{
         data: data?.map(d => {
-          return d.value
+          return d.count
         }),
         type: 'bar',
       }]
@@ -115,17 +93,17 @@ function SuperviseHistogram(props: any) {
 	}, []);
 
 	return (
-		<div className={styles.superviseHistogram}>
+		<div className={styles.superviseStationHistogram}>
 			<Card title={<FormSearch searchPage={searchPage} />} style={{ width: "100%", height: "100%" }}>
-				<div className={styles.superviseHistogram_main}>
-          <h1>医院库存柱状图</h1>
-          <div className={styles.superviseHistogram_main_charts} ref={chartDom}></div>
+				<div className={styles.superviseStationHistogram_main}>
+          <h1>血站库存柱状图</h1>
+          <div className={styles.superviseStationHistogram_main_charts} ref={chartDom}></div>
         </div>
 			</Card>
 		</div>
 	);
 }
-export default SuperviseHistogram;
+export default SuperviseStationHistogram;
 
 const FormSearch = memo((props: any) => {
 	const { searchPage } = props;
@@ -137,7 +115,6 @@ const FormSearch = memo((props: any) => {
 	const initValues = {
 		storeDate: dayjs(new Date()),
 		typeId: 1,
-		hospital: "",
 	};
   useEffect(() => {
     setTypeOptions(dictArrRef.current?.['type']?.map(item => ({
@@ -145,17 +122,17 @@ const FormSearch = memo((props: any) => {
       value: item.id
     })) || [])
   }, [])
-	useEffect(() => {
-    if (depts0ALL && depts0ALL.length > 0) {
-      const depts0ALLT = depts0ALL?.filter(d => d.deptId !== '' && d.deptScope !=='F' && d.deptScope !=='G') || []
-      setHospitalsList(depts0ALLT?.map(item => ({
-        label: item.name,
-        value: item.deptId
-      })))
-      searchForm.setFieldValue('hospital', depts0ALLT[0]?.deptId || '')
-      searchLog()
-    }
-	}, [depts0ALL]);
+	// useEffect(() => {
+  //   if (depts0ALL && depts0ALL.length > 0) {
+  //     const depts0ALLT = depts0ALL?.filter(d => d.deptId !== '' && d.deptScope !=='F' && d.deptScope !=='G') || []
+  //     setHospitalsList(depts0ALLT?.map(item => ({
+  //       label: item.name,
+  //       value: item.deptId
+  //     })))
+  //     searchForm.setFieldValue('hospital', depts0ALLT[0]?.deptId || '')
+  //     searchLog()
+  //   }
+	// }, [depts0ALL]);
 
 	const searchLog = async () => {
 		await searchForm.validateFields();
@@ -175,8 +152,10 @@ const FormSearch = memo((props: any) => {
 					</Form.Item>
 				</Col>
 				<Col span={6}>
-					<Form.Item label="医院" name="hospital" required rules={[{ required: true, message: '请选择医院' }]}>
-						<Select allowClear showSearch options={hospitalsList} style={{ width: "100%" }} />
+					<Form.Item label={null}>
+            <Button type="primary" onClick={() => searchLog()}>
+              查询
+            </Button>
 					</Form.Item>
 				</Col>
 				<Col span={12}></Col>
@@ -187,13 +166,6 @@ const FormSearch = memo((props: any) => {
             />
 					</Form.Item>
         </Col>
-				<Col span={4}>
-					<Form.Item label={null} style={{ margin: "0 auto" }}>
-            <Button type="primary" onClick={() => searchLog()}>
-              查询
-            </Button>
-					</Form.Item>
-				</Col>
 			</Row>
 		</Form>
 	);

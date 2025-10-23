@@ -1,4 +1,4 @@
-import { getDetailDaily } from "@/api/modules/supervise";
+import { getStoreDaily } from "@/api/modules/supervise";
 import useDeptUsers from "@/hooks/useDeptUsers";
 import useDict from "@/hooks/useDict";
 import { tableRepeat, tableMapperRow } from "@/utils/util";
@@ -19,7 +19,7 @@ enum alisaMap {
 	"abNeg" = "AB-"
 }
 
-function SuperviseLineChart(props: any) {
+function SuperviseStationLineChart(props: any) {
 	let chart: any = null;
 	const chartDom = useRef<HTMLDivElement>(null);
 	// const { transformByMapper } = useDict();
@@ -32,7 +32,6 @@ function SuperviseLineChart(props: any) {
 		beforeDate: dayjs(new Date()).subtract(7, "day").format(dateFormatSearch),
 		afterDate: dayjs(new Date()).format(dateFormatSearch),
 		typeId: 1,
-		hospital: ""
 	});
 	useEffect(() => {
 		// getLogList({
@@ -41,22 +40,18 @@ function SuperviseLineChart(props: any) {
 	}, []);
 	const getLogList = params => {
 		setLoading(true);
-		getDetailDaily(params)
+		getStoreDaily(params)
 			.then(res => {
-				let { sum = [] } = res || {};
+				let { store = [] } = res || {};
 				const dataArr = [];
-        if (sum && sum.length) {
-          sum?.forEach(item => {
-            item?.hospitalResult?.forEach(d => {
-              d.storeTotalResult?.forEach(e => {
-                dataArr.push({
-                  name: e.storeDate,
-                  value: e.total || 0
-                })
-              })
-            })
+        store?.map(function (d1) {
+          d1.dailyStationStore?.map(function (d2) {
+            const salesData = {'item':null, 'count': null};
+            salesData.item = d2.storeDate;
+            salesData.count = d2.total;
+            dataArr.push(salesData);
           })
-        }
+        })
 				renderChart(dataArr);
 			})
 			.finally(() => {
@@ -78,11 +73,11 @@ function SuperviseLineChart(props: any) {
       },
       xAxis: {
         type: 'category',
-        data: data?.map(d => d.name), 
+        data: data?.map(d => d.item), 
       },
 			series: [
 				{
-					data: data?.map(d => d.value),
+					data: data?.map(d => d.count),
           type: 'line',
           stack: '总量',
           symbol: 'circle',
@@ -107,31 +102,30 @@ function SuperviseLineChart(props: any) {
 	}, []);
 
 	return (
-		<div className={styles.superviseLineChart}>
+		<div className={styles.superviseStationLineChart}>
 			<Card title={<FormSearch searchPage={searchPage} />} style={{ width: "100%", height: "100%" }}>
-				<div className={styles.superviseLineChart_main}>
-					<h1>医院库存变化</h1>
-					<div className={styles.superviseLineChart_main_charts} ref={chartDom}>
+				<div className={styles.superviseStationLineChart_main}>
+					<h1>血站库存变化</h1>
+					<div className={styles.superviseStationLineChart_main_charts} ref={chartDom}>
 					</div>
 				</div>
 			</Card>
 		</div>
 	);
 }
-export default SuperviseLineChart;
+export default SuperviseStationLineChart;
 
 const FormSearch = memo((props: any) => {
 	const { searchPage } = props;
 	const { depts0ALL } = useDeptUsers();
 	const { dictArrRef } = useDict();
 	const [searchForm] = Form.useForm();
-	const [hospitalsList, setHospitalsList] = useState([]);
+	// const [hospitalsList, setHospitalsList] = useState([]);
 	const [typeOptions, setTypeOptions] = useState([]);
 	const initValues = {
 		beforeDate: dayjs(new Date()).subtract(7, "day"),
 		afterDate: dayjs(new Date()),
 		typeId: 1,
-		hospital: ""
 	};
 	useEffect(() => {
 		setTypeOptions(
@@ -141,19 +135,19 @@ const FormSearch = memo((props: any) => {
 			})) || []
 		);
 	}, []);
-	useEffect(() => {
-		if (depts0ALL && depts0ALL.length > 0) {
-			const depts0ALLT = depts0ALL?.filter(d => d.deptId !== "" && d.deptScope !== "F" && d.deptScope !== "G") || [];
-			setHospitalsList(
-				depts0ALLT?.map(item => ({
-					label: item.name,
-					value: item.deptId
-				}))
-			);
-			searchForm.setFieldValue("hospital", depts0ALLT[0]?.deptId || "");
-			searchLog();
-		}
-	}, [depts0ALL]);
+	// useEffect(() => {
+	// 	if (depts0ALL && depts0ALL.length > 0) {
+	// 		const depts0ALLT = depts0ALL?.filter(d => d.deptId !== "" && d.deptScope !== "F" && d.deptScope !== "G") || [];
+	// 		setHospitalsList(
+	// 			depts0ALLT?.map(item => ({
+	// 				label: item.name,
+	// 				value: item.deptId
+	// 			}))
+	// 		);
+	// 		searchForm.setFieldValue("hospital", depts0ALLT[0]?.deptId || "");
+	// 		searchLog();
+	// 	}
+	// }, [depts0ALL]);
 
 	const searchLog = async () => {
 		await searchForm.validateFields();
@@ -185,21 +179,16 @@ const FormSearch = memo((props: any) => {
 					</Form.Item>
 				</Col>
 				<Col span={6}>
-					<Form.Item label="医院" name="hospital" required rules={[{ required: true, message: '请选择医院' }]}>
-						<Select allowClear showSearch options={hospitalsList} style={{ width: "100%" }} />
+					<Form.Item label={null}>
+						<Button type="primary" onClick={() => searchLog()}>
+							查询
+						</Button>
 					</Form.Item>
 				</Col>
 				<Col span={10}></Col>
 				<Col span={13}>
 					<Form.Item label="血液类型" name="typeId" required rules={[{ required: true, message: '请选择血液类型' }]}>
 						<Radio.Group options={typeOptions} />
-					</Form.Item>
-				</Col>
-				<Col span={4}>
-					<Form.Item label={null} style={{ margin: "0 auto" }}>
-						<Button type="primary" onClick={() => searchLog()}>
-							查询
-						</Button>
 					</Form.Item>
 				</Col>
 			</Row>

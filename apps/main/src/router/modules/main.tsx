@@ -183,7 +183,43 @@ const mainRouter: Array<RouteObject> = [
           title: "医院用血变化",
           key: "supervise-hospital-change"
         }
-      }
+      },
+      {
+        path: "/supervise/supervise-station-all",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "superviseStationAll" */ '@/pages/Supervise/SuperviseStationAll/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "血站库存一览表",
+          key: "supervise-station-all"
+        }
+      },
+      {
+        path: "/supervise/supervise-station-histogram",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "superviseStationHistogram" */ '@/pages/Supervise/SuperviseStationHistogram/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "血站库存柱状图",
+          key: "supervise-station-histogram"
+        }
+      },
+      {
+        path: "/supervise/supervise-station-pit-chart",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "superviseStationPitChart" */ '@/pages/Supervise/SuperviseStationPitChart/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "血站库存饼状图",
+          key: "supervise-station-pit-chart"
+        }
+      },
+      {
+        path: "/supervise/supervise-station-line-chart",
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "superviseStationLineChart" */ '@/pages/Supervise/SuperviseStationLineChart/index'))),
+        meta: {
+          requiresAuth: true,
+          title: "血站库存变化",
+          key: "supervise-station-line-chart"
+        }
+      },
     ]
   },
   {

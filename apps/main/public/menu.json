@@ -61,7 +61,7 @@
           "icon": "LineChartOutlined",
           "title": "医院用血",
           "id": "319",
-          "path": "/supervise2",
+          "path": "/supervise",
           "key": "supervise2",
           "children": [
             {
@@ -86,6 +86,43 @@
               "key": "supervise2/supervise-hospital-change"
             }
           ]
+        },
+        {
+          "icon": "DotChartOutlined",
+          "title": "血站用血",
+          "id": "307",
+          "path": "/supervise",
+          "key": "supervise3",
+          "children": [
+            {
+              "icon": "",
+              "title": "血站库存一览表",
+              "id": "309",
+              "path": "/supervise/supervise-station-all",
+              "key": "supervise3/supervise-station-all"
+            },
+            {
+              "icon": "",
+              "title": "血站库存柱状图",
+              "id": "310",
+              "path": "/supervise/supervise-station-histogram",
+              "key": "supervise3/supervise-station-histogram"
+            },
+            {
+              "icon": "",
+              "title": "血站库存饼状图",
+              "id": "312",
+              "path": "/supervise/supervise-station-pit-chart",
+              "key": "supervise3/supervise-station-pit-chart"
+            },
+            {
+              "icon": "",
+              "title": "血站库存变化",
+              "id": "313",
+              "path": "/supervise/supervise-station-line-chart",
+              "key": "supervise3/supervise-station-line-chart"
+            }
+          ]
         }
       ]
     },
@@ -98,7 +135,7 @@
           "icon": "DesktopOutlined",
           "title": "医院联网监控",
           "id": "227",
-          "path": "/supervise1",
+          "path": "/supervise",
           "key": "supervise1",
           "children": [
             {

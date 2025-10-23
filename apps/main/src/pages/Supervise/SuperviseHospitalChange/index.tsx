@@ -2,20 +2,24 @@ import { getUseStockChange } from "@/api/modules/supervise";
 import { getDeptListByHospitalApi } from "@/api/modules/user";
 import useDeptUsers from "@/hooks/useDeptUsers";
 import useDict from "@/hooks/useDict";
+import * as echarts from "echarts"
 import { tableRepeat, tableMapperRow} from "@/utils/util";
-import { Button, Card, Checkbox, Col, DatePicker, Form, Radio, Row, Select, Table } from "antd";
+import { Button, Card, Checkbox, Col, DatePicker, Divider, Form, Radio, Row, Select, Table } from "antd";
 import dayjs from "dayjs";
 import { dateFormatSearch } from "hoslink-xxx";
 import React, { useState, useEffect, memo, useRef, useCallback } from "react";
 import styles from "./index.module.less";
 
 function SuperviseHospitalChange(props: any) {
+  let chart: any = null
 	const { dictArrRef } = useDict();
 	// const [total, setTotal] = useState(0);
 	// const [pageNum, setPageNum] = useState(1);
 	const [lineDataMonth, setLineDataMonth] = useState([]);
   const [lineDataQuter, setLineDataQuter] = useState([]);
 	const [loading, setLoading] = useState(false);
+  const chartDom1 = useRef<HTMLDivElement>(null);
+  const chartDom2 = useRef<HTMLDivElement>(null);
 	const searchObj = useRef({
 		year: dayjs(new Date()).format('YYYY'),
 		typeId: '',
@@ -68,14 +72,14 @@ function SuperviseHospitalChange(props: any) {
           }
         });
       });
-      setLineDataMonth(lineDataMonthT);
-      setLineDataQuter(lineDataQuterT);
+      renderChart(lineDataMonthT, chartDom1.current, '月');
+      renderChart(lineDataQuterT, chartDom2.current, '季度');
 		}).finally(() => {
 			setLoading(false);
 		})
 	};
-  const renderChart = (data) => {
-    chart = echarts.init(chartDom.current)
+  const renderChart = (data, dom, xAxisUnit) => {
+    chart = echarts.init(dom)
     const option = {
       color: ['#007AFF'],
       yAxis: {
@@ -86,11 +90,11 @@ function SuperviseHospitalChange(props: any) {
       },
       xAxis: {
         type: 'category',
-        data: data?.map(d => d.name),
+        data: data?.map(d => d.item + xAxisUnit),
       },
       series: [{
         data: data?.map(d => {
-          return d.value
+          return d.count
         }),
         type: 'bar',
       }]
@@ -112,10 +116,13 @@ function SuperviseHospitalChange(props: any) {
 	}, []);
 	return (
 		<div className={styles.superviseHospitalChange}>
-			<Card title={<FormSearch searchPage={searchPage} />} style={{ width: "100%", height: "100%" }}>
-      <div className={styles.superviseHistogram_main}>
-        {/* <div className={styles.superviseHistogram_main_charts} ref={chartDom1}></div>
-        <div className={styles.superviseHistogram_main_charts} ref={chartDom2}></div> */}
+			<Card title={<FormSearch searchPage={searchPage} />} style={{ width: "100%"}}>
+      <div className={styles.superviseHospitalChange_main}>
+        <h1>月度用血变化柱状图</h1>
+        <div className={styles.superviseHospitalChange_main_charts} ref={chartDom1}></div>
+        <Divider />
+        <h1>季度用血变化柱状图</h1>
+        <div className={styles.superviseHospitalChange_main_charts} ref={chartDom2}></div>
       </div>
 			</Card>
 		</div>
@@ -156,7 +163,8 @@ const FormSearch = memo((props: any) => {
 
 	}, [depts0ALL]);
 
-	const searchLog = () => {
+	const searchLog = async () => {
+    await searchForm.validateFields();
 		const values = searchForm.getFieldsValue();
 		const params = {
 			...values,
@@ -185,24 +193,23 @@ const FormSearch = memo((props: any) => {
 		<Form form={searchForm} initialValues={initValues} style={{ margin: "10px 0" }}>
 			<Row gutter={16}>
 				<Col span={6}>
-          {/*   */}
-					<Form.Item label="时间" name="year" style={{ marginBottom: 0 }}>
+					<Form.Item label="时间" name="year" style={{ marginBottom: 0 }} required rules={[{ required: true, message: '请选择时间' }]}>
             <DatePicker picker="year" allowClear style={{ width: "100%" }} />
 					</Form.Item>
 				</Col>
 				<Col span={6}>
-					<Form.Item label="医院" name="hospital">
+					<Form.Item label="医院" name="hospital" required rules={[{ required: true, message: '请选择医院' }]}>
 						<Select allowClear placeholder="请选择医院" onChange={getDepartmentList} showSearch options={hospitalsList} style={{ width: "100%" }} />
 					</Form.Item>
 				</Col>
 				<Col span={6}>
-					<Form.Item label="科室" name="department">
+					<Form.Item label="科室" name="department" required rules={[{ required: true, message: '请选择科室' }]}>
 						<Select allowClear placeholder="请选择科室" showSearch options={departmentList} style={{ width: "100%" }} />
 					</Form.Item>
 				</Col>
 				<Col span={4}></Col>
-				<Col span={12}>
-					<Form.Item label="血液类型" name="typeId">
+				<Col span={13}>
+					<Form.Item label="血液类型" name="typeId" required rules={[{ required: true, message: '请选择血液类型' }]}>
             <Radio.Group
               options={typeOptions}
             />

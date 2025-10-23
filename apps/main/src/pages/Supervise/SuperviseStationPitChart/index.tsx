@@ -1,4 +1,4 @@
-import { getUseStock } from "@/api/modules/supervise";
+import { getStatisticsStoreDetail } from "@/api/modules/supervise";
 import useDeptUsers from "@/hooks/useDeptUsers";
 import useDict from "@/hooks/useDict";
 import { tableRepeat, tableMapperRow } from "@/utils/util";
@@ -19,7 +19,7 @@ enum alisaMap {
 	"abNeg" = "AB-"
 }
 
-function SupervisePitChart(props: any) {
+function SuperviseStationPitChart(props: any) {
 	let chart: any = null;
 	const chartDom = useRef<HTMLDivElement>(null);
 	// const { transformByMapper } = useDict();
@@ -31,7 +31,6 @@ function SupervisePitChart(props: any) {
 	const searchObj = useRef({
 		storeDate: dayjs(new Date()).format(dateFormatSearch),
 		typeId: 1,
-		hospital: ""
 	});
 	useEffect(() => {
 		// getLogList({
@@ -40,49 +39,19 @@ function SupervisePitChart(props: any) {
 	}, []);
 	const getLogList = params => {
 		setLoading(true);
-		getUseStock(params)
+		getStatisticsStoreDetail(params)
 			.then(res => {
-				let { subTypeList = [] } = res?.list || {};
-				const dataObj = [
-					{
-						name: "A+",
-						value: 0
-					},
-					{
-						name: "A-",
-						value: 0
-					},
-					{
-						name: "B+",
-						value: 0
-					},
-					{
-						name: "B-",
-						value: 0
-					},
-					{
-						name: "O+",
-						value: 0
-					},
-					{
-						name: "O-",
-						value: 0
-					},
-					{
-						name: "AB+",
-						value: 0
-					},
-					{
-						name: "AB-",
-						value: 0
-					}
-				];
-				subTypeList.forEach(item => {
-					Object.keys(alisaMap).forEach((key, idx) => {
-						dataObj[idx].value += +item[key] || 0;
-					});
-				});
-				renderChart(dataObj);
+				let { store = [] } = res || {};
+        const salesPieData = [];
+				store?.map(function (d1) {
+          d1.subTypeResult?.map(function (d2) {
+            const salesData = {'item':null, 'count': null};
+            salesData.item = d2.subTypeName;
+            salesData.count = d2.total;
+            salesPieData.push(salesData);
+          })
+        })
+				renderChart(salesPieData);
 			})
 			.finally(() => {
 				setLoading(false);
@@ -101,7 +70,7 @@ function SupervisePitChart(props: any) {
 			},
 			series: [
 				{
-					data: data?.filter(item => item.value > 0) || [],
+					data: data?.filter(d => d.count > 0) || [],
 					type: "pie",
 					radius: ["40%", "70%"],
 					itemStyle: {
@@ -146,30 +115,29 @@ function SupervisePitChart(props: any) {
 	}, []);
 
 	return (
-		<div className={styles.supervisePitChart}>
+		<div className={styles.superviseStationPitChart}>
 			<Card title={<FormSearch searchPage={searchPage} />} style={{ width: "100%", height: "100%" }}>
-				<div className={styles.supervisePitChart_main}>
-					<h1>医院库存饼状图</h1>
-					<div className={styles.supervisePitChart_main_charts} ref={chartDom}>
+				<div className={styles.superviseStationPitChart_main}>
+					<h1>血站库存饼状图</h1>
+					<div className={styles.superviseStationPitChart_main_charts} ref={chartDom}>
 					</div>
 				</div>
 			</Card>
 		</div>
 	);
 }
-export default SupervisePitChart;
+export default SuperviseStationPitChart;
 
 const FormSearch = memo((props: any) => {
 	const { searchPage } = props;
 	const { depts0ALL } = useDeptUsers();
 	const { dictArrRef } = useDict();
 	const [searchForm] = Form.useForm();
-	const [hospitalsList, setHospitalsList] = useState([]);
+	// const [hospitalsList, setHospitalsList] = useState([]);
 	const [typeOptions, setTypeOptions] = useState([]);
 	const initValues = {
 		storeDate: dayjs(new Date()),
 		typeId: 1,
-		hospital: ""
 	};
 	useEffect(() => {
 		setTypeOptions(
@@ -179,19 +147,19 @@ const FormSearch = memo((props: any) => {
 			})) || []
 		);
 	}, []);
-	useEffect(() => {
-		if (depts0ALL && depts0ALL.length > 0) {
-			const depts0ALLT = depts0ALL?.filter(d => d.deptId !== "" && d.deptScope !== "F" && d.deptScope !== "G") || [];
-			setHospitalsList(
-				depts0ALLT?.map(item => ({
-					label: item.name,
-					value: item.deptId
-				}))
-			);
-			searchForm.setFieldValue("hospital", depts0ALLT[0]?.deptId || "");
-			searchLog();
-		}
-	}, [depts0ALL]);
+	// useEffect(() => {
+	// 	if (depts0ALL && depts0ALL.length > 0) {
+	// 		const depts0ALLT = depts0ALL?.filter(d => d.deptId !== "" && d.deptScope !== "F" && d.deptScope !== "G") || [];
+	// 		setHospitalsList(
+	// 			depts0ALLT?.map(item => ({
+	// 				label: item.name,
+	// 				value: item.deptId
+	// 			}))
+	// 		);
+	// 		searchForm.setFieldValue("hospital", depts0ALLT[0]?.deptId || "");
+	// 		searchLog();
+	// 	}
+	// }, [depts0ALL]);
 
 	const searchLog = async () => {
 		await searchForm.validateFields();
@@ -211,21 +179,16 @@ const FormSearch = memo((props: any) => {
 					</Form.Item>
 				</Col>
 				<Col span={6}>
-					<Form.Item label="医院" name="hospital" required rules={[{ required: true, message: '请选择医院' }]}>
-						<Select allowClear showSearch options={hospitalsList} style={{ width: "100%" }} />
+					<Form.Item label={null}>
+						<Button type="primary" onClick={() => searchLog()}>
+							查询
+						</Button>
 					</Form.Item>
 				</Col>
 				<Col span={12}></Col>
 				<Col span={13}>
 					<Form.Item label="血液类型" name="typeId" required rules={[{ required: true, message: '请选择血液类型' }]}>
 						<Radio.Group options={typeOptions} />
-					</Form.Item>
-				</Col>
-				<Col span={4}>
-					<Form.Item label={null} style={{ margin: "0 auto" }}>
-						<Button type="primary" onClick={() => searchLog()}>
-							查询
-						</Button>
 					</Form.Item>
 				</Col>
 			</Row>

@@ -125,3 +125,20 @@ export const getUseStockChange = (params: any) => {
 		headers: { showMessage: true }
 	})
 }
+
+/**
+ * 血站库存汇总表
+ */
+export const getStatisticsStoreDetail = (params: any) => {
+	return http._get<any>(`supv/superv/stationStoreDetail`, params, {
+    headers: { showMessage: true }
+  })
+}
+/**
+ * 血站库存变化
+ */
+export const getStoreDaily = (params: any) => {
+	return http._get<any>(`supv/superv/stationStoreDaily`, params, {
+    headers: { showMessage: true }
+  })
+}
