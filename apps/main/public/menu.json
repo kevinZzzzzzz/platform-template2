@@ -16,6 +16,36 @@
       ]
     },
     {
+      "title": "血站端",
+      "id": "299",
+      "type": "group",
+      "children": [
+        {
+          "icon": "AlertOutlined",
+          "title": "血液预订管理",
+          "id": "200",
+          "path": "/bloodManager",
+          "key": "bloodManager",
+          "children": [
+            {
+              "icon": "",
+              "title": "血液预订记录",
+              "id": "201",
+              "path": "/bloodManager/booking-blood-record",
+              "key": "bloodManager/booking-blood-record"
+            },
+            {
+              "icon": "",
+              "title": "血液预订统计",
+              "id": "202",
+              "path": "/bloodManager/booking-blood-statistics",
+              "key": "bloodManager/booking-blood-statistics"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "监管平台",
       "id": "399",
       "type": "group",

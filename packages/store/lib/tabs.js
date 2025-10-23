@@ -8,7 +8,7 @@ var _a;
 var tabsState = {
     // tabsActive 其实没啥用，使用 pathname 就可以了😂
     tabsActive: HOME_URL,
-    tabsList: [{ key: HOME_URL, label: "首页", path: HOME_URL }]
+    tabsList: [{ key: 'home', label: "首页", path: HOME_URL }]
 };
 var tabsSlice = createSlice({
     name: "tabs",

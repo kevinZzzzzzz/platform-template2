@@ -317,6 +317,34 @@ const mainRouter: Array<RouteObject> = [
     ]
   },
   {
+    path: '/bloodManager',
+    meta: {
+      requiresAuth: true,
+      title: "血液预订管理",
+      key: "blood-manager"
+    },
+    children: [
+      {
+        path: '/bloodManager/booking-blood-record',
+        meta: {
+          requiresAuth: true,
+          title: "血液预订记录",
+          key: "booking-blood-record"
+        },
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "BookingBloodRecord" */ '@/pages/BloodManager/BookingBloodRecord/index'))),
+      },
+      {
+        path: '/bloodManager/booking-blood-statistics',
+        meta: {
+          requiresAuth: true,
+          title: "血液预订统计",
+          key: "booking-blood-statistics"
+        },
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "BookingBloodStatistics" */ '@/pages/BloodManager/BookingBloodStatistics/index'))),
+      },
+    ]
+  },
+  {
     path: '/authority',
     meta: {
       requiresAuth: true,

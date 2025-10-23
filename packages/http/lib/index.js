@@ -48879,15 +48879,36 @@ var tryHideFullScreenLoading = function () {
     }
 };
 
+var messageMap = {
+    'successGetList': '查询成功',
+    'successAdd': '添加成功',
+    'successUpdate': '更新成功',
+    'successDelete': '删除成功',
+    'successLogin': '登录成功',
+    'successLogout': '退出成功',
+    'successRegister': '注册成功',
+    'successResetPassword': '重置密码成功',
+    'failGetList': '查询失败',
+    'failAdd': '添加失败',
+    'failUpdate': '更新失败',
+    'failDelete': '删除失败',
+    'failLogin': '登录失败',
+    'failLogout': '退出失败',
+    'failRegister': '注册失败',
+    'failResetPassword': '重置密码失败',
+    'success': '操作成功',
+    'fail': '操作失败',
+};
+
 var RequestHttp = /** @class */ (function () {
     function RequestHttp(config) {
         var _this = this;
-        this.token = config.token || '';
+        this.token = config.token || "";
         this.baseURL = config.baseURL || location.origin || "";
         this.timeOut = config.timeout || 10000;
         this.withCredentials = config.withCredentials || false;
         this.service = axios$1.create({
-            baseURL: this.baseURL || '',
+            baseURL: this.baseURL || "",
             timeout: this.timeOut || 5000,
             withCredentials: this.withCredentials || false,
         });
@@ -48902,7 +48923,7 @@ var RequestHttp = /** @class */ (function () {
             // axiosCanceler.addPending(config);
             // * 如果当前请求需要显示 loading,在api服务中通过指定的第三个参数: { headers: { showLoading: true } }来控制显示loading
             ((_a = config.headers) === null || _a === void 0 ? void 0 : _a.showLoading) && showFullScreenLoading();
-            return __assign(__assign({}, config), { headers: __assign(__assign({}, config.headers), { "token": _this.token || window.localStorage.getItem('token') }) });
+            return __assign(__assign({}, config), { headers: __assign(__assign({}, config.headers), { token: _this.token || window.localStorage.getItem("token") }) });
         }, function (error) {
             return Promise.reject(error);
         });
@@ -48916,17 +48937,23 @@ var RequestHttp = /** @class */ (function () {
             // axiosCanceler.removePending(config);
             tryHideFullScreenLoading();
             return new Promise(function (resolve, reject) {
-                var _a, _b;
+                var _a, _b, _c, _d, _e;
                 if (status === 200) {
                     // * 如果当前请求需要显示 message,在api服务中通过指定的第三个参数: { headers: { showMessage: true } }来控制显示message
                     switch (+data.code) {
                         case 0: // 正常返回
-                            !!((_a = config.headers) === null || _a === void 0 ? void 0 : _a.showMessage) && ((data.msg && message$1.success(data.msg)) || config.headers.msg && message$1.success(decodeURIComponent(config.headers.msg)));
+                            !!((_a = config.headers) === null || _a === void 0 ? void 0 : _a.showMessage) &&
+                                ((data.msg && message$1.success(data.msg)) ||
+                                    (((_b = config.headers) === null || _b === void 0 ? void 0 : _b.msgType) &&
+                                        messageMap[(_c = config.headers) === null || _c === void 0 ? void 0 : _c.msgType] &&
+                                        message$1.success(messageMap[(_d = config.headers) === null || _d === void 0 ? void 0 : _d.msgType])));
                             resolve(data);
                             break;
                         // * 处理异常返回
                         default: // 其余异常
-                            !!((_b = config.headers) === null || _b === void 0 ? void 0 : _b.showMessage) && (data.msg && message$1.error(data.msg));
+                            !!((_e = config.headers) === null || _e === void 0 ? void 0 : _e.showMessage) &&
+                                data.msg &&
+                                message$1.error(data.msg);
                             reject(data);
                             break;
                     }
@@ -48941,12 +48968,14 @@ var RequestHttp = /** @class */ (function () {
             return __generator(this, function (_b) {
                 status = error.request.status;
                 if ([401, 403].includes(status)) {
-                    message$1.error('登录失效，请重新登录');
+                    message$1.error("登录失效，请重新登录");
                     setTimeout(function () {
-                        window.location.hash = '/login';
+                        window.location.hash = "/login";
                     }, 1000);
                 }
-                !!((_a = config.headers) === null || _a === void 0 ? void 0 : _a.showMessage) && (error.message && message$1.error(error.message));
+                !!((_a = config.headers) === null || _a === void 0 ? void 0 : _a.showMessage) &&
+                    error.message &&
+                    message$1.error(error.message);
                 tryHideFullScreenLoading();
                 return [2 /*return*/, Promise.reject(error)];
             });
