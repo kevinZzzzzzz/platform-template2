@@ -702,3 +702,13 @@ export const sleep = async (time: any) => {
       }, time))
   )
 }
+
+/**
+ * 获取图片路径
+ * @param imageName 图片名称
+ * @returns 图片路径
+ */
+export function getImageUrl(imageName) {
+  // 这会返回一个解析后的URL，非常灵活
+  return new URL(imageName, import.meta.url).href;
+}

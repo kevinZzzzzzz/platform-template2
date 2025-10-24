@@ -42,6 +42,22 @@
               "key": "bloodManager/booking-blood-statistics"
             }
           ]
+        },
+        {
+          "icon": "AlertOutlined",
+          "title": "医院退血管理",
+          "id": "240",
+          "path": "/bloodManager",
+          "key": "bloodManager1",
+          "children": [
+            {
+              "icon": "",
+              "title": "医院退血记录",
+              "id": "241",
+              "path": "/bloodManager/hospital-return-list",
+              "key": "bloodManager1/hospital-return-list"
+            }
+          ]
         }
       ]
     },

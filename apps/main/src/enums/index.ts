@@ -11,3 +11,9 @@ export enum modalTypeEnum {
   edit = '编辑',
   view = '查看'
 }
+
+
+export enum rhBloodGroupStyleEnum {
+  NEGATIVE = 'default',
+  POSTIVE = '#87d068'
+}

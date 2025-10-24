@@ -23,17 +23,17 @@ function useDict() {
 
   const transformByMapper = (value: string, type?: Array<string> | string): string => {
     if (!value) {
-      return '';
+      return VIEWNULL;
     }
     if (Array.isArray(type)) {
-      if (dictMapper[type[0]] && dictMapper[type[0]].hasOwnProperty(value)) {
-        return getV(dictMapper, type[0], value, type[1]);
+      if (dictMapperRef.current?.[type[0]] && dictMapperRef.current?.[type[0]].hasOwnProperty(value)) {
+        return getV(dictMapperRef.current, type[0], value, type[1]);
       } else {
         return VIEWNULL;
       }
     } else if (type) {
-      if (dictMapper.hasOwnProperty(type)) {
-        return getV(dictMapper, type, value, 'name');
+      if (dictMapperRef.current.hasOwnProperty(type)) {
+        return getV(dictMapperRef.current, type, value, 'name');
       } else {
         return value + VIEWNULL;
       }

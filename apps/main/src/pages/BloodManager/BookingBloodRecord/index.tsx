@@ -1,23 +1,26 @@
-import { getBookingBloodRecord } from "@/api/modules/bloodManager";
+import { getBookingBloodRecord, putBloodRecordMessage } from "@/api/modules/bloodManager";
 import useDeptUsers from "@/hooks/useDeptUsers";
 import useDict from "@/hooks/useDict";
-import { tableRepeat, tableMapperRow } from "@/utils/util";
-import { Button, Card, Checkbox, Col, DatePicker, Form, Input, message, Radio, Row, Select, Table, Tag } from "antd";
+import { tableRepeat, tableMapperRow, getImageUrl } from "@/utils/util";
+import { Button, Card, Checkbox, Col, DatePicker, Drawer, Form, Input, message, Radio, Row, Select, Table, Tag } from "antd";
 import dayjs from "dayjs";
-import { dateFormatSel } from "hoslink-xxx";
+import { dateFormatPost, dateFormatSel } from "hoslink-xxx";
 import React, { useState, useEffect, memo, useRef, useCallback } from "react";
 import styles from "./index.module.less";
+import droneIcon from "@/assets/images/drone-Icon.png";
+import BookingBloodRecordDrawer from "./module";
+
 const StatusColors = {
-  "VERIFIED":"#FFA500",
-  "CANCEL": "#CD0000",
-  "APPLYING": "#2db7f5",
-  "OUTSTORE": "green",
-  "PREPARED": "#7CCD7C",
-  "CONFIRMED": '#00BFFF',
-  "COMPLETED": '#FFD700',
-  "APPLYCANCEL": '#BFBFBF',
-  "PENDING": '#1E90FF',
-}
+	VERIFIED: "#FFA500",
+	CANCEL: "#CD0000",
+	APPLYING: "#2db7f5",
+	OUTSTORE: "green",
+	PREPARED: "#7CCD7C",
+	CONFIRMED: "#00BFFF",
+	COMPLETED: "#FFD700",
+	APPLYCANCEL: "#BFBFBF",
+	PENDING: "#1E90FF"
+};
 function BookingBloodRecord(props: any) {
 	const { transformByMapper } = useDict();
 	const { transDepts0ById } = useDeptUsers();
@@ -40,6 +43,8 @@ function BookingBloodRecord(props: any) {
 		pageNum,
 		pageSize: 10
 	});
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [drawerData, setDrawerData] = useState({});
 	useEffect(() => {
 		getLogList({
 			...searchObj.current
@@ -73,6 +78,24 @@ function BookingBloodRecord(props: any) {
 			...searchObj.current
 		});
 	}, []);
+  const handleView = (record: any) => {
+    // putBloodRecordMessage({
+    //   content: record.orderNo,
+    //   readTime: dayjs().format(dateFormatPost),
+    //   beenRead: 1
+    // }).then((res: any) => {
+    //   console.log(res, 'res') 
+    // })
+    setOpenDrawer(true);
+    setDrawerData(record);
+  }
+  const onDrawerClose = (flag: false) => {
+    setOpenDrawer(false);
+    setDrawerData({});
+		flag && getLogList({
+			...searchObj.current
+		});
+  }
 	const columns = [
 		{
 			title: "序号",
@@ -99,19 +122,24 @@ function BookingBloodRecord(props: any) {
 			title: "预计用血日期",
 			dataIndex: "useDate",
 			key: "useDate",
-			render: (text, record, index) => dayjs(text).format('YYYY-MM-DD')
+			render: (text, record, index) => dayjs(text).format("YYYY-MM-DD")
 		},
 		{
 			title: "预订类型",
 			dataIndex: "orderType",
 			key: "orderType",
-      render: (text) => {
-        return (
-          <Tag color={text === 'EMERGENCY' ? '#f50' : "#87d068"}>
-            {transformByMapper(text, ["orderType", 'name']) || '--'}
-          </Tag>
-        )
-      }
+			render: (text, record) => {
+				return (
+					<div className={styles.deliveryMethod}>
+						<Tag color={text === "EMERGENCY" ? "#f50" : "#87d068"}>{transformByMapper(text, ["orderType", "name"]) || "--"}</Tag>
+						{record.deliveryMethod !== "无人机配送" ? 
+              <>
+              <img src={droneIcon} alt=""/>
+              <span>{record.deliveryMethod}</span>
+              </> : null}
+					</div>
+				);
+			}
 		},
 		{
 			title: "下单人",
@@ -127,19 +155,15 @@ function BookingBloodRecord(props: any) {
 			title: "状态",
 			dataIndex: "orderStatus",
 			key: "orderStatus",
-      render: (text) => {
-        return (
-          <Tag color={StatusColors[text]}>
-            {transformByMapper(text, ["orderStatus", 'name']) || '--'}
-          </Tag>
-        )
-      }
+			render: text => {
+				return <Tag color={StatusColors[text]}>{transformByMapper(text, ["orderStatus", "name"]) || "--"}</Tag>;
+			}
 		},
 		{
 			title: "操作",
 			dataIndex: "",
 			key: "edit",
-			render: (text, record, index) => <a onClick={() => handleEdit(record)}>查看</a>
+			render: (text, record, index) => <a onClick={() => handleView(record)}>查看</a>
 		}
 	];
 	return (
@@ -160,6 +184,17 @@ function BookingBloodRecord(props: any) {
 					}}
 				/>
 			</Card>
+        <Drawer
+          title="血液预订记录详情"
+          onClose={() => {
+            onDrawerClose(false)
+          }}
+          open={openDrawer}
+          width={1200}
+          destroyOnHidden={true}
+        >
+          <BookingBloodRecordDrawer drawerClose={onDrawerClose} record={drawerData} />
+        </Drawer>
 		</div>
 	);
 }

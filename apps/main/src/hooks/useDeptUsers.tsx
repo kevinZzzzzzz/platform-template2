@@ -119,13 +119,13 @@ function useDeptUsers() {
    * @param id 科室ID
    * @returns 科室名称
    */
-  const transDepts0ById = (id: number | string): string => {
+  const transDepts0ById = (id: number | string, key = 'name'): string => {
     if (id) {
-      const hospitalName = depts0.find(d => {
+      const hospital = depts0.find(d => {
         return d.deptId == id;
       });
-      if (hospitalName) {
-        return hospitalName.name;
+      if (hospital) {
+        return hospital[key];
       } else {
         return VIEWNULL;
       }

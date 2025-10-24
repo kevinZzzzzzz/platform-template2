@@ -342,6 +342,15 @@ const mainRouter: Array<RouteObject> = [
         },
         element: lazyLoad(lazy(() => import(/* webpackChunkName: "BookingBloodStatistics" */ '@/pages/BloodManager/BookingBloodStatistics/index'))),
       },
+      {
+        path: '/bloodManager/hospital-return-list',
+        meta: {
+          requiresAuth: true,
+          title: "医院退血记录",
+          key: "hospital-return-list"
+        },
+        element: lazyLoad(lazy(() => import(/* webpackChunkName: "HospitalReturnList" */ '@/pages/BloodManager/HospitalReturnList/index'))),
+      }
     ]
   },
   {
